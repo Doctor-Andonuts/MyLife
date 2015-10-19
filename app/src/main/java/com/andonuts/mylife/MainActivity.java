@@ -1,5 +1,6 @@
 package com.andonuts.mylife;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -14,12 +15,20 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, CreateChainFragment.OnFragmentInteractionListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        if (getFragmentManager().findFragmentById(R.id.content_area) == null) {
+            CreateChainFragment createChainFragment = new CreateChainFragment();
+            getFragmentManager().beginTransaction()
+                    .add(R.id.content_area, createChainFragment, "Test")
+                    .commit();
+        }
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -27,8 +36,9 @@ public class MainActivity extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+//                        .setAction("Action", null).show();
+
             }
         });
 
@@ -90,5 +100,14 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+
+    public void onFragmentInteraction(Uri uri) {
+        CreateChainFragment createChainFragment = new CreateChainFragment();
+        getFragmentManager().beginTransaction()
+                .add(android.R.id.content, createChainFragment, "Test")
+                .addToBackStack(null)
+                .commit();
     }
 }
