@@ -89,6 +89,7 @@ public class ChainListFragment extends Fragment implements AbsListView.OnItemCli
 
         // Set OnItemClickListener so we can be notified on item clicks
         mListView.setOnItemClickListener(this);
+        
 
         return view;
     }
