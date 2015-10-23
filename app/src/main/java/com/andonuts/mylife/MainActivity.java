@@ -13,9 +13,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, CreateChainFragment.OnFragmentInteractionListener {
+        implements NavigationView.OnNavigationItemSelectedListener,
+        CreateChainFragment.OnFragmentInteractionListener,
+        ChainListFragment.OnFragmentInteractionListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,9 +26,9 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
 
         if (getFragmentManager().findFragmentById(R.id.content_area) == null) {
-            CreateChainFragment createChainFragment = new CreateChainFragment();
+            ChainListFragment chainListFragment = new ChainListFragment();
             getFragmentManager().beginTransaction()
-                    .add(R.id.content_area, createChainFragment, "Test")
+                    .add(R.id.content_area, chainListFragment, "ArrayListFrag")
                     .commit();
         }
 
@@ -104,10 +107,15 @@ public class MainActivity extends AppCompatActivity
 
 
     public void onFragmentInteraction(Uri uri) {
-        CreateChainFragment createChainFragment = new CreateChainFragment();
-        getFragmentManager().beginTransaction()
-                .add(android.R.id.content, createChainFragment, "Test")
-                .addToBackStack(null)
-                .commit();
+//        CreateChainFragment createChainFragment = new CreateChainFragment();
+//        getFragmentManager().beginTransaction()
+//                .add(android.R.id.content, createChainFragment, "Test")
+//                .addToBackStack(null)
+//                .commit();
+        Toast.makeText(getBaseContext(), "No Idea", Toast.LENGTH_SHORT).show();
+    }
+
+    public void onFragmentInteraction(String id) {
+        Toast.makeText(getBaseContext(), "Clicked a thing", Toast.LENGTH_SHORT).show();
     }
 }

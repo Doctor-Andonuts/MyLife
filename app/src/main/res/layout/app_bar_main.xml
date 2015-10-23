@@ -34,11 +34,6 @@
         tools:context=".MainActivity"
         tools:showIn="@layout/app_bar_main"
         android:id="@+id/content_area">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="CHAINS!" />
     </RelativeLayout>
 
     <android.support.design.widget.FloatingActionButton
