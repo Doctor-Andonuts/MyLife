@@ -17,7 +17,6 @@ import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
-        CreateChainFragment.OnFragmentInteractionListener,
         ChainListFragment.OnFragmentInteractionListener {
 
     @Override
@@ -103,16 +102,6 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
-    }
-
-
-    public void onFragmentInteraction(Uri uri) {
-//        CreateChainFragment createChainFragment = new CreateChainFragment();
-//        getFragmentManager().beginTransaction()
-//                .add(android.R.id.content, createChainFragment, "Test")
-//                .addToBackStack(null)
-//                .commit();
-        Toast.makeText(getBaseContext(), "No Idea", Toast.LENGTH_SHORT).show();
     }
 
     public void onFragmentInteraction(String id) {
