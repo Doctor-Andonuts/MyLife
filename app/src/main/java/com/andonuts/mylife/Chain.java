@@ -70,13 +70,24 @@ public class Chain {
         }
         return null;
     }
-    public JSONObject getDatesArray() {
+    public JSONObject getDatesData() {
         try {
             return chainJson.getJSONObject("Dates");
         } catch (Exception e) {
             Log.e(TAG, "Error getting value DatesArray");
         }
         return null;
+    }
+    private String getDateValue(String dateToCheck) {
+        JSONObject datesData = getDatesData();
+        if(datesData.has(dateToCheck)) {
+            try {
+                return datesData.getString(dateToCheck);
+            } catch(Exception e) {
+                Log.e(TAG, "getDateValue");
+            }
+        }
+        return "";
     }
 
 
@@ -148,11 +159,27 @@ public class Chain {
                 break;
         }
 
-        JSONObject datesArray = getDatesArray();
+        JSONObject datesData = getDatesData();
         try {
-            datesArray.put(date, doneTypeAbbreviation);
+            datesData.put(date, doneTypeAbbreviation);
         } catch(Exception e) {
             Log.e(TAG, "setDone");
         }
+    }
+
+    public Integer getCurrentLength() {
+
+    }
+
+    public String getDayStatus(String dateToCheck) {
+        Integer maxDays = getMaxDays();
+        for (int i = 0; i <= maxDays; i++) {
+            String dayValue = getDateValue(dateToCheck);
+            if(!dayValue.equals("")) {
+                return dayValue;
+            }
+        }
+
+        return "";
     }
 }
