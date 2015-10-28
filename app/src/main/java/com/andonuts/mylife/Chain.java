@@ -168,7 +168,10 @@ public class Chain {
     }
 
     public Integer getCurrentLength() {
-
+        // make recursive function for this.
+        /*
+        Have it look up to max days for a done mark, if it finds it
+         */
     }
 
     public String getDayStatus(String dateToCheck) {
@@ -176,7 +179,9 @@ public class Chain {
         for (int i = 0; i <= maxDays; i++) {
             String dayValue = getDateValue(dateToCheck);
             if(!dayValue.equals("")) {
-                return dayValue;
+                // TODO: This needs to be better:
+                // if it is a V,O,S day, then skip it and keep going
+                // If it is a D day, find the diff between dateToCheck and this day and compare to min days to know what the status is
             }
         }
 
