@@ -16,7 +16,8 @@ public class Chain {
     public Chain(JSONObject chainJson) {
         this.chainJson = chainJson;
         try {
-            Log.e("testsGo", this.chainJson.getString("Title"));
+            System.out.println("chainJson toString: " + chainJson.toString());
+            System.out.println("chainJson getString Title: " + this.chainJson.getString("Title"));
         } catch(Exception e) {
 
         }
@@ -27,7 +28,7 @@ public class Chain {
         try {
             return chainJson.getString("Title");
         } catch (Exception e) {
-            Log.e(TAG, "Error getting value Name");
+            Log.v(TAG, "Error getting value Name");
         }
         return null;
     }
