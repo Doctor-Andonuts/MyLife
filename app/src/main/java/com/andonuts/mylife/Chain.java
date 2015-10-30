@@ -5,12 +5,21 @@ import android.util.Log;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
 public class Chain {
     private String TAG = "TaskClass";
     private JSONObject chainJson;
 
     public Chain(JSONObject chainJson) {
         this.chainJson = chainJson;
+        try {
+            Log.e("testsGo", this.chainJson.getString("Title"));
+        } catch(Exception e) {
+
+        }
     }
 
 
@@ -54,13 +63,13 @@ public class Chain {
         }
         return null;
     }
-    public Integer getMaxDays(){
+    public String getMaxDays(){
         try {
-            return chainJson.getInt("MaxDays");
+            return chainJson.getString("MaxDays");
         } catch (Exception e) {
             Log.e(TAG, "Error getting value MaxDays");
         }
-        return null;
+        return "3";
     }
     public Integer getPerWeekValue(){
         try {
@@ -172,19 +181,49 @@ public class Chain {
         /*
         Have it look up to max days for a done mark, if it finds it
          */
+        return null;
     }
 
-    public String getDayStatus(String dateToCheck) {
-        Integer maxDays = getMaxDays();
-        for (int i = 0; i <= maxDays; i++) {
-            String dayValue = getDateValue(dateToCheck);
-            if(!dayValue.equals("")) {
-                // TODO: This needs to be better:
-                // if it is a V,O,S day, then skip it and keep going
-                // If it is a D day, find the diff between dateToCheck and this day and compare to min days to know what the status is
-            }
-        }
-
-        return "";
+    public String getDayStatus(String dateToCheckString) {
+//        Integer maxDays = getMaxDays();
+//        Integer minDays = getMinDays();
+//        dateToCheckString += " 5";
+//        SimpleDateFormat myDateInputFormat = new SimpleDateFormat("yyyy-MM-dd kk");
+//        SimpleDateFormat myDateOutputFormat = new SimpleDateFormat("yyyy-MM-dd");
+//        Calendar dateToCheck = Calendar.getInstance();
+//
+//        try {
+//            dateToCheck.setTime(myDateInputFormat.parse(dateToCheckString));
+//        } catch(Exception e) {
+//            Log.e(TAG, "Date Parse Error");
+//        }
+//
+//        for (int i = 0; i <= maxDays; i++) {
+//            Calendar newDate = null;
+//            try {
+//                newDate = dateToCheck;
+//            } catch(Exception e) {
+//                Log.e(TAG, "Date Clone");
+//            }
+//            newDate.add(Calendar.DATE, 1);
+//            String newDateString = myDateOutputFormat.format(newDate.getTime());
+//
+//            String dayValue = getDateValue(newDateString);
+//            if(dayValue.equals("D")) {
+//                if(i == 0) {
+//                    return "Done";
+//                } else if(i < minDays) {
+//                    return "No need";
+//                } else if(i < maxDays) {
+//                    return "Should do";
+//                } else {
+//                    return "DO IT!";
+//                }
+//                // If it is a D day, find the diff between dateToCheck and this day and compare to min days to know what the status is
+//            }
+//        }
+//
+//        return "";
+        return null;
     }
 }
