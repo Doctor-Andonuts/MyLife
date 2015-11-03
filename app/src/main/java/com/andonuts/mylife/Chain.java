@@ -14,7 +14,6 @@ public class Chain {
     private JSONObject chainJson;
 
     public Chain(JSONObject chainJson) {
-        // TODO: Check for certain values to be set to specific values
         this.chainJson = chainJson;
     }
 
@@ -104,63 +103,71 @@ public class Chain {
     }
 
     public void setTitle(String value) {
-        try {
-            chainJson.put("Title", value);
-        } catch (Exception e) {
-            Log.e(TAG, "setTitle Error");
+        if(value != null) {
+            try {
+                chainJson.put("Title", value);
+            } catch (Exception e) {
+                Log.e(TAG, "setTitle Error");
+            }
         }
     }
 
     public void setStartDate(String value) {
-        // TODO: has to be before any datesData?
-        try {
-            chainJson.put("StartDate", value);
-        } catch (Exception e) {
-            Log.e(TAG, "setStartDate Error");
+        if(value != null && value.matches("\\d{4}-\\d{2}-\\d{2}")) {
+            try {
+                chainJson.put("StartDate", value);
+            } catch (Exception e) {
+                Log.e(TAG, "setStartDate Error");
+            }
         }
     }
 
     public void setEndDate(String value) {
-        // TODO: has to be after any datesData?
-        try {
-            chainJson.put("EndDate", value);
-        } catch (Exception e) {
-            Log.e(TAG, "setEndDate Error");
-        }
-    }
-
-    public void setType(String value) {
-        // TODO: Only allow the 2 specific values (MinMax, PerWeek)
-        try {
-            chainJson.put("Type", value);
-        } catch (Exception e) {
-            Log.e(TAG, "setType Error");
+        if(value == null || value.matches("\\d{4}-\\d{2}-\\d{2}")) {
+            try {
+                chainJson.put("EndDate", value);
+            } catch (Exception e) {
+                Log.e(TAG, "setEndDate Error");
+            }
         }
     }
 
     public void setMinDays(Integer value) {
-        try {
-            chainJson.put("MinDays", value);
-        } catch (Exception e) {
-            Log.e(TAG, "setMinDays Error");
+        if(getType().equals("MinMax")) {
+            if (value <= getMaxDays() && value > 0) {
+                try {
+                    chainJson.put("MinDays", value);
+                } catch (Exception e) {
+                    Log.e(TAG, "setMinDays Error");
+                }
+            }
         }
     }
 
     public void setMaxDays(Integer value) {
-        try {
-            chainJson.put("MaxDays", value);
-        } catch (Exception e) {
-            Log.e(TAG, "setMaxDays Error");
+        if(getType().equals("MinMax")) {
+            if (value >= getMinDays()) {
+                try {
+                    chainJson.put("MaxDays", value);
+                } catch (Exception e) {
+                    Log.e(TAG, "setMaxDays Error");
+                }
+            }
+        }
+    }
+    public void setPerWeekValue(Integer value) {
+        if(getType().equals("PerWeek")) {
+            if (value >= 1 && value <= 7) {
+                try {
+                    chainJson.put("PerWeekValue", value);
+                } catch (Exception e) {
+                    Log.e(TAG, "setPerWeekValue Error");
+                }
+            }
         }
     }
 }
-//    public void setPerWeekValue(Integer value) {
-//        try {
-//            chainJson.put("PerWeekValue", value);
-//        } catch (Exception e) {
-//            Log.e(TAG, "setPerWeekValue Error");
-//        }
-//    }
+
 //
 //    public void setDone(String date, String doneType) {
 //        String doneTypeAbbreviation;
