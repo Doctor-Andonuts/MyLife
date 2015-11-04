@@ -21,6 +21,20 @@ public class ChainTest extends TestCase {
     }
 
     // TODO: test the constructor has certain values
+    // Title is string
+    // StartDate is date
+    // EndDate is null or a date
+    // Type is either PerWeek or MinMax
+    // MinDays is int if MinMax, null if PerWeek
+    // MaxDays is int or null if MinMax, null if PerWeek
+    // PerWeekDays is int if PerWeed, null if MinMax
+    // Dates keys are all dates
+    // Dates values are string exactly D, S, V, O
+    // TODO: I am not sure
+
+    public void testConstructor() throws Exception {
+
+    }
 
     public void testGetTitle() throws Exception {
         Chain chain = new Chain(testJsonOne);
@@ -50,7 +64,7 @@ public class ChainTest extends TestCase {
         Chain chain = new Chain(testJsonOne);
         assertEquals((Integer)4, chain.getMaxDays());
     }
-    public void testGetMaxDaysPerWeek() throws Exception {
+    public void testGetMaxDays_PerWeek() throws Exception {
         Chain chain = new Chain(testJsonTwo);
         assertEquals(null, chain.getMaxDays());
     }
@@ -72,7 +86,7 @@ public class ChainTest extends TestCase {
         chain.setTitle("Go Time");
         assertEquals("Go Time", chain.getTitle());
     }
-    public void testSetTitleNull() throws Exception {
+    public void testSetTitle_Null() throws Exception {
         Chain chain = new Chain(testJsonOne);
         chain.setTitle(null);
         assertEquals("Exercise", chain.getTitle());
@@ -82,12 +96,12 @@ public class ChainTest extends TestCase {
         chain.setStartDate("2015-09-20");
         assertEquals("2015-09-20", chain.getStartDate());
     }
-    public void testSetStartDateNotDate() throws Exception {
+    public void testSetStartDate_NotDate() throws Exception {
         Chain chain = new Chain(testJsonOne);
         chain.setStartDate("Not a date");
         assertEquals("2015-10-01", chain.getStartDate());
     }
-    public void testSetStartDateNull() throws Exception {
+    public void testSetStartDate_Null() throws Exception {
         Chain chain = new Chain(testJsonOne);
         chain.setStartDate(null);
         assertEquals("2015-10-01", chain.getStartDate());
@@ -97,21 +111,21 @@ public class ChainTest extends TestCase {
         chain.setEndDate("2015-11-01");
         assertEquals("2015-11-01", chain.getEndDate());
     }
-    public void testSetEndDateNotDate() throws Exception {
+    public void testSetEndDate_NotDate() throws Exception {
         Chain chain = new Chain(testJsonOne);
         chain.setEndDate("Not A date");
         assertEquals("2015-11-01", chain.getEndDate());
     }
-    public void testSetEndDateNull() throws Exception {
+    public void testSetEndDate_Null() throws Exception {
         Chain chain = new Chain(testJsonOne);
         chain.setEndDate(null);
         assertEquals(null, chain.getEndDate());
     }
-    public void testSetStartDateOutOfScope_PLACEHOLDER() throws Exception {
+    public void testSetStartDate_OutOfScope_PLACEHOLDER() throws Exception {
         // TODO: Test that start date is before any data you have
         assertFalse(true);
     }
-    public void testSetEndDateOutOfScope_PLACEHOLDER() throws Exception {
+    public void testSetEndDate_OutOfScope_PLACEHOLDER() throws Exception {
         // TODO: Test that end date is after any data you have
         assertFalse(true);
     }
@@ -122,17 +136,17 @@ public class ChainTest extends TestCase {
         chain.setMinDays(3);
         assertEquals((Integer) 3, chain.getMinDays());
     }
-    public void testSetMinDaysZero() throws Exception {
+    public void testSetMinDays_Zero() throws Exception {
         Chain chain = new Chain(testJsonOne);
         chain.setMinDays(0);
         assertEquals((Integer) 2, chain.getMinDays());
     }
-    public void testSetMinDaysMoreThanMax() throws Exception {
+    public void testSetMinDays_MoreThanMax() throws Exception {
         Chain chain = new Chain(testJsonOne);
         chain.setMinDays(10);
         assertEquals((Integer) 2, chain.getMinDays());
     }
-    public void testSetMinDaysOnPerWeek() throws Exception {
+    public void testSetMinDays_OnPerWeek() throws Exception {
         Chain chain = new Chain(testJsonTwo);
         chain.setMinDays(3);
         assertEquals(null, chain.getMinDays());
@@ -142,12 +156,12 @@ public class ChainTest extends TestCase {
         chain.setMaxDays(6);
         assertEquals((Integer)6, chain.getMaxDays());
     }
-    public void testSetMaxDaysLessThanMin() throws Exception {
+    public void testSetMaxDays_LessThanMin() throws Exception {
         Chain chain = new Chain(testJsonOne);
         chain.setMaxDays(1);
         assertEquals((Integer)4, chain.getMaxDays());
     }
-    public void testSetMaxDaysOnPerWeek() throws Exception {
+    public void testSetMaxDays_OnPerWeek() throws Exception {
         Chain chain = new Chain(testJsonTwo);
         chain.setMaxDays(3);
         assertEquals(null, chain.getMaxDays());
@@ -158,19 +172,63 @@ public class ChainTest extends TestCase {
         chain.setPerWeekValue(2);
         assertEquals((Integer) 2, chain.getPerWeekValue());
     }
-    public void testSetPerWeekValueZero() throws Exception {
+    public void testSetPerWeekValue_Zero() throws Exception {
         Chain chain = new Chain(testJsonTwo);
         chain.setPerWeekValue(0);
         assertEquals((Integer)3, chain.getPerWeekValue());
     }
-    public void testSetPerWeekValueMoreThanSeven() throws Exception {
+    public void testSetPerWeekValue_MoreThanSeven() throws Exception {
         Chain chain = new Chain(testJsonTwo);
         chain.setPerWeekValue(8);
         assertEquals((Integer)3, chain.getPerWeekValue());
     }
-    public void testSetPerWeekValueOnMinMax() throws Exception {
+    public void testSetPerWeekValue_OnMinMax() throws Exception {
         Chain chain = new Chain(testJsonOne);
         chain.setPerWeekValue(2);
         assertEquals(null, chain.getPerWeekValue());
+    }
+
+    public void testSetDone_Done() throws Exception {
+        Chain chain = new Chain(testJsonOne);
+        chain.setDone("2015-10-16", "Done");
+        assertEquals("D", chain.getDateValue("2015-10-16"));
+    }
+    public void testSetDone_DoneBeforeStart() throws Exception {
+        Chain chain = new Chain(testJsonOne);
+        chain.setDone("2015-09-16", "Done");
+        assertEquals("", chain.getDateValue("2015-09-16"));
+    }
+    public void testSetDone_OffDay() throws Exception {
+        Chain chain = new Chain(testJsonOne);
+        chain.setDone("2015-10-17", "Offday");
+        assertEquals("O", chain.getDateValue("2015-10-17"));
+    }
+    public void testSetDone_WrongType() throws Exception {
+        Chain chain = new Chain(testJsonOne);
+        chain.setDone("2015-10-18", "WARGS");
+        assertEquals("", chain.getDateValue("2015-10-18"));
+    }
+    public void testSetDone_DoneAfterEndDate() throws Exception {
+        Chain chain = new Chain(testJsonOne);
+        chain.setDone("2015-11-19", "Done");
+        assertEquals("", chain.getDateValue("2015-11-19"));
+    }
+
+
+    public void testGetDayStatus_Done() throws Exception {
+        Chain chain = new Chain(testJsonOne);
+        assertEquals("Done", chain.getDayStatus("2015-10-10"));
+    }
+    public void testGetDayStatus_NoNeed() throws Exception {
+        Chain chain = new Chain(testJsonOne);
+        assertEquals("No need", chain.getDayStatus("2015-10-11"));
+    }
+    public void testGetDayStatus_ShouldDo() throws Exception {
+        Chain chain = new Chain(testJsonOne);
+        assertEquals("Should do", chain.getDayStatus("2015-10-12"));
+    }
+    public void testGetDayStatus_DoIt() throws Exception {
+        Chain chain = new Chain(testJsonOne);
+        assertEquals("DO IT!", chain.getDayStatus("2015-10-15"));
     }
 }

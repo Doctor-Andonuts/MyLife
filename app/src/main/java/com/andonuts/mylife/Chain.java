@@ -166,35 +166,55 @@ public class Chain {
             }
         }
     }
-}
 
-//
-//    public void setDone(String date, String doneType) {
-//        String doneTypeAbbreviation;
-//        switch (doneType) {
-//            case "Sick":
-//                doneTypeAbbreviation = "S";
-//                break;
-//            case "Vacation":
-//                doneTypeAbbreviation = "V";
-//                break;
-//            case "Offday":
-//                doneTypeAbbreviation = "O";
-//                break;
-//            case "Done":
-//            default:
-//                doneTypeAbbreviation = "D";
-//                break;
-//        }
-//
-//        JSONObject datesData = getDatesData();
-//        try {
-//            datesData.put(date, doneTypeAbbreviation);
-//        } catch(Exception e) {
-//            Log.e(TAG, "setDone");
-//        }
-//    }
-//
+    public void setDone(String date, String doneType) {
+        String startDateString = getStartDate();
+        String endDateString = getEndDate();
+        SimpleDateFormat myDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+        Calendar startDate = Calendar.getInstance();
+        Calendar endDate = Calendar.getInstance();
+        Calendar dateDone = Calendar.getInstance();
+
+        try {
+            startDate.setTime(myDateFormat.parse(startDateString));
+            endDate.setTime(myDateFormat.parse(endDateString));
+            dateDone.setTime(myDateFormat.parse(date));
+        } catch (Exception e) {
+            Log.e(TAG, "Parse Error");
+        }
+
+        if(dateDone.after(startDate) || dateDone.equals(startDate)) {
+            if(endDateString == null || dateDone.before(endDate) || dateDone.equals(endDate)) {
+                String doneTypeAbbreviation;
+                switch (doneType) {
+                    case "Sick":
+                        doneTypeAbbreviation = "S";
+                        break;
+                    case "Vacation":
+                        doneTypeAbbreviation = "V";
+                        break;
+                    case "Offday":
+                        doneTypeAbbreviation = "O";
+                        break;
+                    case "Done":
+                        doneTypeAbbreviation = "D";
+                        break;
+                    default:
+                        doneTypeAbbreviation = "";
+                        break;
+                }
+
+                JSONObject datesData = getDatesData();
+                try {
+                    datesData.put(date, doneTypeAbbreviation);
+                } catch (Exception e) {
+                    Log.e(TAG, "setDone");
+                }
+            }
+        }
+    }
+
 //    public Integer getCurrentLength() {
 //        // make recursive function for this.
 //        /*
@@ -202,47 +222,41 @@ public class Chain {
 //         */
 //        return null;
 //    }
-//
-//    public String getDayStatus(String dateToCheckString) {
-////        Integer maxDays = getMaxDays();
-////        Integer minDays = getMinDays();
-////        dateToCheckString += " 5";
-////        SimpleDateFormat myDateInputFormat = new SimpleDateFormat("yyyy-MM-dd kk");
-////        SimpleDateFormat myDateOutputFormat = new SimpleDateFormat("yyyy-MM-dd");
-////        Calendar dateToCheck = Calendar.getInstance();
-////
-////        try {
-////            dateToCheck.setTime(myDateInputFormat.parse(dateToCheckString));
-////        } catch(Exception e) {
-////            Log.e(TAG, "Date Parse Error");
-////        }
-////
-////        for (int i = 0; i <= maxDays; i++) {
-////            Calendar newDate = null;
-////            try {
-////                newDate = dateToCheck;
-////            } catch(Exception e) {
-////                Log.e(TAG, "Date Clone");
-////            }
-////            newDate.add(Calendar.DATE, 1);
-////            String newDateString = myDateOutputFormat.format(newDate.getTime());
-////
-////            String dayValue = getDateValue(newDateString);
-////            if(dayValue.equals("D")) {
-////                if(i == 0) {
-////                    return "Done";
-////                } else if(i < minDays) {
-////                    return "No need";
-////                } else if(i < maxDays) {
-////                    return "Should do";
-////                } else {
-////                    return "DO IT!";
-////                }
-////                // If it is a D day, find the diff between dateToCheck and this day and compare to min days to know what the status is
-////            }
-////        }
-////
-////        return "";
-//        return null;
-//    }
-//}
+
+    public String getDayStatus(String dateToCheckString) {
+        Integer maxDays = getMaxDays();
+        Integer minDays = getMinDays();
+        SimpleDateFormat myDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Calendar dateToCheck = Calendar.getInstance();
+
+        try {
+            dateToCheck.setTime(myDateFormat.parse(dateToCheckString));
+        } catch(Exception e) {
+            Log.e(TAG, "Date Parse Error");
+        }
+
+        for (int i = 0; i <= maxDays; i++) {
+            Calendar newDate = Calendar.getInstance();;
+            try {
+                newDate.setTime(myDateFormat.parse(dateToCheckString));
+            } catch(Exception e) {
+                Log.e(TAG, "Date Clone");
+            }
+            newDate.add(Calendar.DATE, -i);
+            String newDateString = myDateFormat.format(newDate.getTime());
+
+            String dayValue = getDateValue(newDateString);
+            if(dayValue.equals("D")) {
+                if(i == 0) {
+                    return "Done";
+                } else if(i < minDays) {
+                    return "No need";
+                } else if(i < maxDays) {
+                    return "Should do";
+                }
+            }
+        }
+
+        return "DO IT!";
+    }
+}
