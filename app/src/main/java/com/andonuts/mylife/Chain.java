@@ -17,7 +17,6 @@ public class Chain {
         this.chainJson = chainJson;
     }
 
-
     public String getTitle() {
         try {
             return chainJson.getString("Title");
