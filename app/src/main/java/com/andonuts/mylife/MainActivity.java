@@ -67,7 +67,7 @@ public class MainActivity extends AppCompatActivity
             Log.e("TestChainData", "Trying to read the data");
         }
 
-
+        // IF NO FRAGMENT SET, SET IT
         if (getFragmentManager().findFragmentById(R.id.content_area) == null) {
             ChainListFragment chainListFragment = new ChainListFragment();
             getFragmentManager().beginTransaction()
