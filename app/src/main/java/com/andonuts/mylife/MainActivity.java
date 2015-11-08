@@ -23,8 +23,7 @@ import java.io.FileOutputStream;
 import java.io.FileReader;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener,
-        ChainListFragment.OnFragmentInteractionListener {
+        implements NavigationView.OnNavigationItemSelectedListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,10 +32,6 @@ public class MainActivity extends AppCompatActivity
 
         /*
         TODO:  Do these things
-            1. Create Strings for chain data
-            2. Open the chain file
-            3. Save my string data to file overwriting all data inside
-            4. Output file data to Log to confirm it worked
             5. Figure out steps to display file data in the ListFragment
          */
         String chainOne = "{\"Title\": \"Exercise\",\"StartDate\": \"2015-10-01\",\"EndDate\": \"2015-11-01\",\"Type\": \"MinMax\",\"MinDays\": 2,\"MaxDays\": \"4\",\"PerWeekValue\": null,\"Dates\": {\"2015-10-01\": \"D\",\"2015-10-02\": \"D\",\"2015-10-05\": \"S\",\"2015-10-10\": \"D\"}}";
