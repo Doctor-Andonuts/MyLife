@@ -5,17 +5,19 @@
     android:padding="6dip"
     android:orientation="horizontal">
 
-    <TextView
-        android:id="@+id/description"
-        android:layout_width="150dp"
-        android:layout_height="35dp"
-        android:textSize="20sp"
-        android:singleLine="true"
-        android:textColor="#000000"/>
     <Button
         android:layout_width="48dp"
         android:layout_height="48dp"
-        android:text="GO"
         android:id="@+id/button" />
+    <TextView
+        android:id="@+id/description"
+        android:layout_width="wrap_content"
+        android:layout_height="35dp"
+        android:textSize="20sp"
+        android:singleLine="true"
+        android:textColor="#000000"
+        android:paddingStart="12dp"
+        android:paddingEnd="12dp" />
+
 
 </LinearLayout>

@@ -219,6 +219,10 @@ public class ChainTest extends TestCase {
         Chain chain = new Chain(testJsonOne);
         assertEquals("Done", chain.getDayStatus("2015-10-10"));
     }
+    public void testGetDayStatus_Done_PerWeek() throws Exception {
+        Chain chain = new Chain(testJsonTwo);
+        assertEquals("", chain.getDayStatus("2015-10-10"));
+    }
     public void testGetDayStatus_NoNeed() throws Exception {
         Chain chain = new Chain(testJsonOne);
         assertEquals("No need", chain.getDayStatus("2015-10-11"));

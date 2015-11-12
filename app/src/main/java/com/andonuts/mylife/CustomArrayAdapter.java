@@ -1,6 +1,7 @@
 package com.andonuts.mylife;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +10,8 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -33,7 +36,26 @@ public class CustomArrayAdapter extends ArrayAdapter<Chain> {
         TextView descriptionTextView = (TextView) rowView.findViewById(R.id.description);
         descriptionTextView.setText(chains.get(position).getTitle());
 
-        Button button= (Button) rowView.findViewById(R.id.button);
+        Button button = (Button) rowView.findViewById(R.id.button);
+
+        SimpleDateFormat myDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Calendar today = Calendar.getInstance();
+        String todayString = myDateFormat.format(today.getTime());
+        Log.d("DateCheck", todayString);
+
+        String dayStatus = chains.get(position).getDayStatus(todayString);
+        if(dayStatus.equals("Done")) {
+            button.setBackgroundColor(0xFF2e7d32);
+        } else if(dayStatus.equals("Should do")) {
+            button.setBackgroundColor(0xFFfdd835);
+        } else if(dayStatus.equals("No need")) {
+            button.setBackgroundColor(0xFF1b5e20);
+        } else if(dayStatus.equals("DO IT!")) {
+            button.setBackgroundColor(0xFFc62828);
+        } else {
+            button.setBackgroundColor(0xFF666666);
+        }
+
         button.setOnClickListener(new View.OnClickListener()
         {
             @Override

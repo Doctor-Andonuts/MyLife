@@ -225,37 +225,40 @@ public class Chain {
     public String getDayStatus(String dateToCheckString) {
         Integer maxDays = getMaxDays();
         Integer minDays = getMinDays();
-        SimpleDateFormat myDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        Calendar dateToCheck = Calendar.getInstance();
+        if(maxDays != null) {
+            SimpleDateFormat myDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            Calendar dateToCheck = Calendar.getInstance();
 
-        try {
-            dateToCheck.setTime(myDateFormat.parse(dateToCheckString));
-        } catch(Exception e) {
-            Log.e(TAG, "Date Parse Error");
-        }
-
-        for (int i = 0; i <= maxDays; i++) {
-            Calendar newDate = Calendar.getInstance();;
             try {
-                newDate.setTime(myDateFormat.parse(dateToCheckString));
-            } catch(Exception e) {
-                Log.e(TAG, "Date Clone");
+                dateToCheck.setTime(myDateFormat.parse(dateToCheckString));
+            } catch (Exception e) {
+                Log.e(TAG, "Date Parse Error");
             }
-            newDate.add(Calendar.DATE, -i);
-            String newDateString = myDateFormat.format(newDate.getTime());
 
-            String dayValue = getDateValue(newDateString);
-            if(dayValue.equals("D")) {
-                if(i == 0) {
-                    return "Done";
-                } else if(i < minDays) {
-                    return "No need";
-                } else if(i < maxDays) {
-                    return "Should do";
+            for (int i = 0; i <= maxDays; i++) {
+                Calendar newDate = Calendar.getInstance();
+                ;
+                try {
+                    newDate.setTime(myDateFormat.parse(dateToCheckString));
+                } catch (Exception e) {
+                    Log.e(TAG, "Date Clone");
+                }
+                newDate.add(Calendar.DATE, -i);
+                String newDateString = myDateFormat.format(newDate.getTime());
+
+                String dayValue = getDateValue(newDateString);
+                if (dayValue.equals("D")) {
+                    if (i == 0) {
+                        return "Done";
+                    } else if (i < minDays) {
+                        return "No need";
+                    } else if (i < maxDays) {
+                        return "Should do";
+                    }
                 }
             }
+            return "DO IT!";
         }
-
-        return "DO IT!";
+        return "";
     }
 }
