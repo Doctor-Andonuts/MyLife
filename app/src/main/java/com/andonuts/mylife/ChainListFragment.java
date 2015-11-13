@@ -30,7 +30,7 @@ public class ChainListFragment extends ListFragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        refreshData();
+//        refreshData();
 
         CustomArrayAdapter arrayAdapter = new CustomArrayAdapter(getActivity(), chains);
         arrayAdapter.notifyDataSetChanged();

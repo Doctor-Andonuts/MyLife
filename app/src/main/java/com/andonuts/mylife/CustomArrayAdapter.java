@@ -21,6 +21,15 @@ public class CustomArrayAdapter extends ArrayAdapter<Chain> {
     private final Context context;
     private final List<Chain> chains;
 
+    @Override
+    public void notifyDataSetChanged() {
+        super.notifyDataSetChanged();
+
+        ChainManager chainManager = new ChainManager(context);
+        chains.clear();
+        chains.addAll(chainManager.getChains());
+    }
+
     public CustomArrayAdapter(Context context, List<Chain> chains) {
         super(context, -1, chains);
         this.context = context;
@@ -61,11 +70,16 @@ public class CustomArrayAdapter extends ArrayAdapter<Chain> {
             @Override
             public void onClick(View v)
             {
-                chains.get(position).setDone(todayString, "D");
-                Toast.makeText(context, "Set today as done", Toast.LENGTH_SHORT).show();
-                // TODO: This needs to refresh the ChainListFragment
-            }
+//                chains.get(position).setDone(todayString, "D");
+                Chain chain = chains.get(position);
+                chain.setTitle("Test");
 
+                ChainManager chainManager = new ChainManager(context);
+                chainManager.addOrUpdateChain(chain);
+                notifyDataSetChanged();
+
+                Toast.makeText(context, "Set today as done", Toast.LENGTH_SHORT).show();
+            }
         });
 
         return rowView;

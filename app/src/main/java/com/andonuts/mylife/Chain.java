@@ -17,11 +17,24 @@ public class Chain {
         this.chainJson = chainJson;
     }
 
+    public String getJsonString() {
+        return chainJson.toString();
+    }
+
     public String getTitle() {
         try {
             return chainJson.getString("Title");
         } catch (Exception e) {
             Log.v(TAG, "Error getting value Name");
+        }
+        return null;
+    }
+
+    public String getUUID() {
+        try {
+            return chainJson.getString("UUID");
+        } catch (Exception e) {
+            Log.v(TAG, "Error getting value UUID");
         }
         return null;
     }
