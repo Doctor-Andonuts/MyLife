@@ -23,11 +23,15 @@ public class CustomArrayAdapter extends ArrayAdapter<Chain> {
 
     @Override
     public void notifyDataSetChanged() {
-        super.notifyDataSetChanged();
+        setNotifyOnChange(false);
 
         ChainManager chainManager = new ChainManager(context);
         chains.clear();
         chains.addAll(chainManager.getChains());
+        ChainComparator chainComparator = new ChainComparator();
+        sort(chainComparator);
+
+        super.notifyDataSetChanged();
     }
 
     public CustomArrayAdapter(Context context, List<Chain> chains) {
@@ -70,9 +74,8 @@ public class CustomArrayAdapter extends ArrayAdapter<Chain> {
             @Override
             public void onClick(View v)
             {
-//                chains.get(position).setDone(todayString, "D");
                 Chain chain = chains.get(position);
-                chain.setTitle("Test");
+                chain.setDone(todayString, "D");
 
                 ChainManager chainManager = new ChainManager(context);
                 chainManager.addOrUpdateChain(chain);

@@ -238,7 +238,9 @@ public class Chain {
     public String getDayStatus(String dateToCheckString) {
         Integer maxDays = getMaxDays();
         Integer minDays = getMinDays();
+
         if(maxDays != null) {
+
             SimpleDateFormat myDateFormat = new SimpleDateFormat("yyyy-MM-dd");
             Calendar dateToCheck = Calendar.getInstance();
 
