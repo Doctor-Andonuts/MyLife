@@ -10,15 +10,6 @@ import android.view.ViewGroup;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * A fragment representing a list of Items.
- * <p/>
- * Large screen devices (such as tablets) are supported by replacing the ListView
- * with a GridView.
- * <p/>
- * Activities containing this fragment MUST implement the {@link OnFragmentInteractionListener}
- * interface.
- */
 public class ChainListFragment extends ListFragment {
     private List<Chain> chains = new ArrayList<>();
     private OnFragmentInteractionListener mListener;
@@ -42,8 +33,6 @@ public class ChainListFragment extends ListFragment {
         refreshData();
 
         CustomArrayAdapter arrayAdapter = new CustomArrayAdapter(getActivity(), chains);
-        //TaskComparator taskComparator = new TaskComparator();
-        //arrayAdapter.sort(taskComparator);
         arrayAdapter.notifyDataSetChanged();
         setListAdapter(arrayAdapter);
     }

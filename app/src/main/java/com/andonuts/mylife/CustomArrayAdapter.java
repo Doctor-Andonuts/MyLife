@@ -28,7 +28,7 @@ public class CustomArrayAdapter extends ArrayAdapter<Chain> {
     }
 
     @Override
-    public View getView(final int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, final ViewGroup parent) {
         LayoutInflater inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View rowView = inflater.inflate(R.layout.chain_list_item, parent, false);
@@ -40,7 +40,7 @@ public class CustomArrayAdapter extends ArrayAdapter<Chain> {
 
         SimpleDateFormat myDateFormat = new SimpleDateFormat("yyyy-MM-dd");
         Calendar today = Calendar.getInstance();
-        String todayString = myDateFormat.format(today.getTime());
+        final String todayString = myDateFormat.format(today.getTime());
         Log.d("DateCheck", todayString);
 
         String dayStatus = chains.get(position).getDayStatus(todayString);
@@ -61,8 +61,9 @@ public class CustomArrayAdapter extends ArrayAdapter<Chain> {
             @Override
             public void onClick(View v)
             {
-                Toast.makeText(context, "Clicked Button: " + chains.get(position).getTitle() , Toast.LENGTH_SHORT).show();
-                // Your code that you want to execute on this button click
+                chains.get(position).setDone(todayString, "D");
+                Toast.makeText(context, "Set today as done", Toast.LENGTH_SHORT).show();
+                // TODO: This needs to refresh the ChainListFragment
             }
 
         });
