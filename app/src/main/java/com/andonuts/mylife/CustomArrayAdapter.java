@@ -58,7 +58,7 @@ public class CustomArrayAdapter extends ArrayAdapter<Chain> {
 
         String dayStatus = chains.get(position).getDayStatus(todayString);
         if(dayStatus.equals("Done")) {
-            button.setBackgroundColor(0xFF2e7d32);
+            button.setBackgroundColor(0xFF43a047);
         } else if(dayStatus.equals("Should do")) {
             button.setBackgroundColor(0xFFfdd835);
         } else if(dayStatus.equals("No need")) {
@@ -75,13 +75,11 @@ public class CustomArrayAdapter extends ArrayAdapter<Chain> {
             public void onClick(View v)
             {
                 Chain chain = chains.get(position);
-                chain.setDone(todayString, "D");
+                chain.setDone(todayString, "Done");
 
                 ChainManager chainManager = new ChainManager(context);
                 chainManager.addOrUpdateChain(chain);
                 notifyDataSetChanged();
-
-                Toast.makeText(context, "Set today as done", Toast.LENGTH_SHORT).show();
             }
         });
 
