@@ -1,5 +1,7 @@
 package com.andonuts.mylife;
 
+import android.app.Fragment;
+import android.app.FragmentManager;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -64,7 +66,7 @@ public class MainActivity extends AppCompatActivity
         if (getFragmentManager().findFragmentById(R.id.content_area) == null) {
             ChainListFragment chainListFragment = new ChainListFragment();
             getFragmentManager().beginTransaction()
-                    .add(R.id.content_area, chainListFragment, "ArrayListFrag")
+                    .add(R.id.content_area, chainListFragment, "ChainListFragment")
                     .commit();
         }
 
@@ -77,6 +79,15 @@ public class MainActivity extends AppCompatActivity
             public void onClick(View view) {
 //                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
 //                        .setAction("Action", null).show();
+                ChainCreateFragment chainCreateFragment = new ChainCreateFragment();
+                ChainListFragment chainListFragment = (ChainListFragment) getFragmentManager().findFragmentByTag("ChainListFragment");
+                getFragmentManager().beginTransaction()
+                        .remove(chainListFragment)
+                        .add(R.id.content_area, chainCreateFragment, "ChainCreateFragment")
+                        .addToBackStack(null)
+                        .commit();
+                FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+                fab.hide();
             }
         });
 
@@ -92,9 +103,25 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
+        FragmentManager fragmentManager = getFragmentManager();
+        ChainCreateFragment chainCreateFragment  = (ChainCreateFragment) fragmentManager.findFragmentByTag("ChainCreateFragment");
+        ChainListFragment chainListFragment = (ChainListFragment) getFragmentManager().findFragmentByTag("ChainListFragment");
+
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
+        } else if (chainCreateFragment != null && chainCreateFragment.isVisible()) {
+            getFragmentManager().beginTransaction()
+                    .remove(chainCreateFragment)
+                    .add(R.id.content_area, chainListFragment, "ChainListFragment")
+                    .addToBackStack(null)
+                    .commit();
+
+            assert getActionBar() != null;
+            getSupportActionBar().setTitle(R.string.app_name);
+
+            FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+            fab.show();
         } else {
             super.onBackPressed();
         }
@@ -114,7 +141,8 @@ public class MainActivity extends AppCompatActivity
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-//        if (id == R.id.action_settings) {
+//        if (id == android.R.id.home) {
+//            getFragmentManager().popBackStack();
 //            return true;
 //        }
 
