@@ -52,7 +52,7 @@ public class CustomArrayAdapter extends ArrayAdapter<Chain> {
         Button button = (Button) rowView.findViewById(R.id.button);
 
         SimpleDateFormat myDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        Calendar today = Calendar.getInstance();
+        final Calendar today = Calendar.getInstance();
         final String todayString = myDateFormat.format(today.getTime());
         Log.d("DateCheck", todayString);
 
@@ -75,7 +75,12 @@ public class CustomArrayAdapter extends ArrayAdapter<Chain> {
             public void onClick(View v)
             {
                 Chain chain = chains.get(position);
-                chain.setDone(todayString, "Done");
+
+                if(chain.getDateValue(todayString).equals("D")) {
+                    chain.setDone(todayString, "");
+                } else {
+                    chain.setDone(todayString, "Done");
+                }
 
                 ChainManager chainManager = new ChainManager(context);
                 chainManager.addOrUpdateChain(chain);
