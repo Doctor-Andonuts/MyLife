@@ -1,5 +1,6 @@
 package com.andonuts.mylife;
 
+import android.app.ActionBar;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Context;
@@ -24,6 +25,9 @@ import java.io.FileReader;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    private DrawerLayout drawerLayout;
+    private ActionBarDrawerToggle actionBarDrawerToggle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,6 +83,8 @@ public class MainActivity extends AppCompatActivity
             public void onClick(View view) {
 //                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
 //                        .setAction("Action", null).show();
+                setDrawerState(false);
+
                 ChainCreateFragment chainCreateFragment = new ChainCreateFragment();
                 ChainListFragment chainListFragment = (ChainListFragment) getFragmentManager().findFragmentByTag("ChainListFragment");
                 getFragmentManager().beginTransaction()
@@ -91,14 +97,34 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.setDrawerListener(toggle);
-        toggle.syncState();
+        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        actionBarDrawerToggle = new ActionBarDrawerToggle(
+                this, drawerLayout, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawerLayout.setDrawerListener(actionBarDrawerToggle);
+        actionBarDrawerToggle.syncState();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        assert getSupportActionBar() != null;
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_menu_white_24dp);
+    }
+
+    public void setDrawerState(boolean isEnabled) {
+        if ( isEnabled ) {
+            drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+//            actionBarDrawerToggle.onDrawerStateChanged(DrawerLayout.LOCK_MODE_UNLOCKED);
+            actionBarDrawerToggle.setDrawerIndicatorEnabled(true);
+            actionBarDrawerToggle.syncState();
+
+        }
+        else {
+            drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+//            actionBarDrawerToggle.onDrawerStateChanged(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+            actionBarDrawerToggle.setDrawerIndicatorEnabled(false);
+            actionBarDrawerToggle.syncState();
+        }
     }
 
     @Override
@@ -107,24 +133,29 @@ public class MainActivity extends AppCompatActivity
         ChainCreateFragment chainCreateFragment  = (ChainCreateFragment) fragmentManager.findFragmentByTag("ChainCreateFragment");
         ChainListFragment chainListFragment = (ChainListFragment) getFragmentManager().findFragmentByTag("ChainListFragment");
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
+//        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            drawerLayout.closeDrawer(GravityCompat.START);
         } else if (chainCreateFragment != null && chainCreateFragment.isVisible()) {
-            getFragmentManager().beginTransaction()
-                    .remove(chainCreateFragment)
-                    .add(R.id.content_area, chainListFragment, "ChainListFragment")
-                    .addToBackStack(null)
-                    .commit();
-
-            assert getActionBar() != null;
-            getSupportActionBar().setTitle(R.string.app_name);
-
-            FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-            fab.show();
+            backToListFragment(chainListFragment, chainCreateFragment);
+            setDrawerState(true);
         } else {
             super.onBackPressed();
         }
+    }
+
+    public void backToListFragment(ChainListFragment chainListFragment, ChainCreateFragment chainCreateFragment) {
+        getFragmentManager().beginTransaction()
+                .remove(chainCreateFragment)
+                .add(R.id.content_area, chainListFragment, "ChainListFragment")
+                .addToBackStack(null)
+                .commit();
+
+        assert getActionBar() != null;
+        getSupportActionBar().setTitle(R.string.app_name);
+
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.show();
     }
 
     @Override
@@ -136,15 +167,16 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-//        if (id == android.R.id.home) {
-//            getFragmentManager().popBackStack();
-//            return true;
-//        }
+        if (id == android.R.id.home) {
+            ChainListFragment chainListFragment = (ChainListFragment) getFragmentManager().findFragmentByTag("ChainListFragment");
+            if (chainListFragment != null && chainListFragment.isVisible()) {
+                drawerLayout.openDrawer(GravityCompat.START);
+                return true;
+            }
+            return false;
+        }
 
         return super.onOptionsItemSelected(item);
     }
@@ -163,8 +195,7 @@ public class MainActivity extends AppCompatActivity
 
         }
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
+        drawerLayout.closeDrawer(GravityCompat.START);
         return true;
     }
 
