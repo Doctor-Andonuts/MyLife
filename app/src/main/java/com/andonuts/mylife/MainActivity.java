@@ -199,6 +199,7 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
+
 //    public void onFragmentInteraction(String id) {
 //        Toast.makeText(getBaseContext(), "Clicked a list item (not needed?)", Toast.LENGTH_SHORT).show();
 //    }

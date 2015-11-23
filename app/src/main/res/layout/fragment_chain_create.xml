@@ -1,9 +1,20 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent" tools:context="com.andonuts.mylife.ChainCreateFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView android:layout_width="match_parent" android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
 
-</FrameLayout>
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/editTitle"
+        android:hint="Title"
+        android:layout_gravity="start|top" />
+
+    <Spinner
+        android:layout_below="@+id/editTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:id="@+id/typeSpinner"
+        android:layout_gravity="start|top" />
+
+</RelativeLayout>
