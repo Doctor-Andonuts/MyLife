@@ -11,6 +11,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 
 
@@ -47,6 +49,28 @@ public class ChainCreateFragment extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
                 // TODO: Code Here
+                if(position == 1) {
+                    LinearLayout spinnerContent = (LinearLayout) getActivity().findViewById(R.id.spinnerContent);
+                    spinnerContent.removeAllViews();
+
+                    EditText perWeekValue = new EditText(getActivity());
+                    perWeekValue.setHint("Per Week Value");
+
+                    spinnerContent.addView(perWeekValue);
+
+                } else {
+                    LinearLayout spinnerContent = (LinearLayout) getActivity().findViewById(R.id.spinnerContent);
+                    spinnerContent.removeAllViews();
+
+                    EditText minDays = new EditText(getActivity());
+                    EditText maxDays = new EditText(getActivity());
+
+                    maxDays.setHint("Max Days");
+                    minDays.setHint("Min Days");
+
+                    spinnerContent.addView(minDays);
+                    spinnerContent.addView(maxDays);
+                }
             }
             @Override
             public void onNothingSelected(AdapterView<?> parentView) {}

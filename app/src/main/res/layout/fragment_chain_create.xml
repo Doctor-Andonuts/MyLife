@@ -17,4 +17,12 @@
         android:id="@+id/typeSpinner"
         android:layout_gravity="start|top" />
 
+    <LinearLayout
+        android:layout_below="@+id/typeSpinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/spinnerContent"
+        android:orientation="horizontal" />
+
+
 </RelativeLayout>
