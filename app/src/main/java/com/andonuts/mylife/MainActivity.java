@@ -42,6 +42,20 @@ public class MainActivity extends AppCompatActivity
         String chainTwo = "{\"UUID\": \"23be9f99-4a24-45db-b892-650ba1772ed2\",\"Title\": \"Handstands\",\"StartDate\": \"2015-11-10\",\"EndDate\": null,\"Type\": \"PerWeek\",\"MinDays\": null,\"MaxDays\": null,\"PerWeekValue\": \"4\",\"Dates\": {\"2015-10-01\": \"D\",\"2015-10-02\": \"D\",\"2015-10-05\": \"S\",\"2015-10-10\": \"D\"}}";
         String fileName = "chain.data";
 
+        /*
+
+        UUID
+        Title
+        StartDate
+        EndDate
+        Type
+        MinDays
+        MaxDays
+        PerWeekValue
+        Dates
+
+         */
+
         // TRY TO WRITE TEST DATA TO FILE
         try {
             FileOutputStream fileOutputStream = openFileOutput(fileName, Context.MODE_PRIVATE);

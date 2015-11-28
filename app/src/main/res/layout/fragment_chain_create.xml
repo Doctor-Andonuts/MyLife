@@ -10,8 +10,24 @@
         android:hint="Title"
         android:layout_gravity="start|top" />
 
-    <Spinner
+    <EditText
         android:layout_below="@+id/editTitle"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/startDate"
+        android:inputType="date"
+        android:hint="Start Date" />
+    <EditText
+        android:layout_below="@+id/editTitle"
+        android:layout_toEndOf="@+id/startDate"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/endDate"
+        android:inputType="date"
+        android:hint="End Date" />
+
+    <Spinner
+        android:layout_below="@+id/startDate"
         android:layout_width="wrap_content"
         android:layout_height="50dp"
         android:id="@+id/typeSpinner"
@@ -23,6 +39,15 @@
         android:layout_height="wrap_content"
         android:id="@+id/spinnerContent"
         android:orientation="horizontal" />
+    
+    <Button
+        android:layout_below="@+id/spinnerContent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Add Chain"
+        android:id="@+id/addChain" />
+
+
 
 
 </RelativeLayout>
