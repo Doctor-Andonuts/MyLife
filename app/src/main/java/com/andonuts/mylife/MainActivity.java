@@ -231,18 +231,22 @@ public class MainActivity extends AppCompatActivity
             EditText startDate = (EditText) findViewById(R.id.startDate);
             jsonChain.put("StartDate", startDate.getText());
             EditText endDate = (EditText) findViewById(R.id.endDate);
-            jsonChain.put("EndDate", endDate.getText());
+            if(endDate.getText().toString().equals("")) {
+                jsonChain.put("EndDate", JSONObject.NULL);
+            } else {
+                jsonChain.put("EndDate", endDate.getText());
+            }
             Spinner type = (Spinner) findViewById(R.id.typeSpinner);
             jsonChain.put("Type", type.getSelectedItem());
             if (type.getSelectedItem().equals("MinMax")) {
                 EditText minDays = (EditText) findViewById(R.id.minDays);
-                jsonChain.put("MinDays", minDays);
+                jsonChain.put("MinDays", minDays.getText());
                 EditText maxDays = (EditText) findViewById(R.id.maxDays);
-                jsonChain.put("MaxDays", maxDays);
-                jsonChain.put("PerWeekValue", null);
+                jsonChain.put("MaxDays", maxDays.getText());
+                jsonChain.put("PerWeekValue", JSONObject.NULL);
             } else {
-                jsonChain.put("MinDays", null);
-                jsonChain.put("MaxDays", null);
+                jsonChain.put("MinDays", JSONObject.NULL);
+                jsonChain.put("MaxDays", JSONObject.NULL);
                 EditText perWeekValue = (EditText) findViewById(R.id.perWeekValue);
                 jsonChain.put("PerWeekValue", perWeekValue.getText());
             }
