@@ -43,10 +43,16 @@ public class ChainManager {
 
             try {
                 startDate.setTime(myDateFormat.parse(startDateString));
-                endDate.setTime(myDateFormat.parse(endDateString));
+                if(endDateString == null || endDateString.equals("null")) {
+                    endDate = null;
+                } else {
+                    endDate.setTime(myDateFormat.parse(endDateString));
+                }
                 today.setTime(myDateFormat.parse(myDateFormat.format(today.getTime())));
             } catch (Exception e) {
-                Log.e(TAG, "Parse Error");
+                Log.e(TAG, "END DATE STRING: " + endDateString);
+                Log.e(TAG, "JSON: " + chain.getJsonString());
+                Log.e(TAG, "Parse Error: " + e.toString());
             }
 
             if(startDate.before(today) || startDate.equals(today)) {

@@ -2,12 +2,10 @@ package com.andonuts.mylife;
 
 import android.util.Log;
 
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 
 public class Chain {
     private String TAG = "TaskClass";

@@ -8,22 +8,16 @@ import android.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.text.InputType;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
-import android.widget.Toast;
-
-import org.json.JSONArray;
-import org.json.JSONObject;
 
 import java.util.Calendar;
 import java.util.UUID;
@@ -52,52 +46,6 @@ public class ChainCreateFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-        Button addChainButton = (Button) getActivity().findViewById(R.id.addChain);
-        addChainButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                // TODO: Validate that I have all the data I need
-                JSONObject jsonChain = new JSONObject();
-
-                String uuid = UUID.randomUUID().toString();
-                try {
-                    jsonChain.put("UUID", uuid);
-                    EditText title = (EditText) getActivity().findViewById(R.id.editTitle);
-                    jsonChain.put("Title", title.getText());
-                    EditText startDate = (EditText) getActivity().findViewById(R.id.startDate);
-                    jsonChain.put("StartDate", startDate.getText());
-                    EditText endDate = (EditText) getActivity().findViewById(R.id.endDate);
-                    jsonChain.put("EndDate", endDate.getText());
-                    Spinner type = (Spinner) getActivity().findViewById(R.id.typeSpinner);
-                    jsonChain.put("Type", type.getSelectedItem());
-                    if (type.getSelectedItem().equals("MinMax")) {
-                        EditText minDays = (EditText) getActivity().findViewById(R.id.minDays);
-                        jsonChain.put("MinDays", minDays);
-                        EditText maxDays = (EditText) getActivity().findViewById(R.id.maxDays);
-                        jsonChain.put("MaxDays", maxDays);
-                        jsonChain.put("PerWeekValue", null);
-                    } else {
-                        jsonChain.put("MinDays", null);
-                        jsonChain.put("MaxDays", null);
-                        EditText perWeekValue = (EditText) getActivity().findViewById(R.id.perWeekValue);
-                        jsonChain.put("PerWeekValue", perWeekValue.getText());
-                    }
-
-                    jsonChain.put("Dates", new JSONObject());
-                } catch (Exception e) {
-                    Log.d("MakingChains", "");
-                }
-
-                Chain chain = new Chain(jsonChain);
-                ChainManager chainManager = new ChainManager(getActivity());
-                chainManager.addOrUpdateChain(chain);
-
-                // TODO: Remove Create Fragment
-                // TODO: Hide Soft Keyboard
-                // TODO: I have no idea of null values are allowed or what happens when sending a blank string
-                // TODO: It might be better to make the basic JSON and use the chain functions to set all the data (except I have none to set Type, but that is forced anyways
-            }
-        });
 
 
         EditText startDate = (EditText) getActivity().findViewById(R.id.startDate);
@@ -211,7 +159,8 @@ public class ChainCreateFragment extends Fragment {
         public void onDateSet(DatePicker view, int year, int month, int day) {
             // Do something with the date chosen by the user
             EditText startDate = (EditText) getActivity().findViewById(R.id.startDate);
-            String dateText = year + "-" + month + "-" + day;
+            int correctedMonth = month + 1;
+            String dateText = year + "-" + correctedMonth + "-" + day;
             startDate.setText(dateText);
         }
     }
@@ -234,7 +183,8 @@ public class ChainCreateFragment extends Fragment {
         public void onDateSet(DatePicker view, int year, int month, int day) {
             // Do something with the date chosen by the user
             EditText endDate = (EditText) getActivity().findViewById(R.id.endDate);
-            String dateText = year + "-" + month + "-" + day;
+            int correctedMonth = month + 1;
+            String dateText = year + "-" + correctedMonth + "-" + day;
             endDate.setText(dateText);
         }
     }

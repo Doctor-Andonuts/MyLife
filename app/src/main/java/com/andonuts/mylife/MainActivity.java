@@ -1,7 +1,6 @@
 package com.andonuts.mylife;
 
-import android.app.ActionBar;
-import android.app.Fragment;
+import android.app.Activity;
 import android.app.FragmentManager;
 import android.content.Context;
 import android.os.Bundle;
@@ -16,12 +15,17 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
+import android.widget.Spinner;
+
+import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FileReader;
+import java.util.UUID;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -152,7 +156,6 @@ public class MainActivity extends AppCompatActivity
             drawerLayout.closeDrawer(GravityCompat.START);
         } else if (chainCreateFragment != null && chainCreateFragment.isVisible()) {
             backToListFragment(chainListFragment, chainCreateFragment);
-            setDrawerState(true);
         } else {
             super.onBackPressed();
         }
@@ -167,6 +170,8 @@ public class MainActivity extends AppCompatActivity
 
         assert getActionBar() != null;
         getSupportActionBar().setTitle(R.string.app_name);
+        setDrawerState(true);
+        hideSoftKeyboard(findViewById(android.R.id.content));
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.show();
@@ -214,7 +219,72 @@ public class MainActivity extends AppCompatActivity
     }
 
 
+    public void addChain(View view) {
+        // TODO: Validate that I have all the data I need
+        JSONObject jsonChain = new JSONObject();
+
+        String uuid = UUID.randomUUID().toString();
+        try {
+            jsonChain.put("UUID", uuid);
+            EditText title = (EditText) findViewById(R.id.editTitle);
+            jsonChain.put("Title", title.getText());
+            EditText startDate = (EditText) findViewById(R.id.startDate);
+            jsonChain.put("StartDate", startDate.getText());
+            EditText endDate = (EditText) findViewById(R.id.endDate);
+            jsonChain.put("EndDate", endDate.getText());
+            Spinner type = (Spinner) findViewById(R.id.typeSpinner);
+            jsonChain.put("Type", type.getSelectedItem());
+            if (type.getSelectedItem().equals("MinMax")) {
+                EditText minDays = (EditText) findViewById(R.id.minDays);
+                jsonChain.put("MinDays", minDays);
+                EditText maxDays = (EditText) findViewById(R.id.maxDays);
+                jsonChain.put("MaxDays", maxDays);
+                jsonChain.put("PerWeekValue", null);
+            } else {
+                jsonChain.put("MinDays", null);
+                jsonChain.put("MaxDays", null);
+                EditText perWeekValue = (EditText) findViewById(R.id.perWeekValue);
+                jsonChain.put("PerWeekValue", perWeekValue.getText());
+            }
+
+            jsonChain.put("Dates", new JSONObject());
+        } catch (Exception e) {
+            Log.d("MakingChains", "");
+        }
+
+        Log.d("jsonChain", jsonChain.toString());
+
+        Chain chain = new Chain(jsonChain);
+        ChainManager chainManager = new ChainManager(this);
+        chainManager.addOrUpdateChain(chain);
+
+        for(Chain chainLoop : chainManager.getChains()) {
+            Log.d("ChainList", chainLoop.getJsonString());
+        }
+
+
+        ChainListFragment chainListFragment = (ChainListFragment) getFragmentManager().findFragmentByTag("ChainListFragment");
+        ChainCreateFragment chainCreateFragment = (ChainCreateFragment) getFragmentManager().findFragmentByTag("ChainCreateFragment");
+//        getFragmentManager().beginTransaction()
+//                .remove(chainCreateFragment)
+//                .add(R.id.content_area, chainListFragment, "ChainListFragment")
+//                .commit();
+        backToListFragment(chainListFragment, chainCreateFragment);
+
+
+        // TODO: Remove Create Fragment
+        // TODO: Hide Soft Keyboard
+        // TODO: I have no idea of null values are allowed or what happens when sending a blank string
+        // TODO: It might be better to make the basic JSON and use the chain functions to set all the data (except I have none to set Type, but that is forced anyways
+
+    }
+
 //    public void onFragmentInteraction(String id) {
 //        Toast.makeText(getBaseContext(), "Clicked a list item (not needed?)", Toast.LENGTH_SHORT).show();
 //    }
+
+    private void hideSoftKeyboard(View view) {
+        InputMethodManager inputMethodManager = (InputMethodManager)  getSystemService(Activity.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    }
 }
