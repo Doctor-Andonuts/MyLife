@@ -49,7 +49,7 @@ public class CustomArrayAdapter extends ArrayAdapter<Chain> {
         TextView descriptionTextView = (TextView) rowView.findViewById(R.id.description);
         descriptionTextView.setText(chains.get(position).getTitle());
 
-        Button button = (Button) rowView.findViewById(R.id.button);
+        Button button = (Button) rowView.findViewById(R.id.listButton_Done);
 
         SimpleDateFormat myDateFormat = new SimpleDateFormat("yyyy-MM-dd");
         final Calendar today = Calendar.getInstance();

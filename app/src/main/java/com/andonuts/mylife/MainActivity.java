@@ -28,7 +28,7 @@ import java.io.FileReader;
 import java.util.UUID;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, ChainListFragment.OnFragmentInteractionListener {
 
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle actionBarDrawerToggle;
@@ -47,7 +47,6 @@ public class MainActivity extends AppCompatActivity
         String fileName = "chain.data";
 
         /*
-
         UUID
         Title
         StartDate
@@ -57,7 +56,6 @@ public class MainActivity extends AppCompatActivity
         MaxDays
         PerWeekValue
         Dates
-
          */
 
         // TRY TO WRITE TEST DATA TO FILE
@@ -129,39 +127,44 @@ public class MainActivity extends AppCompatActivity
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_menu_white_24dp);
     }
 
-    public void setDrawerState(boolean isEnabled) {
-        if ( isEnabled ) {
-            drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
-//            actionBarDrawerToggle.onDrawerStateChanged(DrawerLayout.LOCK_MODE_UNLOCKED);
-            actionBarDrawerToggle.setDrawerIndicatorEnabled(true);
-            actionBarDrawerToggle.syncState();
-
-        }
-        else {
-            drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
-//            actionBarDrawerToggle.onDrawerStateChanged(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
-            actionBarDrawerToggle.setDrawerIndicatorEnabled(false);
-            actionBarDrawerToggle.syncState();
-        }
-    }
 
     @Override
     public void onBackPressed() {
         FragmentManager fragmentManager = getFragmentManager();
         ChainCreateFragment chainCreateFragment  = (ChainCreateFragment) fragmentManager.findFragmentByTag("ChainCreateFragment");
         ChainListFragment chainListFragment = (ChainListFragment) getFragmentManager().findFragmentByTag("ChainListFragment");
-
+        ChainDetailFragment chainDetailFragment= (ChainDetailFragment) getFragmentManager().findFragmentByTag("ChainDetailFragment");
 //        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
             drawerLayout.closeDrawer(GravityCompat.START);
+        } else if (chainDetailFragment != null && chainDetailFragment.isVisible()) {
+            fromDetailToListFragment(chainListFragment, chainDetailFragment);
         } else if (chainCreateFragment != null && chainCreateFragment.isVisible()) {
-            backToListFragment(chainListFragment, chainCreateFragment);
+            fromCreateToListFragment(chainListFragment, chainCreateFragment);
         } else {
             super.onBackPressed();
         }
     }
 
-    public void backToListFragment(ChainListFragment chainListFragment, ChainCreateFragment chainCreateFragment) {
+    // Goes from Details to List Fragment
+    public void fromDetailToListFragment(ChainListFragment chainListFragment, ChainDetailFragment chainDetailFragment) {
+        getFragmentManager().beginTransaction()
+                .remove(chainDetailFragment)
+                .add(R.id.content_area, chainListFragment, "ChainListFragment")
+                .addToBackStack(null)
+                .commit();
+
+        assert getActionBar() != null;
+        getSupportActionBar().setTitle(R.string.app_name);
+        setDrawerState(true);
+        hideSoftKeyboard(findViewById(android.R.id.content));
+
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.show();
+    }
+
+    // Goes from Create to List Fragment
+    public void fromCreateToListFragment(ChainListFragment chainListFragment, ChainCreateFragment chainCreateFragment) {
         getFragmentManager().beginTransaction()
                 .remove(chainCreateFragment)
                 .add(R.id.content_area, chainListFragment, "ChainListFragment")
@@ -177,13 +180,9 @@ public class MainActivity extends AppCompatActivity
         fab.show();
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
-    }
 
+
+    // If you hit the drawer button on the ChainListFragment, show the drawer
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
@@ -200,6 +199,7 @@ public class MainActivity extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
+    // What happens when you hit various items in the drawer
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
@@ -273,7 +273,7 @@ public class MainActivity extends AppCompatActivity
 //                .remove(chainCreateFragment)
 //                .add(R.id.content_area, chainListFragment, "ChainListFragment")
 //                .commit();
-        backToListFragment(chainListFragment, chainCreateFragment);
+        fromCreateToListFragment(chainListFragment, chainCreateFragment);
 
 
         // TODO: Remove Create Fragment
@@ -290,5 +290,32 @@ public class MainActivity extends AppCompatActivity
     private void hideSoftKeyboard(View view) {
         InputMethodManager inputMethodManager = (InputMethodManager)  getSystemService(Activity.INPUT_METHOD_SERVICE);
         inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    }
+
+    public void setDrawerState(boolean isEnabled) {
+        if ( isEnabled ) {
+            drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+//            actionBarDrawerToggle.onDrawerStateChanged(DrawerLayout.LOCK_MODE_UNLOCKED);
+            actionBarDrawerToggle.setDrawerIndicatorEnabled(true);
+            actionBarDrawerToggle.syncState();
+
+        }
+        else {
+            drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+//            actionBarDrawerToggle.onDrawerStateChanged(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+            actionBarDrawerToggle.setDrawerIndicatorEnabled(false);
+            actionBarDrawerToggle.syncState();
+        }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.main, menu);
+        return true;
+    }
+
+    public void onFragmentInteraction(Chain chain) {
+        Log.e("DETAILCLICK", "Just Clicked " + chain.getType());
     }
 }
