@@ -86,7 +86,6 @@ public class ChainCreateFragment extends Fragment {
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-                // TODO: Code Here
                 if (position == 1) {
                     LinearLayout spinnerContent = (LinearLayout) getActivity().findViewById(R.id.spinnerContent);
                     spinnerContent.removeAllViews();
