@@ -250,7 +250,7 @@ public class Chain {
 
             for (int i = 0; i <= maxDays; i++) {
                 Calendar newDate = Calendar.getInstance();
-                ;
+
                 try {
                     newDate.setTime(myDateFormat.parse(dateToCheckString));
                 } catch (Exception e) {
@@ -273,5 +273,49 @@ public class Chain {
             return "DO IT!";
         }
         return "";
+    }
+
+
+    public String getOnceOver(String dateToCheckString) {
+        // TODO: This is what I need to finish. It should return a string like the paper on my desk
+//        Integer maxDays = getMaxDays();
+//        Integer minDays = getMinDays();
+//
+//        if(maxDays != null) {
+//
+//            SimpleDateFormat myDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+//            Calendar dateToCheck = Calendar.getInstance();
+//
+//            try {
+//                dateToCheck.setTime(myDateFormat.parse(dateToCheckString));
+//            } catch (Exception e) {
+//                Log.e(TAG, "Date Parse Error");
+//            }
+//
+//            for (int i = 0; i <= maxDays; i++) {
+//                Calendar newDate = Calendar.getInstance();
+//
+//                try {
+//                    newDate.setTime(myDateFormat.parse(dateToCheckString));
+//                } catch (Exception e) {
+//                    Log.e(TAG, "Date Clone");
+//                }
+//                newDate.add(Calendar.DATE, -i);
+//                String newDateString = myDateFormat.format(newDate.getTime());
+//
+//                String dayValue = getDateValue(newDateString);
+//                if (dayValue.equals("D")) {
+//                    if (i == 0) {
+//                        return "Done";
+//                    } else if (i < minDays) {
+//                        return "No need";
+//                    } else if (i < maxDays) {
+//                        return "Should do";
+//                    }
+//                }
+//            }
+//            return "DO IT!";
+//        }
+        return "Test";
     }
 }

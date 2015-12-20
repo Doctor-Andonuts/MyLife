@@ -46,17 +46,22 @@ public class CustomArrayAdapter extends ArrayAdapter<Chain> {
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View rowView = inflater.inflate(R.layout.chain_list_item, parent, false);
 
-        TextView descriptionTextView = (TextView) rowView.findViewById(R.id.description);
-        descriptionTextView.setText(chains.get(position).getTitle());
+        Chain chain = chains.get(position);
 
-        Button button = (Button) rowView.findViewById(R.id.listButton_Done);
+        TextView descriptionTextView = (TextView) rowView.findViewById(R.id.description);
+        descriptionTextView.setText(chain.getTitle());
 
         SimpleDateFormat myDateFormat = new SimpleDateFormat("yyyy-MM-dd");
         final Calendar today = Calendar.getInstance();
         final String todayString = myDateFormat.format(today.getTime());
         Log.d("DateCheck", todayString);
 
-        String dayStatus = chains.get(position).getDayStatus(todayString);
+        TextView onceOverTextView= (TextView) rowView.findViewById(R.id.onceOver);
+        onceOverTextView.setText(chain.getOnceOver(todayString));
+
+        Button button = (Button) rowView.findViewById(R.id.listButton_Done);
+
+        String dayStatus = chain.getDayStatus(todayString);
         if(dayStatus.equals("Done")) {
             button.setBackgroundColor(0xFF43a047);
         } else if(dayStatus.equals("Should do")) {

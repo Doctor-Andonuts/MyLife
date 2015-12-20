@@ -12,6 +12,16 @@
         android:id="@+id/listButton_Done" />
 
     <TextView
+        android:id="@+id/onceOver"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:singleLine="true"
+        android:textColor="#000000"
+        android:paddingStart="12dp"
+        android:paddingEnd="12dp" />
+
+    <TextView
         android:id="@+id/description"
         android:layout_width="wrap_content"
         android:layout_height="35dp"
