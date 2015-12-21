@@ -277,45 +277,75 @@ public class Chain {
 
 
     public String getOnceOver(String dateToCheckString) {
-        // TODO: This is what I need to finish. It should return a string like the paper on my desk
-//        Integer maxDays = getMaxDays();
-//        Integer minDays = getMinDays();
-//
-//        if(maxDays != null) {
-//
-//            SimpleDateFormat myDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-//            Calendar dateToCheck = Calendar.getInstance();
-//
-//            try {
-//                dateToCheck.setTime(myDateFormat.parse(dateToCheckString));
-//            } catch (Exception e) {
-//                Log.e(TAG, "Date Parse Error");
-//            }
-//
-//            for (int i = 0; i <= maxDays; i++) {
-//                Calendar newDate = Calendar.getInstance();
-//
-//                try {
-//                    newDate.setTime(myDateFormat.parse(dateToCheckString));
-//                } catch (Exception e) {
-//                    Log.e(TAG, "Date Clone");
-//                }
-//                newDate.add(Calendar.DATE, -i);
-//                String newDateString = myDateFormat.format(newDate.getTime());
-//
-//                String dayValue = getDateValue(newDateString);
-//                if (dayValue.equals("D")) {
-//                    if (i == 0) {
-//                        return "Done";
-//                    } else if (i < minDays) {
-//                        return "No need";
-//                    } else if (i < maxDays) {
-//                        return "Should do";
-//                    }
-//                }
-//            }
-//            return "DO IT!";
-//        }
-        return "Test";
+        SimpleDateFormat myDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+        if(getType().equals("MinMax")) {
+
+            Integer maxDays = getMaxDays();
+            Integer minDays = getMinDays();
+
+            Calendar dateToCheck = Calendar.getInstance();
+
+            try {
+                dateToCheck.setTime(myDateFormat.parse(dateToCheckString));
+            } catch (Exception e) {
+                Log.e(TAG, "Date Parse Error");
+            }
+
+            for (int i = 0; i <= maxDays; i++) {
+                Calendar newDate = Calendar.getInstance();
+
+                try {
+                    newDate.setTime(myDateFormat.parse(dateToCheckString));
+                } catch (Exception e) {
+                    Log.e(TAG, "Date Clone");
+                }
+                newDate.add(Calendar.DATE, -i);
+                String newDateString = myDateFormat.format(newDate.getTime());
+
+                String dayValue = getDateValue(newDateString);
+                if (dayValue.equals("D")) {
+                    if (i == 0) {
+                        return "Done";
+                    } else if (i < minDays) {
+                        return "0 in " + maxDays;
+                    } else if (i < maxDays) {
+                        return "1 in " + (i - 1 - maxDays);
+                    }
+                }
+            }
+            return "1 in 1";
+        } else {
+            Calendar todayDate = Calendar.getInstance();
+            int todayDayOfWeek = todayDate.get(Calendar.DAY_OF_WEEK);
+            // Sunday == 1, Saturday == 7
+            // I want Monday to be one and Sunday to be 7
+            todayDayOfWeek -= 1;
+            if(todayDayOfWeek == 0) { todayDayOfWeek = 7; }
+            int daysLeftInWeek = 8 - todayDayOfWeek;
+
+            int timesDoneThisWeek = 0;
+            for (int i = 0; i <= todayDayOfWeek; i++) {
+                Calendar newDate = Calendar.getInstance();
+
+                try {
+                    newDate.setTime(myDateFormat.parse(dateToCheckString));
+                } catch (Exception e) {
+                    Log.e(TAG, "Date Clone");
+                }
+                newDate.add(Calendar.DATE, -i);
+                String newDateString = myDateFormat.format(newDate.getTime());
+
+                String dayValue = getDateValue(newDateString);
+                if (dayValue.equals("D")) {
+                    timesDoneThisWeek++;
+                }
+            }
+
+            Integer perWeekValue = getPerWeekValue();
+            int stillNeedToDoThisWeek = perWeekValue - timesDoneThisWeek;
+
+            return stillNeedToDoThisWeek + " in " + daysLeftInWeek;
+        }
     }
 }
