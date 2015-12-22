@@ -1,4 +1,4 @@
-package com.andonuts.mylife;
+package com.doctor_andonuts.mylife;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
@@ -20,7 +20,6 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 
 import java.util.Calendar;
-import java.util.UUID;
 
 
 public class ChainCreateFragment extends Fragment {

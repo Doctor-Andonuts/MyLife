@@ -1,4 +1,4 @@
-package com.andonuts.mylife;
+package com.doctor_andonuts.mylife;
 
 import android.content.Context;
 import android.util.Log;

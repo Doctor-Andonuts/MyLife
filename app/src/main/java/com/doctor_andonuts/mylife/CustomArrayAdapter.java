@@ -1,4 +1,4 @@
-package com.andonuts.mylife;
+package com.doctor_andonuts.mylife;
 
 import android.content.Context;
 import android.util.Log;
@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;

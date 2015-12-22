@@ -1,4 +1,4 @@
-package com.andonuts.mylife;
+package com.doctor_andonuts.mylife;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;
