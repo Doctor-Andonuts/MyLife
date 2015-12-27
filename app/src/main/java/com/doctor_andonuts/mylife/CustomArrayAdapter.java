@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -49,6 +50,13 @@ public class CustomArrayAdapter extends ArrayAdapter<Chain> {
 
         TextView descriptionTextView = (TextView) rowView.findViewById(R.id.description);
         descriptionTextView.setText(chain.getTitle());
+        descriptionTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // TODO: What happens when you click a title, probably go to a detailed view
+                // TODO: This should be duplicated to the onceover text as well
+            }
+        });
 
         SimpleDateFormat myDateFormat = new SimpleDateFormat("yyyy-MM-dd");
         final Calendar today = Calendar.getInstance();
@@ -58,29 +66,27 @@ public class CustomArrayAdapter extends ArrayAdapter<Chain> {
         TextView onceOverTextView= (TextView) rowView.findViewById(R.id.onceOver);
         onceOverTextView.setText(chain.getOnceOver(todayString));
 
-        Button button = (Button) rowView.findViewById(R.id.listButton_Done);
+        Button doneButton = (Button) rowView.findViewById(R.id.listButton_Done);
 
         String dayStatus = chain.getDayStatus(todayString);
         if(dayStatus.equals("Done")) {
-            button.setBackgroundColor(0xFF43a047);
+            doneButton.setBackgroundColor(0xFF43a047);
         } else if(dayStatus.equals("Should do")) {
-            button.setBackgroundColor(0xFFfdd835);
+            doneButton.setBackgroundColor(0xFFfdd835);
         } else if(dayStatus.equals("No need")) {
-            button.setBackgroundColor(0xFF1b5e20);
+            doneButton.setBackgroundColor(0xFF1b5e20);
         } else if(dayStatus.equals("DO IT!")) {
-            button.setBackgroundColor(0xFFc62828);
+            doneButton.setBackgroundColor(0xFFc62828);
         } else {
-            button.setBackgroundColor(0xFF666666);
+            doneButton.setBackgroundColor(0xFF666666);
         }
 
-        button.setOnClickListener(new View.OnClickListener()
-        {
+        doneButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v)
-            {
+            public void onClick(View v) {
                 Chain chain = chains.get(position);
 
-                if(chain.getDateValue(todayString).equals("D")) {
+                if (chain.getDateValue(todayString).equals("D")) {
                     chain.setDone(todayString, "");
                 } else {
                     chain.setDone(todayString, "Done");
@@ -91,6 +97,8 @@ public class CustomArrayAdapter extends ArrayAdapter<Chain> {
                 notifyDataSetChanged();
             }
         });
+
+
 
         return rowView;
     }

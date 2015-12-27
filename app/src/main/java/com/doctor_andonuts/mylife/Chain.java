@@ -8,7 +8,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 public class Chain {
-    private String TAG = "TaskClass";
+    private String TAG = "ChainClass";
     private JSONObject chainJson;
 
     public Chain(JSONObject chainJson) {
@@ -188,7 +188,7 @@ public class Chain {
 
         try {
             startDate.setTime(myDateFormat.parse(startDateString));
-            endDate.setTime(myDateFormat.parse(endDateString));
+            if(endDateString != null && !endDateString.equals("null")) { endDate.setTime(myDateFormat.parse(endDateString)); }
             dateDone.setTime(myDateFormat.parse(date));
         } catch (Exception e) {
             Log.e(TAG, "Parse Error");
@@ -271,6 +271,13 @@ public class Chain {
                         }
                     }
                 }
+                return "DO IT!";
+            }
+        } else {
+            String dayValue = getDateValue(dateToCheckString);
+            if (dayValue.equals("D")) {
+                return "Done";
+            } else {
                 return "DO IT!";
             }
         }
