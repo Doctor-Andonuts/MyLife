@@ -7,7 +7,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,21 +47,9 @@ public class ChainListFragment extends ListFragment {
 
         refreshData();
 
-        CustomArrayAdapter arrayAdapter = new CustomArrayAdapter(getActivity(), chains);
+        CustomArrayAdapter arrayAdapter = new CustomArrayAdapter(getActivity(), chains, mListener);
         arrayAdapter.notifyDataSetChanged();
         setListAdapter(arrayAdapter);
-    }
-
-    @Override
-    public void onListItemClick(ListView l, View v, int position, long id) {
-        Log.e("DETAILCLICK", "Item Clicked: " + id);
-        Log.e("DETAILCLICK", "Clicked: " + chains.get(position).getTitle());
-
-        if (null != mListener) {
-            // Notify the active callbacks interface (the activity, if the
-            // fragment is attached to one) that an item has been selected.
-            mListener.onFragmentInteraction(chains.get(position));
-        }
     }
 
 

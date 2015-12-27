@@ -39,7 +39,7 @@ public class ChainCreateFragment extends Fragment {
         AppCompatActivity activity = (AppCompatActivity) getActivity();
         assert activity.getSupportActionBar() != null;
         activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        activity.getSupportActionBar().setTitle("Create New Task");
+        activity.getSupportActionBar().setTitle("Create New Chain");
     }
 
     @Override

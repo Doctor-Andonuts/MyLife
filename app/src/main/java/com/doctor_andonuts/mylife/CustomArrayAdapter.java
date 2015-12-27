@@ -1,5 +1,6 @@
 package com.doctor_andonuts.mylife;
 
+import android.app.Activity;
 import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -20,6 +21,7 @@ import java.util.List;
 public class CustomArrayAdapter extends ArrayAdapter<Chain> {
     private final Context context;
     private final List<Chain> chains;
+    private final ChainListFragment.OnFragmentInteractionListener mListener;
 
     @Override
     public void notifyDataSetChanged() {
@@ -34,10 +36,12 @@ public class CustomArrayAdapter extends ArrayAdapter<Chain> {
         super.notifyDataSetChanged();
     }
 
-    public CustomArrayAdapter(Context context, List<Chain> chains) {
+    public CustomArrayAdapter(Context context, List<Chain> chains, ChainListFragment.OnFragmentInteractionListener mListener) {
         super(context, -1, chains);
         this.context = context;
         this.chains = chains;
+        this.mListener = mListener;
+
     }
 
     @Override
@@ -53,10 +57,12 @@ public class CustomArrayAdapter extends ArrayAdapter<Chain> {
         descriptionTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO: What happens when you click a title, probably go to a detailed view
-                // TODO: This should be duplicated to the onceover text as well
+                Chain chain = chains.get(position);
+                mListener.onFragmentInteraction(chain);
             }
         });
+
+
 
         SimpleDateFormat myDateFormat = new SimpleDateFormat("yyyy-MM-dd");
         final Calendar today = Calendar.getInstance();
