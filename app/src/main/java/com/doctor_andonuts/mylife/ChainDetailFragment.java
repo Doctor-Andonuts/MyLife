@@ -22,6 +22,21 @@ public class ChainDetailFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        /*
+
+
+            Title - Could change
+
+            StartDate - should be okay
+            EndDate - should be okay
+
+            Type - nope but display
+            MinDays - messes up historical
+            MaxDays - messes up historical
+            PerWeekValue - messes up historical
+        */
+
+
         DrawerLayout drawer = (DrawerLayout) getActivity().findViewById(R.id.drawer_layout);
         drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
 
@@ -36,8 +51,11 @@ public class ChainDetailFragment extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        TextView test = (TextView) getActivity().findViewById(R.id.test);
-        test.setText(chain.getTitle());
+        TextView chainTitleTextView = (TextView) getActivity().findViewById(R.id.chainTitle);
+        chainTitleTextView.setText(chain.getTitle());
+
+        TextView chainJsonTextView = (TextView) getActivity().findViewById(R.id.chainJson);
+        chainJsonTextView.setText(chain.getJsonString());
     }
 
     @Override
