@@ -91,6 +91,7 @@ public class ChainCreateFragment extends Fragment {
 
                     EditText perWeekValue = new EditText(getActivity());
                     perWeekValue.setHint("Per Week Value");
+                    perWeekValue.setInputType(InputType.TYPE_CLASS_NUMBER);
                     perWeekValue.setId(R.id.perWeekValue);
                     spinnerContent.addView(perWeekValue);
                 } else {
