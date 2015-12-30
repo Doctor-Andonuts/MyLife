@@ -217,60 +217,90 @@ public class MainActivity extends AppCompatActivity
 
     public void addChain(View view) {
         // TODO: Validate that I have all the data I need
-        JSONObject jsonChain = new JSONObject();
+        Boolean submitIsAllowed = true;
+        EditText title = (EditText) findViewById(R.id.editTitle);
+        EditText startDate = (EditText) findViewById(R.id.startDate);
+        EditText endDate = (EditText) findViewById(R.id.endDate);
+        Spinner type = (Spinner) findViewById(R.id.typeSpinner);
 
-        String uuid = UUID.randomUUID().toString();
-        try {
-            jsonChain.put("UUID", uuid);
-            EditText title = (EditText) findViewById(R.id.editTitle);
-            jsonChain.put("Title", title.getText());
-            EditText startDate = (EditText) findViewById(R.id.startDate);
-            jsonChain.put("StartDate", startDate.getText());
-            EditText endDate = (EditText) findViewById(R.id.endDate);
-            if(endDate.getText().toString().equals("")) {
-                jsonChain.put("EndDate", JSONObject.NULL);
-            } else {
-                jsonChain.put("EndDate", endDate.getText());
+        if(title.getText().toString().trim().equals("")) {
+            title.setError("Title is required.");
+            submitIsAllowed = false;
+        }
+        if(startDate.getText().toString().trim().equals("")) {
+            startDate.setError("Start Date is required");
+            submitIsAllowed = false;
+        }
+        if (type.getSelectedItem().equals("MinMax")) {
+            EditText minDays = (EditText) findViewById(R.id.minDays);
+            EditText maxDays = (EditText) findViewById(R.id.maxDays);
+            if(maxDays.getText().toString().trim().equals("")) {
+                maxDays.setError("Max Days is required");
+                submitIsAllowed = false;
             }
-            Spinner type = (Spinner) findViewById(R.id.typeSpinner);
-            jsonChain.put("Type", type.getSelectedItem());
-            if (type.getSelectedItem().equals("MinMax")) {
-                EditText minDays = (EditText) findViewById(R.id.minDays);
-                jsonChain.put("MinDays", minDays.getText());
-                EditText maxDays = (EditText) findViewById(R.id.maxDays);
-                jsonChain.put("MaxDays", maxDays.getText());
-                jsonChain.put("PerWeekValue", JSONObject.NULL);
-            } else {
-                jsonChain.put("MinDays", JSONObject.NULL);
-                jsonChain.put("MaxDays", JSONObject.NULL);
-                EditText perWeekValue = (EditText) findViewById(R.id.perWeekValue);
-                jsonChain.put("PerWeekValue", perWeekValue.getText());
+            if(minDays.getText().toString().trim().equals("")) {
+                minDays.setError("Min Days is required");
+                submitIsAllowed = false;
             }
-
-            jsonChain.put("Dates", new JSONObject());
-        } catch (Exception e) {
-            Log.d("MakingChains", "");
+        } else {
+            EditText perWeekValue = (EditText) findViewById(R.id.perWeekValue);
+            if(perWeekValue.getText().toString().trim().equals("")) {
+                perWeekValue.setError("Per Week Value is required");
+                submitIsAllowed = false;
+            }
         }
 
-        Log.d("jsonChain", jsonChain.toString());
+        if(submitIsAllowed) {
 
-        Chain chain = new Chain(jsonChain);
-        ChainManager chainManager = new ChainManager(this);
-        chainManager.addOrUpdateChain(chain);
+            JSONObject jsonChain = new JSONObject();
+            String uuid = UUID.randomUUID().toString();
+            try {
+                jsonChain.put("UUID", uuid);
+                jsonChain.put("Title", title.getText());
+                jsonChain.put("StartDate", startDate.getText());
+                if (endDate.getText().toString().equals("")) {
+                    jsonChain.put("EndDate", JSONObject.NULL);
+                } else {
+                    jsonChain.put("EndDate", endDate.getText());
+                }
+                jsonChain.put("Type", type.getSelectedItem());
+                if (type.getSelectedItem().equals("MinMax")) {
+                    EditText minDays = (EditText) findViewById(R.id.minDays);
+                    EditText maxDays = (EditText) findViewById(R.id.maxDays);
+                    jsonChain.put("MinDays", minDays.getText());
+                    jsonChain.put("MaxDays", maxDays.getText());
+                    jsonChain.put("PerWeekValue", JSONObject.NULL);
+                } else {
+                    jsonChain.put("MinDays", JSONObject.NULL);
+                    jsonChain.put("MaxDays", JSONObject.NULL);
+                    EditText perWeekValue = (EditText) findViewById(R.id.perWeekValue);
+                    jsonChain.put("PerWeekValue", perWeekValue.getText());
+                }
 
-        for(Chain chainLoop : chainManager.getChains()) {
-            Log.d("ChainList", chainLoop.getJsonString());
-        }
+                jsonChain.put("Dates", new JSONObject());
+            } catch (Exception e) {
+                Log.d("MakingChains", "");
+            }
+
+            Log.d("jsonChain", jsonChain.toString());
+
+            Chain chain = new Chain(jsonChain);
+            ChainManager chainManager = new ChainManager(this);
+            chainManager.addOrUpdateChain(chain);
+
+            for (Chain chainLoop : chainManager.getChains()) {
+                Log.d("ChainList", chainLoop.getJsonString());
+            }
 
 
-        ChainListFragment chainListFragment = (ChainListFragment) getFragmentManager().findFragmentByTag("ChainListFragment");
-        ChainCreateFragment chainCreateFragment = (ChainCreateFragment) getFragmentManager().findFragmentByTag("ChainCreateFragment");
+            ChainListFragment chainListFragment = (ChainListFragment) getFragmentManager().findFragmentByTag("ChainListFragment");
+            ChainCreateFragment chainCreateFragment = (ChainCreateFragment) getFragmentManager().findFragmentByTag("ChainCreateFragment");
 //        getFragmentManager().beginTransaction()
 //                .remove(chainCreateFragment)
 //                .add(R.id.content_area, chainListFragment, "ChainListFragment")
 //                .commit();
-        fromCreateToListFragment(chainListFragment, chainCreateFragment);
-
+            fromCreateToListFragment(chainListFragment, chainCreateFragment);
+        }
     }
 
 //    public void onFragmentInteraction(String id) {
