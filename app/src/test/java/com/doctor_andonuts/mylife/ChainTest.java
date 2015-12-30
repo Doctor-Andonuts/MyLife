@@ -20,18 +20,6 @@ public class ChainTest extends TestCase {
         testJsonTwo = new JSONObject("{\"Title\": \"Exercise\",\"StartDate\": \"2015-10-01\",\"EndDate\": \"2015-11-01\",\"Type\": \"PerWeek\",\"MinDays\": null,\"MaxDays\": null,\"PerWeekValue\": \"3\",\"Dates\": {\"2015-10-01\": \"D\",\"2015-10-02\": \"D\",\"2015-10-05\": \"S\",\"2015-10-10\": \"D\"}}");
     }
 
-    // TODO: test the constructor has certain values
-    // Title is string
-    // StartDate is date
-    // EndDate is null or a date
-    // Type is either PerWeek or MinMax
-    // MinDays is int if MinMax, null if PerWeek
-    // MaxDays is int or null if MinMax, null if PerWeek
-    // PerWeekDays is int if PerWeed, null if MinMax
-    // Dates keys are all dates
-    // Dates values are string exactly D, S, V, O
-    // TODO: I am not sure
-
     public void testConstructor() throws Exception {
 
     }
@@ -121,15 +109,6 @@ public class ChainTest extends TestCase {
         chain.setEndDate(null);
         assertEquals(null, chain.getEndDate());
     }
-//    public void testSetStartDate_OutOfScope_PLACEHOLDER() throws Exception {
-        // TODO: Test that start date is before any data you have
-//        assertFalse(true);
-//    }
-//    public void testSetEndDate_OutOfScope_PLACEHOLDER() throws Exception {
-        // TODO: Test that end date is after any data you have
-//        assertFalse(true);
-//    }
-
 
     public void testSetMinDays() throws Exception {
         Chain chain = new Chain(testJsonOne);
