@@ -12,9 +12,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ChainListFragment extends ListFragment {
-
-    // TODO: Start working in ideas I have about PerWeek and MinMax display.  Adjust the XML display and CustomAdapter to display those things
-
     private List<Chain> chains = new ArrayList<>();
     private OnFragmentInteractionListener mListener;
 

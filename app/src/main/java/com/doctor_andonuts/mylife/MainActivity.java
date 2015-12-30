@@ -216,7 +216,6 @@ public class MainActivity extends AppCompatActivity
 
 
     public void addChain(View view) {
-        // TODO: Validate that I have all the data I need
         Boolean submitIsAllowed = true;
         EditText title = (EditText) findViewById(R.id.editTitle);
         EditText startDate = (EditText) findViewById(R.id.startDate);
@@ -340,9 +339,6 @@ public class MainActivity extends AppCompatActivity
 
         ChainDetailFragment chainDetailFragment = new ChainDetailFragment();
         chainDetailFragment.setChain(chain);
-        // TODO: This is my problem spot.  I don't have the chain here so I can't pass it in.
-        // TODO: I thought I could use onFragmentInteractions, but that happens in the ListFragment for a whole item being clicked on, not just the text like I have it
-        // TODO: And I don't think I can call MainActivity functions from customArrayAdapter
         ChainListFragment chainListFragment = (ChainListFragment) getFragmentManager().findFragmentByTag("ChainListFragment");
         getFragmentManager().beginTransaction()
                 .remove(chainListFragment)
