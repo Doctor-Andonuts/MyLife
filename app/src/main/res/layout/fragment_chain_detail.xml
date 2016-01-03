@@ -20,11 +20,21 @@
         android:layout_below="@+id/chainTitle"
         android:background="#999999" />
 
+    <CalendarView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/calendarView"
+        android:layout_below="@+id/chainDivider" />
+
     <TextView
         android:layout_width="match_parent"
         android:id="@+id/chainJson"
         android:paddingTop="10dp"
-        android:layout_below="@+id/chainDivider"
+        android:layout_below="@+id/calendarView"
         android:layout_height="match_parent"/>
+
+
+
+
 
 </RelativeLayout>

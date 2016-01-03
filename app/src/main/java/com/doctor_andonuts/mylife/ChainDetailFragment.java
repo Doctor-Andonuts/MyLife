@@ -8,10 +8,15 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CalendarView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import java.util.Calendar;
 
 
 public class ChainDetailFragment extends Fragment {
+    private CalendarView calendarView;
     private Chain chain;
 
     public ChainDetailFragment() {
@@ -23,8 +28,6 @@ public class ChainDetailFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         /*
-
-
             Title - Could change
 
             StartDate - should be okay
@@ -35,7 +38,6 @@ public class ChainDetailFragment extends Fragment {
             MaxDays - messes up historical
             PerWeekValue - messes up historical
         */
-
 
         DrawerLayout drawer = (DrawerLayout) getActivity().findViewById(R.id.drawer_layout);
         drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
@@ -50,6 +52,20 @@ public class ChainDetailFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        calendarView = (CalendarView) getActivity().findViewById(R.id.calendarView);
+        calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
+
+            @Override
+            public void onSelectedDayChange(CalendarView view, int year, int month,
+                                            int dayOfMonth) {
+                // TODO Auto-generated method stub
+
+                Toast.makeText(getActivity(), "Selected Date is\n\n"
+                                + dayOfMonth + " : " + month + " : " + year,
+                        Toast.LENGTH_LONG).show();
+            }
+        });
 
         TextView chainTitleTextView = (TextView) getActivity().findViewById(R.id.chainTitle);
         chainTitleTextView.setText(chain.getTitle());
