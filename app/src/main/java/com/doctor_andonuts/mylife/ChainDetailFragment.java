@@ -54,13 +54,12 @@ public class ChainDetailFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         calendarView = (CalendarView) getActivity().findViewById(R.id.calendarView);
+        // TODO: See if I can color the days based on paramters
         calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
-
             @Override
             public void onSelectedDayChange(CalendarView view, int year, int month,
                                             int dayOfMonth) {
-                // TODO Auto-generated method stub
-
+                // TODO: This should toggle a day as done
                 Toast.makeText(getActivity(), "Selected Date is\n\n"
                                 + dayOfMonth + " : " + month + " : " + year,
                         Toast.LENGTH_LONG).show();
