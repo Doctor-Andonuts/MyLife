@@ -25,6 +25,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/calendarGroup"
         android:orientation="vertical"
+        android:layout_marginTop="5dp"
         android:layout_below="@+id/chainDivider" />
 
     <TextView
