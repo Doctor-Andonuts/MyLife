@@ -1,5 +1,12 @@
 package com.doctor_andonuts.mylife;
 
+import android.graphics.Color;
+import android.graphics.ColorMatrix;
+import android.graphics.ColorMatrixColorFilter;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffColorFilter;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.ShapeDrawable;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
@@ -88,21 +95,25 @@ public class ChainDetailFragment extends Fragment {
                 SimpleDateFormat chainDateFormat = new SimpleDateFormat("yyyy-MM-dd");
                 String chainDateTest = chainDateFormat.format(calendar.getTime());
 
-
-                if(chain.getDayStatus(chainDateTest).equals("Done")) {
-                    buttons[d].setBackgroundColor(0xFF43a047);
-                } else if(chain.getDayStatus(chainDateTest).equals("Should do")) {
-                    buttons[d].setBackgroundColor(0xFFfdd835);
-                } else if(chain.getDayStatus(chainDateTest).equals("No need")) {
-                    buttons[d].setBackgroundColor(0xFF1b5e20);
-                } else if(targetMonthOfYear == currentMonthOfYear && targetDayInMonth > currentDayInMonth) {
-                    buttons[d].setBackgroundColor(0xFF666666);
-                } else if(chain.getDayStatus(chainDateTest).equals("DO IT!")) {
-                    buttons[d].setBackgroundColor(0xFFc62828);
-                } else {
-                    buttons[d].setBackgroundColor(0xFFFFFFFF);
+                Drawable dayDrawable = getActivity().getDrawable(R.drawable.test_shape);
+                if(targetMonthOfYear == currentMonthOfYear && targetDayInMonth == currentDayInMonth) {
+                    dayDrawable.setColorFilter(0xff43a047, PorterDuff.Mode.MULTIPLY);
                 }
+                buttons[d].setBackground(dayDrawable);
 
+//                if(chain.getDayStatus(chainDateTest).equals("Done")) {
+//                    buttons[d].setBackgroundColor(0xFF43a047);
+//                } else if(chain.getDayStatus(chainDateTest).equals("Should do")) {
+//                    buttons[d].setBackgroundColor(0xFFfdd835);
+//                } else if(chain.getDayStatus(chainDateTest).equals("No need")) {
+//                    buttons[d].setBackgroundColor(0xFF1b5e20);
+//                } else if(targetMonthOfYear == currentMonthOfYear && targetDayInMonth > currentDayInMonth) {
+//                    buttons[d].setBackgroundColor(0xFF666666);
+//                } else if(chain.getDayStatus(chainDateTest).equals("DO IT!")) {
+//                    buttons[d].setBackgroundColor(0xFFc62828);
+//                } else {
+//                    buttons[d].setBackgroundColor(0xFFFFFFFF);
+//                }
 
                 buttons[d].setText(String.valueOf(targetDayInMonth));
                 calendar.add(Calendar.DATE, 1);
