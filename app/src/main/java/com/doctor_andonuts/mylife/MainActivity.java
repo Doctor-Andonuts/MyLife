@@ -38,8 +38,8 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-//        String chainOne = "{\"UUID\": \"0e36a204-9c40-465f-8dde-3b3ed0513acd\",\"Title\": \"Exercise\",\"StartDate\": \"2015-10-01\",\"EndDate\": \"2016-11-01\",\"Type\": \"MinMax\",\"MinDays\": 2,\"MaxDays\": \"4\",\"PerWeekValue\": null,\"Dates\": {\"2015-10-01\": \"D\",\"2015-10-02\": \"D\",\"2015-10-05\": \"S\",\"2015-10-10\": \"D\"}}";
-//        String chainTwo = "{\"UUID\": \"23be9f99-4a24-45db-b892-650ba1772ed2\",\"Title\": \"Handstands\",\"StartDate\": \"2015-11-10\",\"EndDate\": null,\"Type\": \"PerWeek\",\"MinDays\": null,\"MaxDays\": null,\"PerWeekValue\": \"4\",\"Dates\": {\"2015-10-01\": \"D\",\"2015-10-02\": \"D\",\"2015-10-05\": \"S\",\"2015-10-10\": \"D\"}}";
+        String chainOne = "{\"UUID\": \"0e36a204-9c40-465f-8dde-3b3ed0513acd\",\"Title\": \"Exercise\",\"StartDate\": \"2015-10-01\",\"EndDate\": \"2016-11-01\",\"Type\": \"MinMax\",\"MinDays\": 2,\"MaxDays\": \"4\",\"PerWeekValue\": null,\"Dates\": {\"2015-12-13\": \"D\",\"2015-12-14\": \"D\",\"2015-12-18\": \"S\",\"2015-12-21\": \"D\"}}";
+        String chainTwo = "{\"UUID\": \"23be9f99-4a24-45db-b892-650ba1772ed2\",\"Title\": \"Handstands\",\"StartDate\": \"2015-11-10\",\"EndDate\": null,\"Type\": \"PerWeek\",\"MinDays\": null,\"MaxDays\": null,\"PerWeekValue\": \"4\",\"Dates\": {\"2015-10-01\": \"D\",\"2015-10-02\": \"D\",\"2015-10-05\": \"S\",\"2015-10-10\": \"D\"}}";
         String fileName = "chain.data";
 
         /*
@@ -55,15 +55,15 @@ public class MainActivity extends AppCompatActivity
          */
 
         // TRY TO WRITE TEST DATA TO FILE
-//        try {
-//            FileOutputStream fileOutputStream = openFileOutput(fileName, Context.MODE_PRIVATE);
-//            String writeString = chainOne + "\n" + chainTwo;
-//            fileOutputStream.write(writeString.getBytes());
-//            fileOutputStream.close();
-//            Log.d("TestChainData", "Done Writing data to " + fileName);
-//        } catch (Exception e) {
-//            Log.d("TestChainData", "Problem writing data to : " + fileName + e.toString());
-//        }
+        try {
+            FileOutputStream fileOutputStream = openFileOutput(fileName, Context.MODE_PRIVATE);
+            String writeString = chainOne + "\n" + chainTwo;
+            fileOutputStream.write(writeString.getBytes());
+            fileOutputStream.close();
+            Log.d("TestChainData", "Done Writing data to " + fileName);
+        } catch (Exception e) {
+            Log.d("TestChainData", "Problem writing data to : " + fileName + e.toString());
+        }
 
         // TRY TO READ TEST DATA TO CONFIRM IT IS THERE
 //        try {

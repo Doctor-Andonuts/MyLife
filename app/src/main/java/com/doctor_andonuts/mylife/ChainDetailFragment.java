@@ -62,6 +62,11 @@ public class ChainDetailFragment extends Fragment {
         Calendar calendar = Calendar.getInstance();
         SimpleDateFormat dayInWeekFormat = new SimpleDateFormat("F", Locale.US);
         Integer dayInWeek = Integer.parseInt(dayInWeekFormat.format(calendar.getTime()));
+        SimpleDateFormat currentMonthOfYearFormat = new SimpleDateFormat("M", Locale.US);
+        Integer currentMonthOfYear = Integer.parseInt(currentMonthOfYearFormat.format(calendar.getTime()));
+        SimpleDateFormat currentDayInMonthFormat = new SimpleDateFormat("d", Locale.US);
+        Integer currentDayInMonth = Integer.parseInt(currentDayInMonthFormat.format(calendar.getTime()));
+
 
         Integer daysAfterStart = dayInWeek - 1;
         Integer daysToGoBack = 21 + daysAfterStart;
@@ -75,14 +80,38 @@ public class ChainDetailFragment extends Fragment {
             for (int d = 0; d < 7; d++) {
                 buttons[d] = new Button(getActivity());
 
-                SimpleDateFormat dayInMonthFormat = new SimpleDateFormat("d", Locale.US);
-                Integer dayInMonth = Integer.parseInt(dayInMonthFormat.format(calendar.getTime()));
-                buttons[d].setText(String.valueOf(dayInMonth));
+                SimpleDateFormat targetDayInMonthFormat = new SimpleDateFormat("d", Locale.US);
+                SimpleDateFormat targetMonthOfYearFormat = new SimpleDateFormat("M", Locale.US);
+                Integer targetDayInMonth = Integer.parseInt(targetDayInMonthFormat.format(calendar.getTime()));
+                Integer targetMonthOfYear = Integer.parseInt(targetMonthOfYearFormat.format(calendar.getTime()));
 
+                SimpleDateFormat chainDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                String chainDateTest = chainDateFormat.format(calendar.getTime());
+
+
+                if(chain.getDayStatus(chainDateTest).equals("Done")) {
+                    buttons[d].setBackgroundColor(0xFF43a047);
+                } else if(chain.getDayStatus(chainDateTest).equals("Should do")) {
+                    buttons[d].setBackgroundColor(0xFFfdd835);
+                } else if(chain.getDayStatus(chainDateTest).equals("No need")) {
+                    buttons[d].setBackgroundColor(0xFF1b5e20);
+                } else if(targetMonthOfYear == currentMonthOfYear && targetDayInMonth > currentDayInMonth) {
+                    buttons[d].setBackgroundColor(0xFF666666);
+                } else if(chain.getDayStatus(chainDateTest).equals("DO IT!")) {
+                    buttons[d].setBackgroundColor(0xFFc62828);
+                } else {
+                    buttons[d].setBackgroundColor(0xFFFFFFFF);
+                }
+
+
+                buttons[d].setText(String.valueOf(targetDayInMonth));
                 calendar.add(Calendar.DATE, 1);
 
                 weekGroup[w].addView(buttons[d]);
                 LinearLayout.LayoutParams p = new LinearLayout.LayoutParams(0, RelativeLayout.LayoutParams.WRAP_CONTENT, 1.0f);
+                float scale = getResources().getDisplayMetrics().density;
+                int dpAsPixels = (int) (5*scale + 0.5f); // sizeInDP * scale / 0.5f
+                p.setMargins(dpAsPixels, dpAsPixels, dpAsPixels, dpAsPixels);
                 buttons[d].setLayoutParams(p);
             }
         }
