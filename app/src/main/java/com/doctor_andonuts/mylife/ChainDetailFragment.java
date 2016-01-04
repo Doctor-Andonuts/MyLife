@@ -4,19 +4,22 @@ import android.os.Bundle;
 import android.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CalendarView;
+import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Locale;
 
 
 public class ChainDetailFragment extends Fragment {
-    private CalendarView calendarView;
     private Chain chain;
 
     public ChainDetailFragment() {
@@ -53,18 +56,36 @@ public class ChainDetailFragment extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        calendarView = (CalendarView) getActivity().findViewById(R.id.calendarView);
-        // TODO: See if I can color the days based on paramters
-        calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
-            @Override
-            public void onSelectedDayChange(CalendarView view, int year, int month,
-                                            int dayOfMonth) {
-                // TODO: This should toggle a day as done
-                Toast.makeText(getActivity(), "Selected Date is\n\n"
-                                + dayOfMonth + " : " + month + " : " + year,
-                        Toast.LENGTH_LONG).show();
+        LinearLayout calendarGroup = (LinearLayout) getActivity().findViewById(R.id.calendarGroup);
+        LinearLayout weekGroup[] = new LinearLayout[4];
+
+        Calendar calendar = Calendar.getInstance();
+        SimpleDateFormat dayInWeekFormat = new SimpleDateFormat("F", Locale.US);
+        Integer dayInWeek = Integer.parseInt(dayInWeekFormat.format(calendar.getTime()));
+
+        Integer daysAfterStart = dayInWeek - 1;
+        Integer daysToGoBack = 21 + daysAfterStart;
+        calendar.add(Calendar.DATE, -daysToGoBack);
+
+        for (int w = 0; w < 4; w++) {
+            weekGroup[w] = new LinearLayout(getActivity());
+            calendarGroup.addView(weekGroup[w]);
+
+            Button buttons[] = new Button[7];
+            for (int d = 0; d < 7; d++) {
+                buttons[d] = new Button(getActivity());
+
+                SimpleDateFormat dayInMonthFormat = new SimpleDateFormat("d", Locale.US);
+                Integer dayInMonth = Integer.parseInt(dayInMonthFormat.format(calendar.getTime()));
+                buttons[d].setText(String.valueOf(dayInMonth));
+
+                calendar.add(Calendar.DATE, 1);
+
+                weekGroup[w].addView(buttons[d]);
+                LinearLayout.LayoutParams p = new LinearLayout.LayoutParams(0, RelativeLayout.LayoutParams.WRAP_CONTENT, 1.0f);
+                buttons[d].setLayoutParams(p);
             }
-        });
+        }
 
         TextView chainTitleTextView = (TextView) getActivity().findViewById(R.id.chainTitle);
         chainTitleTextView.setText(chain.getTitle());
