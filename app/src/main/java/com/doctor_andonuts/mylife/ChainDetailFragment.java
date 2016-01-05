@@ -96,8 +96,38 @@ public class ChainDetailFragment extends Fragment {
         int currentDayInMonth = Integer.parseInt(currentDayInMonthFormat.format(calendar.getTime()));
 
         int dayInWeek = calendar.get(Calendar.DAY_OF_WEEK);
-        int daysToGoBack = 21 + dayInWeek - 1;
+        int daysToGoBack = 21 + dayInWeek - 2;
         calendar.add(Calendar.DATE, -daysToGoBack);
+
+        Button buttonLabels[] = new Button[7];
+        String weekLabel[] = new String[7];
+        weekLabel[0] = "M";
+        weekLabel[1] = "T";
+        weekLabel[2] = "W";
+        weekLabel[3] = "T";
+        weekLabel[4] = "F";
+        weekLabel[5] = "S";
+        weekLabel[6] = "S";
+        for (int d = 0; d < 7; d++) {
+            buttonLabels[d] = new Button(getActivity());
+            LinearLayout calendarLabelGroup = (LinearLayout) getActivity().findViewById(R.id.calendarLabelGroup);
+
+            GradientDrawable dayDrawable = new GradientDrawable();
+            dayDrawable.setShape(GradientDrawable.RECTANGLE);
+            dayDrawable.setCornerRadius(7);
+            buttonLabels[d].setBackground(dayDrawable);
+            buttonLabels[d].setText(weekLabel[d]);
+            dayDrawable.setColor(0xFFFFFFFF);
+            buttonLabels[d].setPadding(0,0,0,0);
+
+            LinearLayout.LayoutParams p = new LinearLayout.LayoutParams(0, 150, 1.0f);
+            float scale = getResources().getDisplayMetrics().density;
+            int dpAsPixels = (int) (5*scale + 0.5f); // sizeInDP * scale / 0.5f
+            p.setMargins(dpAsPixels, dpAsPixels, dpAsPixels, dpAsPixels);
+            buttonLabels[d].setLayoutParams(p);
+
+            calendarLabelGroup.addView(buttonLabels[d]);
+        }
 
         for (int w = 0; w < 4; w++) {
             weekGroup[w] = new LinearLayout(getActivity());

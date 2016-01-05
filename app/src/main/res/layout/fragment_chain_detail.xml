@@ -23,10 +23,17 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:id="@+id/calendarLabelGroup"
+        android:orientation="horizontal"
+        android:layout_marginTop="5dp"
+        android:layout_below="@+id/chainDivider" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:id="@+id/calendarGroup"
         android:orientation="vertical"
         android:layout_marginTop="5dp"
-        android:layout_below="@+id/chainDivider" />
+        android:layout_below="@+id/calendarLabelGroup" />
 
     <TextView
         android:layout_width="match_parent"
