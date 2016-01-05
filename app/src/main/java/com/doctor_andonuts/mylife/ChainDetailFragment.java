@@ -101,8 +101,7 @@ public class ChainDetailFragment extends Fragment {
         int currentDayInMonth = Integer.parseInt(currentDayInMonthFormat.format(calendar.getTime()));
 
         int dayInWeek = calendar.get(Calendar.DAY_OF_WEEK);
-        int daysAfterStart = dayInWeek - 1;
-        int daysToGoBack = 21 + daysAfterStart;
+        int daysToGoBack = 21 + dayInWeek - 1;
         calendar.add(Calendar.DATE, -daysToGoBack);
 
         for (int w = 0; w < 4; w++) {
@@ -130,19 +129,20 @@ public class ChainDetailFragment extends Fragment {
                 }
 
 
-//                if(chain.getDayStatus(chainDateTest).equals("Done")) {
-//                    buttons[d].setBackgroundColor(0xFF43a047);
-//                } else if(chain.getDayStatus(chainDateTest).equals("Should do")) {
-//                    buttons[d].setBackgroundColor(0xFFfdd835);
-//                } else if(chain.getDayStatus(chainDateTest).equals("No need")) {
-//                    buttons[d].setBackgroundColor(0xFF1b5e20);
-//                } else if(targetMonthOfYear == currentMonthOfYear && targetDayInMonth > currentDayInMonth) {
-//                    buttons[d].setBackgroundColor(0xFF666666);
-//                } else if(chain.getDayStatus(chainDateTest).equals("DO IT!")) {
-//                    buttons[d].setBackgroundColor(0xFFc62828);
-//                } else {
-//                    buttons[d].setBackgroundColor(0xFFFFFFFF);
-//                }
+                if(chain.getDayStatus(chainDateTest).equals("Done")) {
+                    dayDrawable.setColor(0xFF43a047);
+                } else if(chain.getDayStatus(chainDateTest).equals("Should do")) {
+                    dayDrawable.setColor(0xFFfdd835);
+                } else if(chain.getDayStatus(chainDateTest).equals("No need")) {
+                    dayDrawable.setColor(0xFF1b5e20);
+                } else if(targetMonthOfYear == currentMonthOfYear && targetDayInMonth > currentDayInMonth) {
+                    dayDrawable.setColor(0xFF666666);
+                } else if(chain.getDayStatus(chainDateTest).equals("DO IT!")) {
+                    dayDrawable.setColor(0xFFc62828);
+                } else {
+                    dayDrawable.setColor(0xFFFFFFFF);
+                }
+
 
                 buttons[d].setBackground(dayDrawable);
                 buttons[d].setText(String.valueOf(targetDayInMonth));
