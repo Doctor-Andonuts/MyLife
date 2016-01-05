@@ -117,6 +117,8 @@ public class ChainDetailFragment extends Fragment {
 
                 GradientDrawable dayDrawable = new GradientDrawable();
                 dayDrawable.setShape(GradientDrawable.RECTANGLE);
+                dayDrawable.setCornerRadius(7);
+
                 if(targetMonthOfYear == currentMonthOfYear && targetDayInMonth == currentDayInMonth) {
                     dayDrawable.setStroke(5, Color.BLACK);
                 } else {
