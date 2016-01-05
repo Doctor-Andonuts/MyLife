@@ -99,6 +99,12 @@ public class ChainDetailFragment extends Fragment {
         int daysToGoBack = 21 + dayInWeek - 2;
         calendar.add(Calendar.DATE, -daysToGoBack);
 
+        SimpleDateFormat myDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Calendar startDate = Calendar.getInstance();
+        try {
+            startDate.setTime(myDateFormat.parse(chain.getStartDate()));
+        } catch (Exception e) {}
+
         Button buttonLabels[] = new Button[7];
         String weekLabel[] = new String[7];
         weekLabel[0] = "M";
@@ -108,10 +114,10 @@ public class ChainDetailFragment extends Fragment {
         weekLabel[4] = "F";
         weekLabel[5] = "S";
         weekLabel[6] = "S";
+        LinearLayout calendarLabelGroup = (LinearLayout) getActivity().findViewById(R.id.calendarLabelGroup);
+        calendarLabelGroup.removeAllViews();
         for (int d = 0; d < 7; d++) {
             buttonLabels[d] = new Button(getActivity());
-            LinearLayout calendarLabelGroup = (LinearLayout) getActivity().findViewById(R.id.calendarLabelGroup);
-            calendarLabelGroup.removeAllViews();
 
             GradientDrawable dayDrawable = new GradientDrawable();
             dayDrawable.setShape(GradientDrawable.RECTANGLE);
@@ -121,7 +127,8 @@ public class ChainDetailFragment extends Fragment {
             dayDrawable.setColor(0xFFFFFFFF);
             buttonLabels[d].setPadding(0,0,0,0);
 
-            LinearLayout.LayoutParams p = new LinearLayout.LayoutParams(0, 150, 1.0f);
+
+            LinearLayout.LayoutParams p = new LinearLayout.LayoutParams(0, 50, 1.0f);
             float scale = getResources().getDisplayMetrics().density;
             int dpAsPixels = (int) (5*scale + 0.5f); // sizeInDP * scale / 0.5f
             p.setMargins(dpAsPixels, dpAsPixels, dpAsPixels, dpAsPixels);
@@ -156,15 +163,16 @@ public class ChainDetailFragment extends Fragment {
                     dayDrawable.setStroke(1, Color.BLACK);
                 }
 
-                if(targetMonthOfYear == currentMonthOfYear && targetDayInMonth > currentDayInMonth) {
-                    buttons[d].setOnClickListener(null);
-                } else {
-                    buttons[d].setOnClickListener(new DetailDoneButtonOnClickListener(chainDateFormat.format(calendar.getTime())));
-                }
+                buttons[d].setOnClickListener(new DetailDoneButtonOnClickListener(chainDateFormat.format(calendar.getTime())));
                 buttons[d].setBackground(dayDrawable);
                 buttons[d].setText(String.valueOf(targetDayInMonth));
 
-                if(chain.getDayStatus(chainDateTest).equals("Done")) {
+                if(calendar.before(startDate)) {
+                    dayDrawable.setColor(0xFFCCCCCC);
+                    dayDrawable.setStroke(1, Color.WHITE);
+                    buttons[d].setTextColor(0xFFFFFFFF);
+                    buttons[d].setOnClickListener(null);
+                } else if(chain.getDayStatus(chainDateTest).equals("Done")) {
                     dayDrawable.setColor(0xFF43a047);
                 } else if(chain.getDayStatus(chainDateTest).equals("Should do")) {
                     dayDrawable.setColor(0xFFfdd835);
@@ -174,6 +182,7 @@ public class ChainDetailFragment extends Fragment {
                     dayDrawable.setColor(0xFFCCCCCC);
                     dayDrawable.setStroke(1, Color.WHITE);
                     buttons[d].setTextColor(0xFFFFFFFF);
+                    buttons[d].setOnClickListener(null);
                 } else if(chain.getDayStatus(chainDateTest).equals("DO IT!")) {
                     dayDrawable.setColor(0xFFc62828);
                 } else {
