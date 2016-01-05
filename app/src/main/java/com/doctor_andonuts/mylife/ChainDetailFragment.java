@@ -6,6 +6,7 @@ import android.graphics.ColorMatrixColorFilter;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.ShapeDrawable;
 import android.os.Bundle;
 import android.app.Fragment;
@@ -62,76 +63,7 @@ public class ChainDetailFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-        LinearLayout calendarGroup = (LinearLayout) getActivity().findViewById(R.id.calendarGroup);
-        LinearLayout weekGroup[] = new LinearLayout[4];
-
-        Calendar calendar = Calendar.getInstance();
-        SimpleDateFormat dayInWeekFormat = new SimpleDateFormat("F", Locale.US);
-        Integer dayInWeek = Integer.parseInt(dayInWeekFormat.format(calendar.getTime()));
-        SimpleDateFormat currentMonthOfYearFormat = new SimpleDateFormat("M", Locale.US);
-        Integer currentMonthOfYear = Integer.parseInt(currentMonthOfYearFormat.format(calendar.getTime()));
-        SimpleDateFormat currentDayInMonthFormat = new SimpleDateFormat("d", Locale.US);
-        Integer currentDayInMonth = Integer.parseInt(currentDayInMonthFormat.format(calendar.getTime()));
-
-
-        Integer daysAfterStart = dayInWeek - 1;
-        Integer daysToGoBack = 21 + daysAfterStart;
-        calendar.add(Calendar.DATE, -daysToGoBack);
-
-        for (int w = 0; w < 4; w++) {
-            weekGroup[w] = new LinearLayout(getActivity());
-            calendarGroup.addView(weekGroup[w]);
-
-            Button buttons[] = new Button[7];
-            for (int d = 0; d < 7; d++) {
-                buttons[d] = new Button(getActivity());
-
-                SimpleDateFormat targetDayInMonthFormat = new SimpleDateFormat("d", Locale.US);
-                SimpleDateFormat targetMonthOfYearFormat = new SimpleDateFormat("M", Locale.US);
-                Integer targetDayInMonth = Integer.parseInt(targetDayInMonthFormat.format(calendar.getTime()));
-                Integer targetMonthOfYear = Integer.parseInt(targetMonthOfYearFormat.format(calendar.getTime()));
-
-                SimpleDateFormat chainDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-                String chainDateTest = chainDateFormat.format(calendar.getTime());
-
-                Drawable dayDrawable = getActivity().getDrawable(R.drawable.test_shape);
-                if(targetMonthOfYear == currentMonthOfYear && targetDayInMonth == currentDayInMonth) {
-                    dayDrawable.setColorFilter(0xff43a047, PorterDuff.Mode.MULTIPLY);
-                }
-                buttons[d].setBackground(dayDrawable);
-
-//                if(chain.getDayStatus(chainDateTest).equals("Done")) {
-//                    buttons[d].setBackgroundColor(0xFF43a047);
-//                } else if(chain.getDayStatus(chainDateTest).equals("Should do")) {
-//                    buttons[d].setBackgroundColor(0xFFfdd835);
-//                } else if(chain.getDayStatus(chainDateTest).equals("No need")) {
-//                    buttons[d].setBackgroundColor(0xFF1b5e20);
-//                } else if(targetMonthOfYear == currentMonthOfYear && targetDayInMonth > currentDayInMonth) {
-//                    buttons[d].setBackgroundColor(0xFF666666);
-//                } else if(chain.getDayStatus(chainDateTest).equals("DO IT!")) {
-//                    buttons[d].setBackgroundColor(0xFFc62828);
-//                } else {
-//                    buttons[d].setBackgroundColor(0xFFFFFFFF);
-//                }
-
-                buttons[d].setText(String.valueOf(targetDayInMonth));
-                calendar.add(Calendar.DATE, 1);
-
-                weekGroup[w].addView(buttons[d]);
-                LinearLayout.LayoutParams p = new LinearLayout.LayoutParams(0, RelativeLayout.LayoutParams.WRAP_CONTENT, 1.0f);
-                float scale = getResources().getDisplayMetrics().density;
-                int dpAsPixels = (int) (5*scale + 0.5f); // sizeInDP * scale / 0.5f
-                p.setMargins(dpAsPixels, dpAsPixels, dpAsPixels, dpAsPixels);
-                buttons[d].setLayoutParams(p);
-            }
-        }
-
-        TextView chainTitleTextView = (TextView) getActivity().findViewById(R.id.chainTitle);
-        chainTitleTextView.setText(chain.getTitle());
-
-        TextView chainJsonTextView = (TextView) getActivity().findViewById(R.id.chainJson);
-        chainJsonTextView.setText(chain.getJsonString());
+        loadData();
     }
 
     @Override
@@ -158,6 +90,78 @@ public class ChainDetailFragment extends Fragment {
     }
 
 
+    public void loadData() {
+        LinearLayout calendarGroup = (LinearLayout) getActivity().findViewById(R.id.calendarGroup);
+        LinearLayout weekGroup[] = new LinearLayout[4];
 
+        Calendar calendar = Calendar.getInstance();
+        SimpleDateFormat currentMonthOfYearFormat = new SimpleDateFormat("M", Locale.US);
+        int currentMonthOfYear = Integer.parseInt(currentMonthOfYearFormat.format(calendar.getTime()));
+        SimpleDateFormat currentDayInMonthFormat = new SimpleDateFormat("d", Locale.US);
+        int currentDayInMonth = Integer.parseInt(currentDayInMonthFormat.format(calendar.getTime()));
+
+        int dayInWeek = calendar.get(Calendar.DAY_OF_WEEK);
+        int daysAfterStart = dayInWeek - 1;
+        int daysToGoBack = 21 + daysAfterStart;
+        calendar.add(Calendar.DATE, -daysToGoBack);
+
+        for (int w = 0; w < 4; w++) {
+            weekGroup[w] = new LinearLayout(getActivity());
+            calendarGroup.addView(weekGroup[w]);
+
+            Button buttons[] = new Button[7];
+            for (int d = 0; d < 7; d++) {
+                buttons[d] = new Button(getActivity());
+
+                SimpleDateFormat targetDayInMonthFormat = new SimpleDateFormat("d", Locale.US);
+                SimpleDateFormat targetMonthOfYearFormat = new SimpleDateFormat("M", Locale.US);
+                int targetDayInMonth = Integer.parseInt(targetDayInMonthFormat.format(calendar.getTime()));
+                int targetMonthOfYear = Integer.parseInt(targetMonthOfYearFormat.format(calendar.getTime()));
+
+                SimpleDateFormat chainDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                String chainDateTest = chainDateFormat.format(calendar.getTime());
+
+                GradientDrawable dayDrawable = new GradientDrawable();
+                dayDrawable.setShape(GradientDrawable.RECTANGLE);
+                if(targetMonthOfYear == currentMonthOfYear && targetDayInMonth == currentDayInMonth) {
+                    dayDrawable.setStroke(5, Color.BLACK);
+                } else {
+                    dayDrawable.setStroke(1, Color.BLACK);
+                }
+
+
+//                if(chain.getDayStatus(chainDateTest).equals("Done")) {
+//                    buttons[d].setBackgroundColor(0xFF43a047);
+//                } else if(chain.getDayStatus(chainDateTest).equals("Should do")) {
+//                    buttons[d].setBackgroundColor(0xFFfdd835);
+//                } else if(chain.getDayStatus(chainDateTest).equals("No need")) {
+//                    buttons[d].setBackgroundColor(0xFF1b5e20);
+//                } else if(targetMonthOfYear == currentMonthOfYear && targetDayInMonth > currentDayInMonth) {
+//                    buttons[d].setBackgroundColor(0xFF666666);
+//                } else if(chain.getDayStatus(chainDateTest).equals("DO IT!")) {
+//                    buttons[d].setBackgroundColor(0xFFc62828);
+//                } else {
+//                    buttons[d].setBackgroundColor(0xFFFFFFFF);
+//                }
+
+                buttons[d].setBackground(dayDrawable);
+                buttons[d].setText(String.valueOf(targetDayInMonth));
+                calendar.add(Calendar.DATE, 1);
+
+                weekGroup[w].addView(buttons[d]);
+                LinearLayout.LayoutParams p = new LinearLayout.LayoutParams(0, RelativeLayout.LayoutParams.WRAP_CONTENT, 1.0f);
+                float scale = getResources().getDisplayMetrics().density;
+                int dpAsPixels = (int) (5*scale + 0.5f); // sizeInDP * scale / 0.5f
+                p.setMargins(dpAsPixels, dpAsPixels, dpAsPixels, dpAsPixels);
+                buttons[d].setLayoutParams(p);
+            }
+        }
+
+        TextView chainTitleTextView = (TextView) getActivity().findViewById(R.id.chainTitle);
+        chainTitleTextView.setText(chain.getTitle());
+
+        TextView chainJsonTextView = (TextView) getActivity().findViewById(R.id.chainJson);
+        chainJsonTextView.setText(chain.getJsonString());
+    }
 
 }
