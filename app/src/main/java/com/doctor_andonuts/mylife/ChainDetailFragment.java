@@ -111,6 +111,7 @@ public class ChainDetailFragment extends Fragment {
         for (int d = 0; d < 7; d++) {
             buttonLabels[d] = new Button(getActivity());
             LinearLayout calendarLabelGroup = (LinearLayout) getActivity().findViewById(R.id.calendarLabelGroup);
+            calendarLabelGroup.removeAllViews();
 
             GradientDrawable dayDrawable = new GradientDrawable();
             dayDrawable.setShape(GradientDrawable.RECTANGLE);
