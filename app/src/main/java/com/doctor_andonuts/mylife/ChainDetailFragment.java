@@ -120,11 +120,18 @@ public class ChainDetailFragment extends Fragment {
                 dayDrawable.setCornerRadius(7);
 
                 if(targetMonthOfYear == currentMonthOfYear && targetDayInMonth == currentDayInMonth) {
-                    dayDrawable.setStroke(5, Color.BLACK);
+                    dayDrawable.setStroke(10, Color.LTGRAY);
                 } else {
                     dayDrawable.setStroke(1, Color.BLACK);
                 }
 
+                if(targetMonthOfYear == currentMonthOfYear && targetDayInMonth > currentDayInMonth) {
+                    buttons[d].setOnClickListener(null);
+                } else {
+                    buttons[d].setOnClickListener(new DetailDoneButtonOnClickListener(chainDateFormat.format(calendar.getTime())));
+                }
+                buttons[d].setBackground(dayDrawable);
+                buttons[d].setText(String.valueOf(targetDayInMonth));
 
                 if(chain.getDayStatus(chainDateTest).equals("Done")) {
                     dayDrawable.setColor(0xFF43a047);
@@ -133,17 +140,15 @@ public class ChainDetailFragment extends Fragment {
                 } else if(chain.getDayStatus(chainDateTest).equals("No need")) {
                     dayDrawable.setColor(0xFF1b5e20);
                 } else if(targetMonthOfYear == currentMonthOfYear && targetDayInMonth > currentDayInMonth) {
-                    dayDrawable.setColor(0xFF666666);
+                    dayDrawable.setColor(0xFFCCCCCC);
+                    dayDrawable.setStroke(1, Color.WHITE);
+                    buttons[d].setTextColor(0xFFFFFFFF);
                 } else if(chain.getDayStatus(chainDateTest).equals("DO IT!")) {
                     dayDrawable.setColor(0xFFc62828);
                 } else {
                     dayDrawable.setColor(0xFFFFFFFF);
                 }
 
-
-                buttons[d].setOnClickListener(new DetailDoneButtonOnClickListener(chainDateFormat.format(calendar.getTime())));
-                buttons[d].setBackground(dayDrawable);
-                buttons[d].setText(String.valueOf(targetDayInMonth));
                 calendar.add(Calendar.DATE, 1);
 
                 weekGroup[w].addView(buttons[d]);
