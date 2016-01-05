@@ -1,18 +1,11 @@
 package com.doctor_andonuts.mylife;
 
 import android.graphics.Color;
-import android.graphics.ColorMatrix;
-import android.graphics.ColorMatrixColorFilter;
-import android.graphics.PorterDuff;
-import android.graphics.PorterDuffColorFilter;
-import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
-import android.graphics.drawable.ShapeDrawable;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -21,6 +14,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -92,6 +86,7 @@ public class ChainDetailFragment extends Fragment {
 
     public void loadData() {
         LinearLayout calendarGroup = (LinearLayout) getActivity().findViewById(R.id.calendarGroup);
+        calendarGroup.removeAllViews();
         LinearLayout weekGroup[] = new LinearLayout[4];
 
         Calendar calendar = Calendar.getInstance();
@@ -144,6 +139,7 @@ public class ChainDetailFragment extends Fragment {
                 }
 
 
+                buttons[d].setOnClickListener(new DetailDoneButtonOnClickListener(chainDateFormat.format(calendar.getTime())));
                 buttons[d].setBackground(dayDrawable);
                 buttons[d].setText(String.valueOf(targetDayInMonth));
                 calendar.add(Calendar.DATE, 1);
@@ -164,4 +160,25 @@ public class ChainDetailFragment extends Fragment {
         chainJsonTextView.setText(chain.getJsonString());
     }
 
+    public class DetailDoneButtonOnClickListener implements View.OnClickListener
+    {
+
+        String chainDate;
+        public DetailDoneButtonOnClickListener(String chainDate) {
+            this.chainDate = chainDate;
+        }
+
+        @Override
+        public void onClick(View v)
+        {
+            if(chain.getDateValue(chainDate).equals("D"))
+            {
+                chain.setDone(chainDate, "REMOVE");
+            } else {
+                chain.setDone(chainDate, "Done");
+            }
+            loadData();
+        }
+
+    };
 }

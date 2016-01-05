@@ -217,7 +217,11 @@ public class Chain {
 
                 JSONObject datesData = getDatesData();
                 try {
-                    datesData.put(date, doneTypeAbbreviation);
+                    if(doneTypeAbbreviation.equals("")) {
+                        datesData.remove(date);
+                    } else {
+                        datesData.put(date, doneTypeAbbreviation);
+                    }
                 } catch (Exception e) {
                     Log.e(TAG, "setDone");
                 }
@@ -225,15 +229,9 @@ public class Chain {
         }
     }
 
-//    public Integer getCurrentLength() {
-//        // make recursive function for this.
-//        /*
-//        Have it look up to max days for a done mark, if it finds it
-//         */
-//        return null;
-//    }
 
     public String getDayStatus(String dateToCheckString) {
+        // TODO: Don't return things if the date to check if before start or after end date
         if(getType().equals("MinMax")) {
             Integer maxDays = getMaxDays();
             Integer minDays = getMinDays();
