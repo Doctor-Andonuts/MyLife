@@ -73,6 +73,9 @@ public class CustomArrayAdapter extends ArrayAdapter<Chain> {
         onceOverTextView.setText(chain.getOnceOver(todayString));
 
         Button doneButton = (Button) rowView.findViewById(R.id.listButton_Done);
+        doneButton.setText(String.valueOf(chain.getCurrentLength()));
+        doneButton.setTextColor(0xFFFFFFFF);
+
 
         String dayStatus = chain.getDayStatus(todayString);
         if(dayStatus.equals("Done")) {
