@@ -91,6 +91,7 @@ public class Chain {
         return null;
     }
 
+    // Gets JSONObject of all date data
     private JSONObject getDatesData() {
         try {
             return chainJson.getJSONObject("Dates");
@@ -100,6 +101,7 @@ public class Chain {
         return null;
     }
 
+    // Gets the actual value for a date
     public String getDateValue(String dateToCheck) {
         JSONObject datesData = getDatesData();
         try {
@@ -230,6 +232,7 @@ public class Chain {
     }
 
 
+    // Checks to see if I need to do a chain on a particular date
     public String getDayStatus(String dateToCheckString) {
         // TODO: Don't return things if the date to check if before start or after end date
         if(getType().equals("MinMax")) {
@@ -282,7 +285,12 @@ public class Chain {
         return "";
     }
 
+    public int getCurrentLength() {
+        // TODO: This function
+        return 127;
+    }
 
+    // Get string containing a quick once over
     public String getOnceOver(String dateToCheckString) {
         SimpleDateFormat myDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
