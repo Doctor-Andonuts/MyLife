@@ -345,6 +345,7 @@ public class Chain {
 
                 String dayValue = getDateValue(newDateString);
                 if (dayValue.equals("D")) {
+                    daysLeftInWeek--;
                     timesDoneThisWeek++;
                 }
             }
