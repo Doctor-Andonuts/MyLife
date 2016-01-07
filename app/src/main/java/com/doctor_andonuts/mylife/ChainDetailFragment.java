@@ -1,16 +1,19 @@
 package com.doctor_andonuts.mylife;
 
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -18,7 +21,9 @@ import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
+import java.util.TimeZone;
 
 
 public class ChainDetailFragment extends Fragment {
@@ -202,9 +207,46 @@ public class ChainDetailFragment extends Fragment {
 
         TextView chainTitleTextView = (TextView) getActivity().findViewById(R.id.chainTitle);
         chainTitleTextView.setText(chain.getTitle());
+        chainTitleTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                editDescription();
+            }
+        });
 
         TextView chainJsonTextView = (TextView) getActivity().findViewById(R.id.chainJson);
         chainJsonTextView.setText(chain.getJsonString());
+    }
+
+
+    private void editDescription() {
+        // Creating and Building the Dialog
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        final TextView chainTitleTextView = (TextView) getActivity().findViewById(R.id.chainTitle);
+        builder.setTitle("Edit Title");
+        builder.setCancelable(true);
+        final EditText titleInput = new EditText(getActivity());
+        titleInput.setText(chainTitleTextView.getText());
+        builder.setView(titleInput);
+
+        builder.setPositiveButton("Submit", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                chain.setTitle(titleInput.getText().toString());
+                chainTitleTextView.setText(titleInput.getText());
+
+                ChainManager chainManager = new ChainManager(getActivity());
+                chainManager.addOrUpdateChain(chain);
+            }
+        });
+
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                dialog.cancel();
+            }
+        });
+
+        AlertDialog alert = builder.create();
+        alert.show();
     }
 
     public class DetailDoneButtonOnClickListener implements View.OnClickListener
