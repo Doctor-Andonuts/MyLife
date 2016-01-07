@@ -98,17 +98,17 @@ public class ChainCreateFragment extends Fragment {
                     LinearLayout spinnerContent = (LinearLayout) getActivity().findViewById(R.id.spinnerContent);
                     spinnerContent.removeAllViews();
 
-                    EditText maxDays = new EditText(getActivity());
-                    maxDays.setHint("Max Days");
-                    maxDays.setInputType(InputType.TYPE_CLASS_NUMBER);
-                    maxDays.setId(R.id.maxDays);
-                    spinnerContent.addView(maxDays);
-
                     EditText minDays = new EditText(getActivity());
                     minDays.setHint("Min Days");
                     minDays.setInputType(InputType.TYPE_CLASS_NUMBER);
                     minDays.setId(R.id.minDays);
                     spinnerContent.addView(minDays);
+
+                    EditText maxDays = new EditText(getActivity());
+                    maxDays.setHint("Max Days");
+                    maxDays.setInputType(InputType.TYPE_CLASS_NUMBER);
+                    maxDays.setId(R.id.maxDays);
+                    spinnerContent.addView(maxDays);
                 }
             }
 
