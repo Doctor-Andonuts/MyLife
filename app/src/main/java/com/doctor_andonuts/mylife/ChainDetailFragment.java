@@ -224,6 +224,8 @@ public class ChainDetailFragment extends Fragment {
             } else {
                 chain.setDone(chainDate, "Done");
             }
+            ChainManager chainManager = new ChainManager(getActivity());
+            chainManager.addOrUpdateChain(chain);
             loadData();
         }
 
