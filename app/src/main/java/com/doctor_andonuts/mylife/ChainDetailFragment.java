@@ -1,5 +1,8 @@
 package com.doctor_andonuts.mylife;
 
+import android.app.DatePickerDialog;
+import android.app.Dialog;
+import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
@@ -13,6 +16,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -216,6 +220,17 @@ public class ChainDetailFragment extends Fragment {
 
         TextView chainJsonTextView = (TextView) getActivity().findViewById(R.id.chainJson);
         chainJsonTextView.setText(chain.getJsonString());
+
+        TextView chainEndDateTextView = (TextView) getActivity().findViewById(R.id.chainEndDate);
+        chainEndDateTextView.setText(chain.getEndDate());
+        chainEndDateTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DialogFragment newFragment = new DatePickerFragmentEndDate();
+                newFragment.show(getFragmentManager(), "datePicker");
+            }
+        });
+
     }
 
 
@@ -272,4 +287,29 @@ public class ChainDetailFragment extends Fragment {
         }
 
     };
+
+    public static class DatePickerFragmentEndDate extends DialogFragment
+            implements DatePickerDialog.OnDateSetListener {
+
+        @Override
+        public Dialog onCreateDialog(Bundle savedInstanceState) {
+            // Use the current date as the default date in the picker
+            final Calendar c = Calendar.getInstance();
+            int year = c.get(Calendar.YEAR);
+            int month = c.get(Calendar.MONTH);
+            int day = c.get(Calendar.DAY_OF_MONTH);
+
+            // Create a new instance of DatePickerDialog and return it
+            return new DatePickerDialog(getActivity(), this, year, month, day);
+        }
+
+        public void onDateSet(DatePicker view, int year, int month, int day) {
+            // Do something with the date chosen by the user
+            TextView endDate = (TextView) getActivity().findViewById(R.id.chainEndDate);
+            int correctedMonth = month + 1; // TODO: Need leading zeros here
+            String dateText = year + "-" + correctedMonth + "-" + day;
+            endDate.setText(dateText);
+            // TODO: This needs to save the change, but I don't have the chain here
+        }
+    }
 }
