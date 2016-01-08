@@ -31,7 +31,7 @@ import java.util.TimeZone;
 
 
 public class ChainDetailFragment extends Fragment {
-    private Chain chain;
+    static private Chain chain;
 
     public ChainDetailFragment() {
         // Required empty public constructor
@@ -306,10 +306,14 @@ public class ChainDetailFragment extends Fragment {
         public void onDateSet(DatePicker view, int year, int month, int day) {
             // Do something with the date chosen by the user
             TextView endDate = (TextView) getActivity().findViewById(R.id.chainEndDate);
-            int correctedMonth = month + 1; // TODO: Need leading zeros here
-            String dateText = year + "-" + correctedMonth + "-" + day;
+            int correctedMonth = month + 1;
+            String dateText = String.format ("%04d", year) + "-" + String.format ("%02d", correctedMonth) + "-" + String.format ("%02d", day);
             endDate.setText(dateText);
-            // TODO: This needs to save the change, but I don't have the chain here
+
+            chain.setEndDate(dateText);
+            ChainManager chainManager = new ChainManager(getActivity());
+            chainManager.addOrUpdateChain(chain);
+
         }
     }
 }

@@ -69,6 +69,42 @@ public class CustomArrayAdapter extends ArrayAdapter<Chain> {
         final String todayString = myDateFormat.format(today.getTime());
         Log.d("DateCheck", todayString);
 
+
+
+
+// -------------------------------------
+
+        String startDateString = chain.getStartDate();
+        String endDateString = chain.getEndDate();
+
+        Calendar startDate = Calendar.getInstance();
+        Calendar endDate = Calendar.getInstance();
+
+        try {
+            startDate.setTime(myDateFormat.parse(startDateString));
+            if(endDateString == null || endDateString.equals("null")) {
+                endDate = null;
+            } else {
+                endDate.setTime(myDateFormat.parse(endDateString));
+            }
+            today.setTime(myDateFormat.parse(myDateFormat.format(today.getTime())));
+        } catch (Exception e) {
+            Log.e("Time Crap", "END DATE STRING: " + endDateString);
+            Log.e("Time Crap", "JSON: " + chain.getJsonString());
+            Log.e("Time Crap", "Parse Error: " + e.toString());
+        }
+
+        if(startDate.before(today) || startDate.equals(today)) {
+            if(chain.getEndDate().equals("null") || endDate.after(today) || endDate.equals(today)) {
+                rowView.setBackgroundColor(0xFF999999);
+            }
+        }
+
+
+// -------------------------------------
+
+
+
         TextView onceOverTextView= (TextView) rowView.findViewById(R.id.onceOver);
         onceOverTextView.setText(chain.getOnceOver(todayString));
 

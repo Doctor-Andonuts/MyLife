@@ -159,7 +159,8 @@ public class ChainCreateFragment extends Fragment {
             // Do something with the date chosen by the user
             EditText startDate = (EditText) getActivity().findViewById(R.id.startDate);
             int correctedMonth = month + 1;
-            String dateText = year + "-" + correctedMonth + "-" + day;
+            String dateText = String.format ("%04d", year) + "-" + String.format ("%02d", correctedMonth) + "-" + String.format ("%02d", day);
+            //String dateText = year + "-" + correctedMonth + "-" + day;
             startDate.setText(dateText);
         }
     }
@@ -183,7 +184,8 @@ public class ChainCreateFragment extends Fragment {
             // Do something with the date chosen by the user
             EditText endDate = (EditText) getActivity().findViewById(R.id.endDate);
             int correctedMonth = month + 1;
-            String dateText = year + "-" + correctedMonth + "-" + day;
+            String dateText = String.format ("%04d", year) + "-" + String.format ("%02d", correctedMonth) + "-" + String.format ("%02d", day);
+            //String dateText = year + "-" + correctedMonth + "-" + day;
             endDate.setText(dateText);
         }
     }
