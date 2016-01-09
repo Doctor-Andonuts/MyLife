@@ -325,7 +325,7 @@ public class Chain {
                     } else if (i < minDays) {
                         return "0 in " + maxDays;
                     } else if (i < maxDays) {
-                        return "1 in " + (i - 1 - maxDays);
+                        return "1 in " + (maxDays - i + 1);
                     }
                 }
             }
