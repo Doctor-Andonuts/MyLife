@@ -308,6 +308,36 @@ public class Chain {
             }
         } else {
             // TODO: Per Week!!!
+            /*
+            How do I want to handle this.
+            Count up now many times done per Monday - Sunday period, if more then perweek,
+                then add that many times to counter (not perweek, but how many actually done)
+            Count the current week but don't care if it is above perweek or not, just add them
+             */
+            boolean chainContinues = true;
+            while(chainContinues) {
+                // TODO: Move to next week
+                int weeklyCounter = 0;
+
+                for (int i = 0; i < 7; i++) {
+                    Calendar newDateToCheck = Calendar.getInstance();
+                    try {
+                        newDateToCheck.setTime(myDateFormat.parse(lastDoneDate));
+                    } catch(Exception e) {}
+                    newDateToCheck.add(Calendar.DATE, -i);
+                    String newDateToCheckString = myDateFormat.format(newDateToCheck.getTime());
+                    if(getDayStatus(newDateToCheckString).equals("D")) {
+                        weeklyCounter++;
+                    }
+                }
+                if(weeklyCounter >= getPerWeekValue()) {
+                    chainLength += weeklyCounter;
+                } else {
+                    chainContinues = false;
+                }
+
+            }
+
         }
 
         return chainLength;
