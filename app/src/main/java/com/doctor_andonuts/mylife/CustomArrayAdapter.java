@@ -109,7 +109,7 @@ public class CustomArrayAdapter extends ArrayAdapter<Chain> {
         onceOverTextView.setText(chain.getOnceOver(todayString));
 
         Button doneButton = (Button) rowView.findViewById(R.id.listButton_Done);
-        doneButton.setText(String.valueOf(chain.getCurrentLength()));
+        doneButton.setText(String.valueOf(chain.getCurrentLength(todayString)));
         doneButton.setTextColor(0xFFFFFFFF);
 
 

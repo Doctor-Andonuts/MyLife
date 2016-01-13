@@ -14,11 +14,9 @@ public class Chain {
     public Chain(JSONObject chainJson) {
         this.chainJson = chainJson;
     }
-
     public String getJsonString() {
         return chainJson.toString();
     }
-
     public String getTitle() {
         try {
             return chainJson.getString("Title");
@@ -27,7 +25,6 @@ public class Chain {
         }
         return null;
     }
-
     public String getUUID() {
         try {
             return chainJson.getString("UUID");
@@ -36,7 +33,6 @@ public class Chain {
         }
         return null;
     }
-
     public String getStartDate() {
         try {
             return chainJson.getString("StartDate");
@@ -45,7 +41,6 @@ public class Chain {
         }
         return null;
     }
-
     public String getEndDate() {
         try {
             return chainJson.getString("EndDate");
@@ -54,7 +49,6 @@ public class Chain {
         }
         return null;
     }
-
     public String getType() {
         try {
             return chainJson.getString("Type");
@@ -63,7 +57,6 @@ public class Chain {
         }
         return null;
     }
-
     public Integer getMinDays() {
         try {
             return chainJson.getInt("MinDays");
@@ -72,7 +65,6 @@ public class Chain {
         }
         return null;
     }
-
     public Integer getMaxDays() {
         try {
             return chainJson.getInt("MaxDays");
@@ -81,7 +73,6 @@ public class Chain {
         }
         return null;
     }
-
     public Integer getPerWeekValue() {
         try {
             return chainJson.getInt("PerWeekValue");
@@ -90,7 +81,6 @@ public class Chain {
         }
         return null;
     }
-
     // Gets JSONObject of all date data
     private JSONObject getDatesData() {
         try {
@@ -100,7 +90,6 @@ public class Chain {
         }
         return null;
     }
-
     // Gets the actual value for a date
     public String getDateValue(String dateToCheck) {
         JSONObject datesData = getDatesData();
@@ -123,7 +112,6 @@ public class Chain {
             }
         }
     }
-
     public void setStartDate(String value) {
         if(value != null && value.matches("\\d{4}-\\d{2}-\\d{2}")) {
             try {
@@ -133,7 +121,6 @@ public class Chain {
             }
         }
     }
-
     public void setEndDate(String value) {
         if(value == null || value.matches("\\d{4}-\\d{2}-\\d{2}")) {
             try {
@@ -143,7 +130,6 @@ public class Chain {
             }
         }
     }
-
     public void setMinDays(Integer value) {
         if(getType().equals("MinMax")) {
             if (value <= getMaxDays() && value > 0) {
@@ -155,7 +141,6 @@ public class Chain {
             }
         }
     }
-
     public void setMaxDays(Integer value) {
         if(getType().equals("MinMax")) {
             if (value >= getMinDays()) {
@@ -178,7 +163,6 @@ public class Chain {
             }
         }
     }
-
     public void setDone(String date, String doneType) {
         String startDateString = getStartDate();
         String endDateString = getEndDate();
@@ -230,7 +214,6 @@ public class Chain {
             }
         }
     }
-
 
     // Checks to see if I need to do a chain on a particular date
     public String getDayStatus(String dateToCheckString) {
@@ -285,9 +268,46 @@ public class Chain {
         return "";
     }
 
-    public int getCurrentLength() {
+    public int getCurrentLength(String lastDoneDate) {
+        SimpleDateFormat myDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Calendar dateToCheck = Calendar.getInstance();
+        int counter = 0;
+        int chainLength = 0;
         // TODO: This function
-        return 127;
+        if(getType().equals("MinMax")) {
+            int maxDays = getMaxDays();
+            boolean chainContinues = true;
+            while(chainContinues) {
+                counter++;
+                if(counter == 100) {
+                    Log.e(TAG, "Counter at 100");
+                    chainContinues = false;
+                    break;
+                }
+                boolean foundDate = false;
+                try {
+                    dateToCheck.setTime(myDateFormat.parse(lastDoneDate));
+                } catch(Exception e) {}
+
+                for (int i = 0; i < maxDays; i++) {
+                    dateToCheck.add(Calendar.DATE, -i);
+                    String dateToCheckString = myDateFormat.format(dateToCheck.getTime());
+                    if(getDateValue(dateToCheckString).equals("D")) {
+                        foundDate = true;
+                        lastDoneDate = dateToCheckString;
+                        chainLength++;
+                        break;
+                    }
+
+                }
+                if(!foundDate) {
+                    chainContinues = false;
+                }
+            }
+        } else {
+            // Per Week!!!
+        }
+        return chainLength;
     }
 
     // Get string containing a quick once over
