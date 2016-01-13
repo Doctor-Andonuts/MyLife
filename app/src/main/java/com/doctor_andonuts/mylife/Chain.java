@@ -270,31 +270,33 @@ public class Chain {
 
     public int getCurrentLength(String lastDoneDate) {
         SimpleDateFormat myDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        Calendar dateToCheck = Calendar.getInstance();
         int counter = 0;
         int chainLength = 0;
-        // TODO: This function
         if(getType().equals("MinMax")) {
             int maxDays = getMaxDays();
             boolean chainContinues = true;
+
+            if(getDateValue(lastDoneDate).equals("D")) {
+                chainLength++;
+            }
+
             while(chainContinues) {
                 counter++;
-                if(counter == 100) {
-                    Log.e(TAG, "Counter at 100");
-                    chainContinues = false;
+                if(counter == 1000) { // Catch for no looping forever
                     break;
                 }
                 boolean foundDate = false;
-                try {
-                    dateToCheck.setTime(myDateFormat.parse(lastDoneDate));
-                } catch(Exception e) {}
 
-                for (int i = 0; i < maxDays; i++) {
-                    dateToCheck.add(Calendar.DATE, -i);
-                    String dateToCheckString = myDateFormat.format(dateToCheck.getTime());
-                    if(getDateValue(dateToCheckString).equals("D")) {
+                for (int i = 1; i <= maxDays; i++) {
+                    Calendar newDateToCheck = Calendar.getInstance();
+                    try {
+                        newDateToCheck.setTime(myDateFormat.parse(lastDoneDate));
+                    } catch(Exception e) {}
+                    newDateToCheck.add(Calendar.DATE, -i);
+                    String newDateToCheckString = myDateFormat.format(newDateToCheck.getTime());
+                    if(getDateValue(newDateToCheckString).equals("D")) {
                         foundDate = true;
-                        lastDoneDate = dateToCheckString;
+                        lastDoneDate = newDateToCheckString;
                         chainLength++;
                         break;
                     }
@@ -305,8 +307,9 @@ public class Chain {
                 }
             }
         } else {
-            // Per Week!!!
+            // TODO: Per Week!!!
         }
+
         return chainLength;
     }
 
