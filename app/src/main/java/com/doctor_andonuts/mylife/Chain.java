@@ -335,9 +335,7 @@ public class Chain {
                 } else {
                     chainContinues = false;
                 }
-
             }
-
         }
 
         return chainLength;
@@ -413,6 +411,9 @@ public class Chain {
 
             Integer perWeekValue = getPerWeekValue();
             int stillNeedToDoThisWeek = perWeekValue - timesDoneThisWeek;
+            if (stillNeedToDoThisWeek < 0) {
+                stillNeedToDoThisWeek = 0;
+            }
 
             return stillNeedToDoThisWeek + " in " + daysLeftInWeek;
         }
