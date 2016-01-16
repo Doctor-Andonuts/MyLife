@@ -9,9 +9,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FileReader;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 
@@ -88,6 +86,12 @@ public class ChainManager {
     public void addOrUpdateChain(Chain newChain) {
         HashMap<String, Chain> chainList = readFile();
         chainList.put(newChain.getUUID(), newChain);
+        writeFile(chainHashMapToString(chainList));
+    }
+
+    public void removeChain(Chain newChain) {
+        HashMap<String, Chain> chainList = readFile();
+        chainList.remove(newChain.getUUID());
         writeFile(chainHashMapToString(chainList));
     }
 

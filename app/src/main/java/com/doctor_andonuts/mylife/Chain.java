@@ -314,28 +314,31 @@ public class Chain {
                 then add that many times to counter (not perweek, but how many actually done)
             Count the current week but don't care if it is above perweek or not, just add them
              */
-            boolean chainContinues = true;
-            while(chainContinues) {
-                // TODO: Move to next week
-                int weeklyCounter = 0;
+//            boolean chainContinues = true;
+//            while(chainContinues) {
+//                // TODO: Move to next week
+//                int weeklyCounter = 0;
+//
+//                for (int i = 0; i < 7; i++) {
+//                    Calendar newDateToCheck = Calendar.getInstance();
+//                    try {
+//                        newDateToCheck.setTime(myDateFormat.parse(lastDoneDate));
+//                    } catch(Exception e) {}
+//                    newDateToCheck.add(Calendar.DATE, -i);
+//                    String newDateToCheckString = myDateFormat.format(newDateToCheck.getTime());
+//                    if(getDayStatus(newDateToCheckString).equals("D")) {
+//                        weeklyCounter++;
+//                    }
+//                }
+//                if(weeklyCounter >= getPerWeekValue()) {
+//                    chainLength += weeklyCounter;
+//                } else {
+//                    chainContinues = false;
+//                }
+//            }
 
-                for (int i = 0; i < 7; i++) {
-                    Calendar newDateToCheck = Calendar.getInstance();
-                    try {
-                        newDateToCheck.setTime(myDateFormat.parse(lastDoneDate));
-                    } catch(Exception e) {}
-                    newDateToCheck.add(Calendar.DATE, -i);
-                    String newDateToCheckString = myDateFormat.format(newDateToCheck.getTime());
-                    if(getDayStatus(newDateToCheckString).equals("D")) {
-                        weeklyCounter++;
-                    }
-                }
-                if(weeklyCounter >= getPerWeekValue()) {
-                    chainLength += weeklyCounter;
-                } else {
-                    chainContinues = false;
-                }
-            }
+            chainLength = -1; // TODO: Placeholder for when I get the real code working
+            // TODO: This is a stopgap so I can deploy other updates
         }
 
         return chainLength;
