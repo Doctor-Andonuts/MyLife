@@ -94,10 +94,11 @@ public class CustomArrayAdapter extends ArrayAdapter<Chain> {
             Log.e("Time Crap", "Parse Error: " + e.toString());
         }
 
-        if(startDate.before(today) || startDate.equals(today)) {
-            if(chain.getEndDate().equals("null") || endDate.after(today) || endDate.equals(today)) {
-                rowView.setBackgroundColor(0xFF999999);
-            }
+        if(startDate.after(today)) {
+            rowView.setBackgroundColor(0xFF999999);
+        }
+        if(!chain.getEndDate().equals("null") && endDate.before(today)) {
+            rowView.setBackgroundColor(0xFF999999);
         }
 
 

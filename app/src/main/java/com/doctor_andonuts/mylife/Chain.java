@@ -307,38 +307,49 @@ public class Chain {
                 }
             }
         } else {
-            // TODO: Per Week!!!
-            /*
-            How do I want to handle this.
-            Count up now many times done per Monday - Sunday period, if more then perweek,
-                then add that many times to counter (not perweek, but how many actually done)
-            Count the current week but don't care if it is above perweek or not, just add them
-             */
-//            boolean chainContinues = true;
-//            while(chainContinues) {
-//                // TODO: Move to next week
-//                int weeklyCounter = 0;
-//
-//                for (int i = 0; i < 7; i++) {
-//                    Calendar newDateToCheck = Calendar.getInstance();
-//                    try {
-//                        newDateToCheck.setTime(myDateFormat.parse(lastDoneDate));
-//                    } catch(Exception e) {}
-//                    newDateToCheck.add(Calendar.DATE, -i);
-//                    String newDateToCheckString = myDateFormat.format(newDateToCheck.getTime());
-//                    if(getDayStatus(newDateToCheckString).equals("D")) {
-//                        weeklyCounter++;
-//                    }
-//                }
-//                if(weeklyCounter >= getPerWeekValue()) {
-//                    chainLength += weeklyCounter;
-//                } else {
-//                    chainContinues = false;
-//                }
-//            }
+            Calendar today = Calendar.getInstance();
+            int todayDayOfWeek = today.get(Calendar.DAY_OF_WEEK); // Sunday == 1, Saturday == 7
 
-            chainLength = -1; // TODO: Placeholder for when I get the real code working
-            // TODO: This is a stopgap so I can deploy other updates
+            int dayCounterOffset = 0;
+            if(todayDayOfWeek == 1) { // Sunday
+                dayCounterOffset = 0;
+            } else if(todayDayOfWeek >= 2) { // Monday
+                dayCounterOffset = 8 - todayDayOfWeek;
+            }
+
+            // TODO: This happens twice on start? (the whole loop that is)
+            boolean chainContinues = true;
+            while(chainContinues) {
+                int weeklyDoneCounter = 0;
+
+                for (int i = 0; i < 7; i++) {
+                    // This goes back 7 days and counts, so this needs to start on a Sunday.
+                    // Maybe I start on the next (or current) sunday in the future to count the current week?
+                    // Then loop 1 week at a time for that until I don't continue
+                    Calendar newDateToCheck = Calendar.getInstance();
+                    try {
+                        newDateToCheck.setTime(myDateFormat.parse(lastDoneDate));
+                    } catch (Exception e) {
+                    }
+                    newDateToCheck.add(Calendar.DATE, -i + dayCounterOffset);
+                    String newDateToCheckString = myDateFormat.format(newDateToCheck.getTime());
+                    if (getDateValue(newDateToCheckString).equals("D")) {
+                        weeklyDoneCounter++;
+                    }
+                }
+
+                if(dayCounterOffset >= 0) { // if it is the current week
+                    chainLength += weeklyDoneCounter;
+                } else if(weeklyDoneCounter >= getPerWeekValue()) {
+                    chainLength += weeklyDoneCounter;
+                }
+
+                if(dayCounterOffset < 0 && weeklyDoneCounter < getPerWeekValue()) {
+                    chainContinues = false;
+                }
+
+                dayCounterOffset = dayCounterOffset - 7;
+            }
         }
 
         return chainLength;
@@ -407,7 +418,6 @@ public class Chain {
 
                 String dayValue = getDateValue(newDateString);
                 if (dayValue.equals("D")) {
-                    daysLeftInWeek--;
                     timesDoneThisWeek++;
                 }
             }
