@@ -258,10 +258,25 @@ public class Chain {
                 return "DO IT!";
             }
         } else {
+/*
+            Red means I have to do it today.
+            1 in 1, 2 in 2, 3 in 3, etc
+            return "DO IT!";
+
+            Yellow means I should do it (50% or more)
+            1 in 2, 3 in 4, 4 in 5, etc
+            return "Should do";
+
+            Dark green is don't have to (less then 50%)
+            1 in 3, 3 in 7, 2 in 5, etc
+            return "No need";
+*/
+
+
             String dayValue = getDateValue(dateToCheckString);
             if (dayValue.equals("D")) {
                 return "Done";
-            } else {
+            } else if(true) {
                 return "DO IT!";
             }
         }
