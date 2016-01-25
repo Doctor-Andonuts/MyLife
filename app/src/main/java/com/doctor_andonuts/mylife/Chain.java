@@ -401,11 +401,11 @@ public class Chain {
             // Sunday == 1, Saturday == 7
             // I want Monday to be one and Sunday to be 7
             todayDayOfWeek -= 1;
-            if(todayDayOfWeek == 0) { todayDayOfWeek = 7; }
+            if(todayDayOfWeek == 0) { todayDayOfWeek = 7; } // Monday == 1, Sunday == 7
             int daysLeftInWeek = 8 - todayDayOfWeek;
 
             int timesDoneThisWeek = 0;
-            for (int i = 0; i <= todayDayOfWeek; i++) {
+            for (int i = 0; i < todayDayOfWeek; i++) {
                 Calendar newDate = Calendar.getInstance();
 
                 try {
