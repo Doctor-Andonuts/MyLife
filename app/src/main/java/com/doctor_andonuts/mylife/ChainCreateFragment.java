@@ -19,10 +19,12 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 
 public class ChainCreateFragment extends Fragment {
+    SimpleDateFormat myDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
     public ChainCreateFragment() {
         // Required empty public constructor
@@ -46,9 +48,12 @@ public class ChainCreateFragment extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        Calendar newDate = Calendar.getInstance();
+        String todayDateString = myDateFormat.format(newDate.getTime());
 
         EditText startDate = (EditText) getActivity().findViewById(R.id.startDate);
         startDate.setInputType(InputType.TYPE_NULL);
+        startDate.setText(todayDateString);
         startDate.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
