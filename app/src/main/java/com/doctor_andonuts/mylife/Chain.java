@@ -433,6 +433,9 @@ public class Chain {
 
                 String dayValue = getDateValue(newDateString);
                 if (dayValue.equals("D")) {
+                    if(i==0) {
+                        return "Done";
+                    }
                     timesDoneThisWeek++;
                 }
             }
