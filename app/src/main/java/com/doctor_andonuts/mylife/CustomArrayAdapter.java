@@ -1,6 +1,5 @@
 package com.doctor_andonuts.mylife;
 
-import android.app.Activity;
 import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -9,7 +8,6 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -107,7 +105,7 @@ public class CustomArrayAdapter extends ArrayAdapter<Chain> {
 
 
         TextView onceOverTextView= (TextView) rowView.findViewById(R.id.onceOver);
-        onceOverTextView.setText(chain.getOnceOver(todayString));
+        onceOverTextView.setText(chain.getOnceOverString(todayString));
 
         Button doneButton = (Button) rowView.findViewById(R.id.listButton_Done);
         doneButton.setText(String.valueOf(chain.getCurrentLength(todayString)));

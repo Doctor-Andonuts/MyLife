@@ -5,6 +5,7 @@ import android.util.Log;
 import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 
 public class Chain {
@@ -371,8 +372,9 @@ public class Chain {
     }
 
     // Get string containing a quick once over
-    public String getOnceOver(String dateToCheckString) {
+    public int[] getOnceOverData(String dateToCheckString) {
         SimpleDateFormat myDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        int[] returnValue = new int[2];
 
         if(getType().equals("MinMax")) {
 
@@ -401,15 +403,23 @@ public class Chain {
                 String dayValue = getDateValue(newDateString);
                 if (dayValue.equals("D")) {
                     if (i == 0) {
-                        return "Done";
+                        returnValue[0] = -1;
+                        returnValue[1] = -1;
+                        return returnValue;
                     } else if (i < minDays) {
-                        return "0 in " + maxDays;
+                        returnValue[0] = 0;
+                        returnValue[1] = maxDays;
+                        return returnValue;
                     } else if (i < maxDays) {
-                        return "1 in " + (maxDays - i + 1);
+                        returnValue[0] = 1;
+                        returnValue[1] = (maxDays - i + 1);
+                        return returnValue;
                     }
                 }
             }
-            return "1 in 1";
+            returnValue[0] = 1;
+            returnValue[1] = 1;
+            return returnValue;
         } else {
             Calendar todayDate = Calendar.getInstance();
             int todayDayOfWeek = todayDate.get(Calendar.DAY_OF_WEEK);
@@ -434,7 +444,9 @@ public class Chain {
                 String dayValue = getDateValue(newDateString);
                 if (dayValue.equals("D")) {
                     if(i==0) {
-                        return "Done";
+                        returnValue[0] = -1;
+                        returnValue[1] = -1;
+                        return returnValue;
                     }
                     timesDoneThisWeek++;
                 }
@@ -446,7 +458,18 @@ public class Chain {
                 stillNeedToDoThisWeek = 0;
             }
 
-            return stillNeedToDoThisWeek + " in " + daysLeftInWeek;
+            returnValue[0] = stillNeedToDoThisWeek;
+            returnValue[1] = daysLeftInWeek;
+            return returnValue;
         }
+    }
+
+    public String getOnceOverString(String dateToCheckString) {
+        int[] data;
+        data = getOnceOverData(dateToCheckString);
+        if(data[0] == -1 && data[1] == -1 ) {
+            return "Done";
+        }
+        return data[0] + " in " + data[1];
     }
 }
