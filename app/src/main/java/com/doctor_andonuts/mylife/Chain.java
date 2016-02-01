@@ -372,9 +372,9 @@ public class Chain {
     }
 
     // Get string containing a quick once over
-    public int[] getOnceOverData(String dateToCheckString) {
+    public double[] getOnceOverData(String dateToCheckString) {
         SimpleDateFormat myDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        int[] returnValue = new int[2];
+        double[] returnValue = new double[2];
 
         if(getType().equals("MinMax")) {
 
@@ -465,11 +465,11 @@ public class Chain {
     }
 
     public String getOnceOverString(String dateToCheckString) {
-        int[] data;
+        double[] data;
         data = getOnceOverData(dateToCheckString);
         if(data[0] == -1 && data[1] == -1 ) {
             return "Done";
         }
-        return data[0] + " in " + data[1];
+        return (int)data[0] + " in " + (int)data[1];
     }
 }

@@ -126,10 +126,10 @@ public class CustomArrayAdapter extends ArrayAdapter<Chain> {
                 doneButton.setBackgroundColor(0xFF666666);
             }
         } else {
-            int[] onceOverData = chain.getOnceOverData(todayString);
+            double[] onceOverData = chain.getOnceOverData(todayString);
             if(onceOverData[0] == onceOverData[1]) {
                 doneButton.setBackgroundColor(0xFFc62828); // Red
-            } else if((double)onceOverData[0] / (double)onceOverData[1] >= 0.5) {
+            } else if(onceOverData[0] / onceOverData[1] >= 0.5) {
                 doneButton.setBackgroundColor(0xFFfdd835); // Yellow
             } else {
                 doneButton.setBackgroundColor(0xFF1b5e20); // Dark Green
