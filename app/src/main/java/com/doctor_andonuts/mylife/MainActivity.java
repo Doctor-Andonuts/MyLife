@@ -20,7 +20,6 @@ import android.widget.EditText;
 import android.widget.Spinner;
 
 import org.json.JSONObject;
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;

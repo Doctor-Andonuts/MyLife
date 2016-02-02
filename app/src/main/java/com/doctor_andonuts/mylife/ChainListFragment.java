@@ -64,6 +64,7 @@ public class ChainListFragment extends ListFragment {
      * activity.
      * <p/>
      * See the Android Training lesson <a href=
+     * See the Android Training lesson <a href=
      * "http://developer.android.com/training/basics/fragments/communicating.html"
      * >Communicating with Other Fragments</a> for more information.
      */
