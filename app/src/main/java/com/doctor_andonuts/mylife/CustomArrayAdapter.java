@@ -46,9 +46,14 @@ public class CustomArrayAdapter extends ArrayAdapter<Chain> {
     public View getView(final int position, View convertView, final ViewGroup parent) {
         LayoutInflater inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View rowView = inflater.inflate(R.layout.chain_list_item, parent, false);
+        final View rowView = inflater.inflate(R.layout.chain_list_item, parent, false);
 
         Chain chain = chains.get(position);
+
+        SimpleDateFormat myDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        final Calendar today = Calendar.getInstance();
+        final String todayString = myDateFormat.format(today.getTime());
+        Log.d("DateCheck", todayString);
 
         TextView descriptionTextView = (TextView) rowView.findViewById(R.id.description);
         descriptionTextView.setText(chain.getTitle());
@@ -59,15 +64,6 @@ public class CustomArrayAdapter extends ArrayAdapter<Chain> {
                 mListener.onFragmentInteraction(chain);
             }
         });
-
-
-
-        SimpleDateFormat myDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        final Calendar today = Calendar.getInstance();
-        final String todayString = myDateFormat.format(today.getTime());
-        Log.d("DateCheck", todayString);
-
-
 
 
 // -------------------------------------
@@ -103,14 +99,12 @@ public class CustomArrayAdapter extends ArrayAdapter<Chain> {
 // -------------------------------------
 
 
-
         TextView onceOverTextView= (TextView) rowView.findViewById(R.id.onceOver);
         onceOverTextView.setText(chain.getOnceOverString(todayString));
 
         Button doneButton = (Button) rowView.findViewById(R.id.listButton_Done);
         doneButton.setText(String.valueOf(chain.getCurrentLength(todayString)));
         doneButton.setTextColor(0xFFFFFFFF);
-
 
         if(chain.getType().equals("MinMax")) {
             String dayStatus = chain.getDayStatus(todayString);
@@ -149,14 +143,54 @@ public class CustomArrayAdapter extends ArrayAdapter<Chain> {
                     chain.setDone(todayString, "Done");
                 }
 
+                TextView descriptionTextView = (TextView) rowView.findViewById(R.id.description);
+                descriptionTextView.setText(chain.getTitle());
+
+                TextView onceOverTextView= (TextView) rowView.findViewById(R.id.onceOver);
+                onceOverTextView.setText(chain.getOnceOverString(todayString));
+
+                Button doneButton = (Button) rowView.findViewById(R.id.listButton_Done);
+                doneButton.setText(String.valueOf(chain.getCurrentLength(todayString)));
+                doneButton.setTextColor(0xFFFFFFFF);
+
+                if(chain.getType().equals("MinMax")) {
+                    String dayStatus = chain.getDayStatus(todayString);
+                    if (dayStatus.equals("Done")) {
+                        v.setBackgroundColor(0xFF43a047); // Light Green
+                    } else if (dayStatus.equals("Should do")) {
+                        v.setBackgroundColor(0xFFfdd835); // Yellow
+                    } else if (dayStatus.equals("No need")) {
+                        v.setBackgroundColor(0xFF1b5e20); // Dark Green
+                    } else if (dayStatus.equals("DO IT!")) {
+                        v.setBackgroundColor(0xFFc62828); // Red
+                    } else {
+                        v.setBackgroundColor(0xFF666666);
+                    }
+                } else {
+                    double[] onceOverData = chain.getOnceOverData(todayString);
+                    if(onceOverData[0] == -1 && onceOverData[1] == -1) {
+                        v.setBackgroundColor(0xFF43a047); // Light Green
+                    } else if(onceOverData[0] == onceOverData[1]) {
+                        v.setBackgroundColor(0xFFc62828); // Red
+                    } else if(onceOverData[0] / onceOverData[1] >= 0.5) {
+                        v.setBackgroundColor(0xFFfdd835); // Yellow
+                    } else {
+                        v.setBackgroundColor(0xFF1b5e20); // Dark Green
+                    }
+                }
+
                 ChainManager chainManager = new ChainManager(context);
                 chainManager.addOrUpdateChain(chain);
-                notifyDataSetChanged();
             }
         });
 
 
 
         return rowView;
+    }
+
+
+    public void updateStuff() {
+
     }
 }
