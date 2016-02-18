@@ -240,6 +240,16 @@ public class ChainDetailFragment extends Fragment {
         TextView chainJsonTextView = (TextView) getActivity().findViewById(R.id.chainJson);
         chainJsonTextView.setText(chain.getJsonString());
 
+
+
+        TextView chainEndDateLabelTextView = (TextView) getActivity().findViewById(R.id.chainEndDateLabel);
+        chainEndDateLabelTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DialogFragment newFragment = new DatePickerFragmentEndDate();
+                newFragment.show(getFragmentManager(), "datePicker");
+            }
+        });
         TextView chainEndDateTextView = (TextView) getActivity().findViewById(R.id.chainEndDate);
         chainEndDateTextView.setText(chain.getEndDate());
         chainEndDateTextView.setOnClickListener(new View.OnClickListener() {
@@ -249,6 +259,8 @@ public class ChainDetailFragment extends Fragment {
                 newFragment.show(getFragmentManager(), "datePicker");
             }
         });
+
+
 
     }
 
