@@ -132,6 +132,10 @@ public class ChainDetailFragment extends Fragment {
         try {
             startDate.setTime(myDateFormat.parse(chain.getStartDate()));
         } catch (Exception e) {}
+        Calendar endDate = Calendar.getInstance();
+        try {
+            endDate.setTime(myDateFormat.parse(chain.getEndDate()));
+        } catch (Exception e) {}
 
         Button buttonLabels[] = new Button[7];
         String weekLabel[] = new String[7];
@@ -196,6 +200,11 @@ public class ChainDetailFragment extends Fragment {
                 buttons[d].setText(String.valueOf(targetDayInMonth));
 
                 if(calendar.before(startDate)) {
+                    dayDrawable.setColor(0xFFCCCCCC);
+                    dayDrawable.setStroke(1, Color.WHITE);
+                    buttons[d].setTextColor(0xFFFFFFFF);
+                    buttons[d].setOnClickListener(null);
+                } else if(calendar.after(endDate)) {
                     dayDrawable.setColor(0xFFCCCCCC);
                     dayDrawable.setStroke(1, Color.WHITE);
                     buttons[d].setTextColor(0xFFFFFFFF);
