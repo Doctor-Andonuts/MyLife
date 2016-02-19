@@ -277,15 +277,11 @@ public class ChainDetailFragment extends Fragment {
         chainEndDateTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DialogFragment newFragment = new DatePickerFragmentEndDate();
-                newFragment.show(getFragmentManager(), "datePicker");
+                DatePickerFragmentEndDate datePickerFragment = new DatePickerFragmentEndDate();
+                datePickerFragment.show(getFragmentManager(), "datePicker");
             }
         });
-
-
-
     }
-
 
     private void editDescription() {
         // Creating and Building the Dialog
@@ -412,7 +408,6 @@ public class ChainDetailFragment extends Fragment {
             chain.setEndDate(dateText);
             ChainManager chainManager = new ChainManager(getActivity());
             chainManager.addOrUpdateChain(chain);
-
         }
     }
 }
