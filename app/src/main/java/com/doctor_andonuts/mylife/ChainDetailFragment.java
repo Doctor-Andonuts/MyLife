@@ -246,10 +246,6 @@ public class ChainDetailFragment extends Fragment {
             }
         });
 
-        TextView chainJsonTextView = (TextView) getActivity().findViewById(R.id.chainJson);
-        chainJsonTextView.setText(chain.getJsonString());
-
-
 
         TextView chainEndDateLabelTextView = (TextView) getActivity().findViewById(R.id.chainEndDateLabel);
         chainEndDateLabelTextView.setOnClickListener(new View.OnClickListener() {
