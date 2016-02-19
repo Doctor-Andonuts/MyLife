@@ -246,6 +246,23 @@ public class ChainDetailFragment extends Fragment {
             }
         });
 
+        TextView chainStartDateLabelTextView = (TextView) getActivity().findViewById(R.id.chainStartDateLabel);
+        chainStartDateLabelTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DialogFragment newFragment = new DatePickerFragmentStartDate();
+                newFragment.show(getFragmentManager(), "datePicker");
+            }
+        });
+        TextView chainStartDateTextView = (TextView) getActivity().findViewById(R.id.chainStartDate);
+        chainStartDateTextView.setText(chain.getStartDate());
+        chainStartDateTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DialogFragment newFragment = new DatePickerFragmentStartDate();
+                newFragment.show(getFragmentManager(), "datePicker");
+            }
+        });
 
         TextView chainEndDateLabelTextView = (TextView) getActivity().findViewById(R.id.chainEndDateLabel);
         chainEndDateLabelTextView.setOnClickListener(new View.OnClickListener() {
@@ -324,16 +341,62 @@ public class ChainDetailFragment extends Fragment {
 
     };
 
+    public static class DatePickerFragmentStartDate extends DialogFragment
+            implements DatePickerDialog.OnDateSetListener {
+
+        @Override
+        public Dialog onCreateDialog(Bundle savedInstanceState) {
+            // Use the current date as the default date in the picker
+            Calendar startDate = Calendar.getInstance();
+            if(!chain.getStartDate().equals("null")) {
+                SimpleDateFormat myDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                try {
+                    startDate.setTime(myDateFormat.parse(chain.getStartDate()));
+                } catch (Exception e) {
+                }
+            }
+
+            int year = startDate.get(Calendar.YEAR);
+            int month = startDate.get(Calendar.MONTH);
+            int day = startDate.get(Calendar.DAY_OF_MONTH);
+
+            // Create a new instance of DatePickerDialog and return it
+            return new DatePickerDialog(getActivity(), this, year, month, day);
+        }
+
+        public void onDateSet(DatePicker view, int year, int month, int day) {
+            // Do something with the date chosen by the user
+            TextView startDate = (TextView) getActivity().findViewById(R.id.chainStartDate);
+            int correctedMonth = month + 1;
+            String dateText = String.format ("%04d", year) + "-" + String.format ("%02d", correctedMonth) + "-" + String.format ("%02d", day);
+            startDate.setText(dateText);
+
+            chain.setStartDate(dateText);
+            ChainManager chainManager = new ChainManager(getActivity());
+            chainManager.addOrUpdateChain(chain);
+
+        }
+    }
+
     public static class DatePickerFragmentEndDate extends DialogFragment
             implements DatePickerDialog.OnDateSetListener {
 
         @Override
         public Dialog onCreateDialog(Bundle savedInstanceState) {
             // Use the current date as the default date in the picker
-            final Calendar c = Calendar.getInstance();
-            int year = c.get(Calendar.YEAR);
-            int month = c.get(Calendar.MONTH);
-            int day = c.get(Calendar.DAY_OF_MONTH);
+
+            Calendar endDate = Calendar.getInstance();
+            if(!chain.getEndDate().equals("null")) {
+                SimpleDateFormat myDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                try {
+                    endDate.setTime(myDateFormat.parse(chain.getEndDate()));
+                } catch (Exception e) {
+                }
+            }
+
+            int year = endDate.get(Calendar.YEAR);
+            int month = endDate.get(Calendar.MONTH);
+            int day = endDate.get(Calendar.DAY_OF_MONTH);
 
             // Create a new instance of DatePickerDialog and return it
             return new DatePickerDialog(getActivity(), this, year, month, day);
