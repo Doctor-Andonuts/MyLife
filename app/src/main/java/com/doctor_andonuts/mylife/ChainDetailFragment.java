@@ -135,6 +135,9 @@ public class ChainDetailFragment extends Fragment {
         Calendar endDate = Calendar.getInstance();
         try {
             endDate.setTime(myDateFormat.parse(chain.getEndDate()));
+            endDate.add(Calendar.HOUR, 23);
+            endDate.add(Calendar.MINUTE, 59);
+            endDate.add(Calendar.SECOND, 59);
         } catch (Exception e) {}
 
         Button buttonLabels[] = new Button[7];
