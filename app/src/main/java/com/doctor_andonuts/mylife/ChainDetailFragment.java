@@ -331,45 +331,7 @@ public class ChainDetailFragment extends Fragment {
             loadData();
         }
 
-    };
-
-    public static class DatePickerFragmentStartDate extends DialogFragment
-            implements DatePickerDialog.OnDateSetListener {
-
-        @Override
-        public Dialog onCreateDialog(Bundle savedInstanceState) {
-            // Use the current date as the default date in the picker
-            Calendar startDate = Calendar.getInstance();
-            if(!chain.getStartDate().equals("null")) {
-                SimpleDateFormat myDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-                try {
-                    startDate.setTime(myDateFormat.parse(chain.getStartDate()));
-                } catch (Exception e) {
-                }
-            }
-
-            int year = startDate.get(Calendar.YEAR);
-            int month = startDate.get(Calendar.MONTH);
-            int day = startDate.get(Calendar.DAY_OF_MONTH);
-
-            // Create a new instance of DatePickerDialog and return it
-            return new DatePickerDialog(getActivity(), this, year, month, day);
-        }
-
-        public void onDateSet(DatePicker view, int year, int month, int day) {
-            // Do something with the date chosen by the user
-            TextView startDate = (TextView) getActivity().findViewById(R.id.chainStartDate);
-            int correctedMonth = month + 1;
-            String dateText = String.format ("%04d", year) + "-" + String.format ("%02d", correctedMonth) + "-" + String.format ("%02d", day);
-            startDate.setText(dateText);
-
-            chain.setStartDate(dateText);
-            ChainManager chainManager = new ChainManager(getActivity());
-            chainManager.addOrUpdateChain(chain);
-
-        }
     }
-
 
     private void editEndDate() {
         Calendar endDate = Calendar.getInstance();
@@ -396,6 +358,7 @@ public class ChainDetailFragment extends Fragment {
                 chain.setEndDate(dateText);
                 ChainManager chainManager = new ChainManager(getActivity());
                 chainManager.addOrUpdateChain(chain);
+                loadData();
             }
         }, mYear, mMonth, mDay);
         datePickerDialog.setButton(DialogInterface.BUTTON_NEGATIVE, "Remove", new DialogInterface.OnClickListener() {
@@ -407,6 +370,7 @@ public class ChainDetailFragment extends Fragment {
                     chain.setEndDate("null");
                     ChainManager chainManager = new ChainManager(getActivity());
                     chainManager.addOrUpdateChain(chain);
+                    loadData();
                 }
             }
         });
@@ -439,6 +403,7 @@ public class ChainDetailFragment extends Fragment {
                 chain.setStartDate(dateText);
                 ChainManager chainManager = new ChainManager(getActivity());
                 chainManager.addOrUpdateChain(chain);
+                loadData();
             }
         }, mYear, mMonth, mDay);
         datePickerDialog.setButton(DialogInterface.BUTTON_NEGATIVE, "", datePickerDialog);
