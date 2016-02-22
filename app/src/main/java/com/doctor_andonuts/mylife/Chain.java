@@ -123,7 +123,7 @@ public class Chain {
         }
     }
     public void setEndDate(String value) {
-        if(value == null || value.matches("\\d{4}-\\d{2}-\\d{2}")) {
+        if(value == null || value == "null" || value.matches("\\d{4}-\\d{2}-\\d{2}")) {
             try {
                 chainJson.put("EndDate", value);
             } catch (Exception e) {
