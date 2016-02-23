@@ -21,10 +21,11 @@ import android.widget.Spinner;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Locale;
 
 
 public class ChainCreateFragment extends Fragment {
-    SimpleDateFormat myDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+    private final SimpleDateFormat myDateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
 
     public ChainCreateFragment() {
         // Required empty public constructor
@@ -61,8 +62,6 @@ public class ChainCreateFragment extends Fragment {
                     //Show your calender here
                     DialogFragment newFragment = new DatePickerFragmentStartDate();
                     newFragment.show(getFragmentManager(), "datePicker");
-                } else {
-                    //Hide your calender here
                 }
             }
         });
@@ -76,8 +75,6 @@ public class ChainCreateFragment extends Fragment {
                     //Show your calender here
                     DialogFragment newFragment = new DatePickerFragmentEndDate();
                     newFragment.show(getFragmentManager(), "datePicker");
-                } else {
-                    //Hide your calender here
                 }
             }
         });

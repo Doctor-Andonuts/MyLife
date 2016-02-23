@@ -43,7 +43,7 @@
         android:paddingTop="10dp"
         android:textSize="20sp"
         android:textColor="#000000"
-        android:text="Once Over: "
+        android:text="@string/label_onceOver"
         android:layout_below="@+id/calendarGroup"
         android:layout_height="wrap_content"/>
     <TextView
@@ -62,7 +62,7 @@
         android:paddingTop="10dp"
         android:textSize="20sp"
         android:textColor="#000000"
-        android:text="Start Date: "
+        android:text="@string/label_startDate"
         android:layout_below="@+id/chainOnceOverLabel"
         android:layout_height="wrap_content"/>
     <TextView
@@ -83,7 +83,7 @@
         android:paddingTop="10dp"
         android:textSize="20sp"
         android:textColor="#000000"
-        android:text="End Date: "
+        android:text="@string/label_endDate"
         android:layout_below="@+id/chainStartDateLabel"
         android:layout_height="wrap_content"/>
     <TextView
@@ -108,7 +108,7 @@
         android:paddingTop="10dp"
         android:textSize="20sp"
         android:textColor="#000000"
-        android:text="Type: "
+        android:text="@string/label_type"
         android:layout_below="@+id/chainEndDateLabel"
         android:layout_height="wrap_content"/>
     <TextView
@@ -129,7 +129,7 @@
         android:paddingTop="10dp"
         android:textSize="20sp"
         android:textColor="#000000"
-        android:text="Type Data: "
+        android:text="@string/label_typeData"
         android:layout_below="@+id/chainTypeLabel"
         android:layout_height="wrap_content"/>
     <TextView
@@ -149,7 +149,7 @@
         android:paddingTop="10dp"
         android:textSize="16sp"
         android:textColor="#000000"
-        android:text="UUID: "
+        android:text="@string/label_uuid"
         android:layout_below="@+id/chainTypeDataLabel"
         android:layout_height="wrap_content"/>
     <TextView

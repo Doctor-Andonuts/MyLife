@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -28,7 +29,8 @@ import java.util.Locale;
 
 
 public class ChainDetailFragment extends Fragment {
-    static private Chain chain;
+    private Chain chain;
+    private final String TAG = "ChainDetailFragment";
 
     public ChainDetailFragment() {
         // Required empty public constructor
@@ -107,7 +109,7 @@ public class ChainDetailFragment extends Fragment {
     }
 
 
-    public void loadData() {
+    private void loadData() {
         LinearLayout calendarGroup = (LinearLayout) getActivity().findViewById(R.id.calendarGroup);
         calendarGroup.removeAllViews();
         LinearLayout weekGroup[] = new LinearLayout[4];
@@ -122,18 +124,22 @@ public class ChainDetailFragment extends Fragment {
         int daysToGoBack = 21 + dayInWeek - 2;
         calendar.add(Calendar.DATE, -daysToGoBack);
 
-        SimpleDateFormat myDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat myDateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
         Calendar startDate = Calendar.getInstance();
         try {
             startDate.setTime(myDateFormat.parse(chain.getStartDate()));
-        } catch (Exception e) {}
+        } catch (Exception e) {
+            Log.e(TAG, "Could not set time correctly");
+        }
         Calendar endDate = Calendar.getInstance();
         try {
             endDate.setTime(myDateFormat.parse(chain.getEndDate()));
             endDate.add(Calendar.HOUR, 23);
             endDate.add(Calendar.MINUTE, 59);
             endDate.add(Calendar.SECOND, 59);
-        } catch (Exception e) {}
+        } catch (Exception e) {
+            Log.e(TAG, "Could not set time correctly");
+        }
 
         Button buttonLabels[] = new Button[7];
         String weekLabel[] = new String[7];
@@ -180,7 +186,7 @@ public class ChainDetailFragment extends Fragment {
                 int targetDayInMonth = Integer.parseInt(targetDayInMonthFormat.format(calendar.getTime()));
                 int targetMonthOfYear = Integer.parseInt(targetMonthOfYearFormat.format(calendar.getTime()));
 
-                SimpleDateFormat chainDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                SimpleDateFormat chainDateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
                 String chainDateTest = chainDateFormat.format(calendar.getTime());
 
                 GradientDrawable dayDrawable = new GradientDrawable();
@@ -330,7 +336,7 @@ public class ChainDetailFragment extends Fragment {
     public class DetailDoneButtonOnClickListener implements View.OnClickListener
     {
 
-        String chainDate;
+        final String chainDate;
         public DetailDoneButtonOnClickListener(String chainDate) {
             this.chainDate = chainDate;
         }
@@ -354,10 +360,11 @@ public class ChainDetailFragment extends Fragment {
     private void editEndDate() {
         Calendar endDate = Calendar.getInstance();
         if(!chain.getEndDate().equals("null")) {
-            SimpleDateFormat myDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            SimpleDateFormat myDateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
             try {
                 endDate.setTime(myDateFormat.parse(chain.getEndDate()));
             } catch (Exception e) {
+                Log.e(TAG, "Could not set time correctly");
             }
         }
 
@@ -399,10 +406,11 @@ public class ChainDetailFragment extends Fragment {
     private void editStartDate() {
         Calendar startDate = Calendar.getInstance();
         if(!chain.getStartDate().equals("null")) {
-            SimpleDateFormat myDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            SimpleDateFormat myDateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
             try {
                 startDate.setTime(myDateFormat.parse(chain.getStartDate()));
             } catch (Exception e) {
+                Log.e(TAG, "Could not set time correctly");
             }
         }
 

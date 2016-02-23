@@ -7,11 +7,14 @@ import org.json.JSONObject;
 
 /**
  * Created by jgowing on 10/30/2015.
+ *
+ * Unit tests for chain.java
  */
+@SuppressWarnings("unused")
 public class ChainTest extends TestCase {
 
-    JSONObject testJsonOne;
-    JSONObject testJsonTwo;
+    private JSONObject testJsonOne;
+    private JSONObject testJsonTwo;
 
     @Override
     protected void setUp() throws Exception {
@@ -20,6 +23,7 @@ public class ChainTest extends TestCase {
         testJsonTwo = new JSONObject("{\"Title\": \"Exercise\",\"StartDate\": \"2015-10-01\",\"EndDate\": \"2015-11-01\",\"Type\": \"PerWeek\",\"MinDays\": null,\"MaxDays\": null,\"PerWeekValue\": \"3\",\"Dates\": {\"2015-10-01\": \"D\",\"2015-10-02\": \"D\",\"2015-10-05\": \"S\",\"2015-10-10\": \"D\"}}");
     }
 
+    @SuppressWarnings("EmptyMethod")
     public void testConstructor() throws Exception {
 
     }
@@ -184,7 +188,7 @@ public class ChainTest extends TestCase {
     }
     public void testSetDone_WrongType() throws Exception {
         Chain chain = new Chain(testJsonOne);
-        chain.setDone("2015-10-18", "WARGS");
+        chain.setDone("2015-10-18", "Wrong");
         assertEquals("", chain.getDateValue("2015-10-18"));
     }
     public void testSetDone_DoneAfterEndDate() throws Exception {

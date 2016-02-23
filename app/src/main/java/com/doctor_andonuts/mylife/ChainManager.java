@@ -15,11 +15,14 @@ import java.util.List;
 
 /**
  * Created by Andonuts on 11/7/2015.
+ *
+ * Manages chains, reads and writes to the JSON files, and handles updating chains with new data.
  */
-public class ChainManager {
-    private String TAG = "ChainManager";
-    private String fileName = "chain.data";
-    private Context _context;
+class ChainManager {
+    @SuppressWarnings("FieldCanBeLocal")
+    private final String TAG = "ChainManager";
+    private final String fileName = "chain.data";
+    private final Context _context;
 
     public ChainManager(Context context)
     {
@@ -64,7 +67,7 @@ public class ChainManager {
     }
 
     private HashMap<String, Chain> readFile() {
-        HashMap<String, Chain> chainHashmap = new HashMap<>();
+        HashMap<String, Chain> chainHashMap = new HashMap<>();
 
         try {
             File file = new File(_context.getFilesDir(), fileName);
@@ -73,14 +76,14 @@ public class ChainManager {
 
             while((line = bufferedReader.readLine()) != null) {
                 Chain chain = new Chain(new JSONObject(line));
-                chainHashmap.put(chain.getUUID(), chain);
+                chainHashMap.put(chain.getUUID(), chain);
             }
         } catch (Exception e ) {
             Log.d(TAG, "Problem reading " + fileName + ": " + e.toString());
         }
 
         Log.d(TAG, "Done reading " + fileName);
-        return chainHashmap;
+        return chainHashMap;
     }
 
     public void addOrUpdateChain(Chain newChain) {

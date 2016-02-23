@@ -1,7 +1,7 @@
 package com.doctor_andonuts.mylife;
 
-import android.app.Activity;
 import android.app.ListFragment;
+import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ChainListFragment extends ListFragment {
-    private List<Chain> chains = new ArrayList<>();
+    private final List<Chain> chains = new ArrayList<>();
     private OnFragmentInteractionListener mListener;
 
     @Override
@@ -22,12 +22,12 @@ public class ChainListFragment extends ListFragment {
     }
 
     @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
+    public void onAttach(Context context) {
+        super.onAttach(context);
         try {
-            mListener = (OnFragmentInteractionListener) activity;
+            mListener = (OnFragmentInteractionListener) context;
         } catch (ClassCastException e) {
-            throw new ClassCastException(activity.toString()
+            throw new ClassCastException(context.toString()
                     + " must implement OnFragmentInteractionListener");
         }
     }
@@ -50,7 +50,7 @@ public class ChainListFragment extends ListFragment {
     }
 
 
-    public void refreshData() {
+    private void refreshData() {
         ChainManager chainManager = new ChainManager(getActivity());
         chains.clear();
         chains.addAll(chainManager.getChains());

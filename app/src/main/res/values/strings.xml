@@ -4,13 +4,22 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
-    <string name="action_settings">Settings</string>
     <string name="title_chain">Chain</string>
     <string name="title_taskwarrior">Task Warrior</string>
     <string name="title_settings">Settings</string>
-    <string name="title_misc">Misc</string>
     <string name="title_sub">Organize all the things</string>
     <string name="action_delete">Delete</string>
+
+    <string name="label_title">Title</string>
+    <string name="label_startDate">Start Date</string>
+    <string name="label_endDate">End Date</string>
+    <string name="label_addChain">Add Chain</string>
+    <string name="label_onceOver">Once Over</string>
+    <string name="label_type">Type</string>
+    <string name="label_typeData">Type Data</string>
+    <string name="label_uuid">UUID</string>
+
+    <string name="description_logo">MyLife Logo</string>
 
 
     <string-array name="type_array">

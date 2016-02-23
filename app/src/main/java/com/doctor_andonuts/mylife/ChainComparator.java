@@ -3,14 +3,17 @@ package com.doctor_andonuts.mylife;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Comparator;
+import java.util.Locale;
 
 /**
  * Created by jgowing on 11/13/2015.
+ *
+ * Sorting comparator, currently sorts by using once over text
  */
-public class ChainComparator implements Comparator<Chain> {
-    SimpleDateFormat myDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-    final Calendar today = Calendar.getInstance();
-    final String todayString = myDateFormat.format(today.getTime());
+class ChainComparator implements Comparator<Chain> {
+    private final SimpleDateFormat myDateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
+    private final Calendar today = Calendar.getInstance();
+    private final String todayString = myDateFormat.format(today.getTime());
 
     @Override
     public int compare(Chain lhs, Chain rhs) {

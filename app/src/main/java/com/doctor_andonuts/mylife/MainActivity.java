@@ -66,8 +66,6 @@ public class MainActivity extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
                 setDrawerState(false);
 
                 ChainCreateFragment chainCreateFragment = new ChainCreateFragment();
@@ -116,14 +114,14 @@ public class MainActivity extends AppCompatActivity
     }
 
     // Goes from Details to List Fragment
-    public void fromDetailToListFragment(ChainListFragment chainListFragment, ChainDetailFragment chainDetailFragment) {
+    private void fromDetailToListFragment(ChainListFragment chainListFragment, ChainDetailFragment chainDetailFragment) {
         getFragmentManager().beginTransaction()
                 .remove(chainDetailFragment)
                 .add(R.id.content_area, chainListFragment, "ChainListFragment")
                 .addToBackStack(null)
                 .commit();
 
-        assert getActionBar() != null;
+        assert getSupportActionBar() != null;
         getSupportActionBar().setTitle(R.string.app_name);
         setDrawerState(true);
         hideSoftKeyboard(findViewById(android.R.id.content));
@@ -133,14 +131,14 @@ public class MainActivity extends AppCompatActivity
     }
 
     // Goes from Create to List Fragment
-    public void fromCreateToListFragment(ChainListFragment chainListFragment, ChainCreateFragment chainCreateFragment) {
+    private void fromCreateToListFragment(ChainListFragment chainListFragment, ChainCreateFragment chainCreateFragment) {
         getFragmentManager().beginTransaction()
                 .remove(chainCreateFragment)
                 .add(R.id.content_area, chainListFragment, "ChainListFragment")
                 .addToBackStack(null)
                 .commit();
 
-        assert getActionBar() != null;
+        assert getSupportActionBar() != null;
         getSupportActionBar().setTitle(R.string.app_name);
         setDrawerState(true);
         hideSoftKeyboard(findViewById(android.R.id.content));
@@ -188,6 +186,7 @@ public class MainActivity extends AppCompatActivity
     }
 
 
+    @SuppressWarnings({"UnusedParameters", "unused"})
     public void addChain(View view) {
         Boolean submitIsAllowed = true;
         EditText title = (EditText) findViewById(R.id.editTitle);
@@ -284,7 +283,7 @@ public class MainActivity extends AppCompatActivity
         inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
-    public void setDrawerState(boolean isEnabled) {
+    private void setDrawerState(boolean isEnabled) {
         if ( isEnabled ) {
             drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
 //            actionBarDrawerToggle.onDrawerStateChanged(DrawerLayout.LOCK_MODE_UNLOCKED);

@@ -1,5 +1,6 @@
 package com.doctor_andonuts.mylife;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,11 +13,14 @@ import android.widget.TextView;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by Andonuts on 11/7/2015.
+ *
+ * Array adapter for the list fragment
  */
-public class CustomArrayAdapter extends ArrayAdapter<Chain> {
+class CustomArrayAdapter extends ArrayAdapter<Chain> {
     private final Context context;
     private final List<Chain> chains;
     private final ChainListFragment.OnFragmentInteractionListener mListener;
@@ -39,18 +43,16 @@ public class CustomArrayAdapter extends ArrayAdapter<Chain> {
         this.context = context;
         this.chains = chains;
         this.mListener = mListener;
-
     }
 
     @Override
     public View getView(final int position, View convertView, final ViewGroup parent) {
-        LayoutInflater inflater = (LayoutInflater) context
-                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        final View rowView = inflater.inflate(R.layout.chain_list_item, parent, false);
+        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        @SuppressLint("ViewHolder") final View rowView = inflater.inflate(R.layout.chain_list_item, parent, false);
 
         Chain chain = chains.get(position);
 
-        SimpleDateFormat myDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat myDateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
         final Calendar today = Calendar.getInstance();
         final String todayString = myDateFormat.format(today.getTime());
         Log.d("DateCheck", todayString);
@@ -76,7 +78,7 @@ public class CustomArrayAdapter extends ArrayAdapter<Chain> {
 
         try {
             startDate.setTime(myDateFormat.parse(startDateString));
-            if(endDateString == null || endDateString.equals("null")) {
+            if (endDateString == null || endDateString.equals("null")) {
                 endDate = null;
             } else {
                 endDate.setTime(myDateFormat.parse(endDateString));
@@ -88,10 +90,11 @@ public class CustomArrayAdapter extends ArrayAdapter<Chain> {
             Log.e("Time Crap", "Parse Error: " + e.toString());
         }
 
-        if(startDate.after(today)) {
+        if (startDate.after(today)) {
             rowView.setBackgroundColor(0xFF999999);
         }
-        if(!chain.getEndDate().equals("null") && endDate.before(today)) {
+
+        if (!chain.getEndDate().equals("null") && endDate != null && endDate.before(today)) {
             rowView.setBackgroundColor(0xFF999999);
         }
 
@@ -99,33 +102,39 @@ public class CustomArrayAdapter extends ArrayAdapter<Chain> {
 // -------------------------------------
 
 
-        TextView onceOverTextView= (TextView) rowView.findViewById(R.id.onceOver);
+        TextView onceOverTextView = (TextView) rowView.findViewById(R.id.onceOver);
         onceOverTextView.setText(chain.getOnceOverString(todayString));
 
         Button doneButton = (Button) rowView.findViewById(R.id.listButton_Done);
         doneButton.setText(String.valueOf(chain.getCurrentLength(todayString)));
         doneButton.setTextColor(0xFFFFFFFF);
 
-        if(chain.getType().equals("MinMax")) {
+        if (chain.getType().equals("MinMax")) {
             String dayStatus = chain.getDayStatus(todayString);
-            if (dayStatus.equals("Done")) {
-                doneButton.setBackgroundColor(0xFF43a047); // Light Green
-            } else if (dayStatus.equals("Should do")) {
-                doneButton.setBackgroundColor(0xFFfdd835); // Yellow
-            } else if (dayStatus.equals("No need")) {
-                doneButton.setBackgroundColor(0xFF1b5e20); // Dark Green
-            } else if (dayStatus.equals("DO IT!")) {
-                doneButton.setBackgroundColor(0xFFc62828); // Red
-            } else {
-                doneButton.setBackgroundColor(0xFF666666);
+            switch(dayStatus) {
+                case "Done":
+                    doneButton.setBackgroundColor(0xFF43a047); // Light Green
+                    break;
+                case "Should do":
+                    doneButton.setBackgroundColor(0xFFfdd835); // Yellow
+                    break;
+                case "No need":
+                    doneButton.setBackgroundColor(0xFF1b5e20); // Dark Green
+                    break;
+                case "DO IT!":
+                    doneButton.setBackgroundColor(0xFFc62828); // Red
+                    break;
+                default:
+                    doneButton.setBackgroundColor(0xFF666666);
+                    break;
             }
         } else {
             double[] onceOverData = chain.getOnceOverData(todayString);
-            if(onceOverData[0] == -1 && onceOverData[1] == -1) {
+            if (onceOverData[0] == -1 && onceOverData[1] == -1) {
                 doneButton.setBackgroundColor(0xFF43a047); // Light Green
-            } else if(onceOverData[0] == onceOverData[1]) {
+            } else if (onceOverData[0] == onceOverData[1]) {
                 doneButton.setBackgroundColor(0xFFc62828); // Red
-            } else if(onceOverData[0] / onceOverData[1] >= 0.5) {
+            } else if (onceOverData[0] / onceOverData[1] >= 0.5) {
                 doneButton.setBackgroundColor(0xFFfdd835); // Yellow
             } else {
                 doneButton.setBackgroundColor(0xFF1b5e20); // Dark Green
@@ -143,36 +152,40 @@ public class CustomArrayAdapter extends ArrayAdapter<Chain> {
                     chain.setDone(todayString, "Done");
                 }
 
-                TextView descriptionTextView = (TextView) rowView.findViewById(R.id.description);
-                descriptionTextView.setText(chain.getTitle());
-
-                TextView onceOverTextView= (TextView) rowView.findViewById(R.id.onceOver);
+                TextView onceOverTextView = (TextView) rowView.findViewById(R.id.onceOver);
                 onceOverTextView.setText(chain.getOnceOverString(todayString));
 
                 Button doneButton = (Button) rowView.findViewById(R.id.listButton_Done);
                 doneButton.setText(String.valueOf(chain.getCurrentLength(todayString)));
                 doneButton.setTextColor(0xFFFFFFFF);
 
-                if(chain.getType().equals("MinMax")) {
+                if (chain.getType().equals("MinMax")) {
                     String dayStatus = chain.getDayStatus(todayString);
-                    if (dayStatus.equals("Done")) {
-                        v.setBackgroundColor(0xFF43a047); // Light Green
-                    } else if (dayStatus.equals("Should do")) {
-                        v.setBackgroundColor(0xFFfdd835); // Yellow
-                    } else if (dayStatus.equals("No need")) {
-                        v.setBackgroundColor(0xFF1b5e20); // Dark Green
-                    } else if (dayStatus.equals("DO IT!")) {
-                        v.setBackgroundColor(0xFFc62828); // Red
-                    } else {
-                        v.setBackgroundColor(0xFF666666);
+
+                    switch(dayStatus) {
+                        case "Done":
+                            doneButton.setBackgroundColor(0xFF43a047); // Light Green
+                            break;
+                        case "Should do":
+                            doneButton.setBackgroundColor(0xFFfdd835); // Yellow
+                            break;
+                        case "No need":
+                            doneButton.setBackgroundColor(0xFF1b5e20); // Dark Green
+                            break;
+                        case "DO IT!":
+                            doneButton.setBackgroundColor(0xFFc62828); // Red
+                            break;
+                        default:
+                            doneButton.setBackgroundColor(0xFF666666);
+                            break;
                     }
                 } else {
                     double[] onceOverData = chain.getOnceOverData(todayString);
-                    if(onceOverData[0] == -1 && onceOverData[1] == -1) {
+                    if (onceOverData[0] == -1 && onceOverData[1] == -1) {
                         v.setBackgroundColor(0xFF43a047); // Light Green
-                    } else if(onceOverData[0] == onceOverData[1]) {
+                    } else if (onceOverData[0] == onceOverData[1]) {
                         v.setBackgroundColor(0xFFc62828); // Red
-                    } else if(onceOverData[0] / onceOverData[1] >= 0.5) {
+                    } else if (onceOverData[0] / onceOverData[1] >= 0.5) {
                         v.setBackgroundColor(0xFFfdd835); // Yellow
                     } else {
                         v.setBackgroundColor(0xFF1b5e20); // Dark Green
@@ -185,12 +198,6 @@ public class CustomArrayAdapter extends ArrayAdapter<Chain> {
         });
 
 
-
         return rowView;
-    }
-
-
-    public void updateStuff() {
-
     }
 }

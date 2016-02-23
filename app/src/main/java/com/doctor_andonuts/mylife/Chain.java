@@ -6,10 +6,11 @@ import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Locale;
 
-public class Chain {
-    private String TAG = "ChainClass";
-    private JSONObject chainJson;
+class Chain {
+    private final String TAG = "ChainClass";
+    private final JSONObject chainJson;
 
     public Chain(JSONObject chainJson) {
         this.chainJson = chainJson;
@@ -94,7 +95,9 @@ public class Chain {
     public String getDateValue(String dateToCheck) {
         JSONObject datesData = getDatesData();
         try {
-            if (datesData.has(dateToCheck)) {
+            if(datesData == null) {
+                return "";
+            } else if (datesData.has(dateToCheck)) {
                 return datesData.getString(dateToCheck);
             }
         } catch (Exception e) {
@@ -122,7 +125,7 @@ public class Chain {
         }
     }
     public void setEndDate(String value) {
-        if(value == null || value == "null" || value.matches("\\d{4}-\\d{2}-\\d{2}")) {
+        if(value == null || value.equals("null") || value.matches("\\d{4}-\\d{2}-\\d{2}")) {
             try {
                 chainJson.put("EndDate", value);
             } catch (Exception e) {
@@ -166,7 +169,7 @@ public class Chain {
     public void setDone(String date, String doneType) {
         String startDateString = getStartDate();
         String endDateString = getEndDate();
-        SimpleDateFormat myDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat myDateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
 
         Calendar startDate = Calendar.getInstance();
         Calendar endDate = Calendar.getInstance();
@@ -203,10 +206,12 @@ public class Chain {
 
                 JSONObject datesData = getDatesData();
                 try {
-                    if(doneTypeAbbreviation.equals("")) {
-                        datesData.remove(date);
-                    } else {
-                        datesData.put(date, doneTypeAbbreviation);
+                    if(datesData != null) {
+                        if (doneTypeAbbreviation.equals("")) {
+                            datesData.remove(date);
+                        } else {
+                            datesData.put(date, doneTypeAbbreviation);
+                        }
                     }
                 } catch (Exception e) {
                     Log.e(TAG, "setDone");
@@ -224,7 +229,7 @@ public class Chain {
 
             if (maxDays != null) {
 
-                SimpleDateFormat myDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                SimpleDateFormat myDateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
                 Calendar dateToCheck = Calendar.getInstance();
 
                 try {
@@ -276,7 +281,7 @@ public class Chain {
             String dayValue = getDateValue(dateToCheckString);
             if (dayValue.equals("D")) {
                 return "Done";
-            } else if(true) {
+            } else {
                 return "DO IT!";
             }
         }
@@ -284,7 +289,7 @@ public class Chain {
     }
 
     public int getCurrentLength(String lastDoneDate) {
-        SimpleDateFormat myDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat myDateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
         int counter = 0;
         int chainLength = 0;
         if(getType().equals("MinMax")) {
@@ -306,7 +311,9 @@ public class Chain {
                     Calendar newDateToCheck = Calendar.getInstance();
                     try {
                         newDateToCheck.setTime(myDateFormat.parse(lastDoneDate));
-                    } catch(Exception e) {}
+                    } catch(Exception e) {
+                        Log.e(TAG, "Could not set time correctly");
+                    }
                     newDateToCheck.add(Calendar.DATE, -i);
                     String newDateToCheckString = myDateFormat.format(newDateToCheck.getTime());
                     if(getDateValue(newDateToCheckString).equals("D")) {
@@ -345,6 +352,7 @@ public class Chain {
                     try {
                         newDateToCheck.setTime(myDateFormat.parse(lastDoneDate));
                     } catch (Exception e) {
+                        Log.e(TAG, "Could not set time correctly");
                     }
                     newDateToCheck.add(Calendar.DATE, -i + dayCounterOffset);
                     String newDateToCheckString = myDateFormat.format(newDateToCheck.getTime());
@@ -372,7 +380,7 @@ public class Chain {
 
     // Get string containing a quick once over
     public double[] getOnceOverData(String dateToCheckString) {
-        SimpleDateFormat myDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat myDateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
         double[] returnValue = new double[2];
 
         if(getType().equals("MinMax")) {

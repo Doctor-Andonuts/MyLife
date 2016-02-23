@@ -7,8 +7,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/editTitle"
-        android:capitalize="sentences"
-        android:hint="Title"
+        android:inputType="textCapSentences"
+        android:hint="@string/label_title"
         android:layout_gravity="start|top" />
 
     <EditText
@@ -17,7 +17,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/startDate"
         android:inputType="date"
-        android:hint="Start Date" />
+        android:hint="@string/label_startDate" />
     <EditText
         android:layout_below="@+id/editTitle"
         android:layout_toEndOf="@+id/startDate"
@@ -25,7 +25,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/endDate"
         android:inputType="date"
-        android:hint="End Date" />
+        android:hint="@string/label_endDate" />
 
     <Spinner
         android:layout_below="@+id/startDate"
@@ -45,7 +45,7 @@
         android:layout_below="@+id/spinnerContent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Add Chain"
+        android:text="@string/label_addChain"
         android:onClick="addChain"
         android:id="@+id/addChain" />
 
