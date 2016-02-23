@@ -276,11 +276,16 @@ public class ChainDetailFragment extends Fragment {
             }
         });
 
+        TextView chainTypeTextView = (TextView) getActivity().findViewById(R.id.chainType);
+        chainTypeTextView.setText(chain.getType());
+
         TextView chainUUIDView = (TextView) getActivity().findViewById(R.id.chainUUID);
         chainUUIDView.setText(chain.getUUID());
 
-        TextView chainTypeTextView = (TextView) getActivity().findViewById(R.id.chainType);
-        chainTypeTextView.setText(chain.getType());
+        TextView chainOnceOverTextView = (TextView) getActivity().findViewById(R.id.chainOnceOver);
+        Calendar today = Calendar.getInstance();
+        String chainDateTest = myDateFormat.format(today.getTime());
+        chainOnceOverTextView.setText(chain.getOnceOverString(chainDateTest));
 
         TextView chainTypeDataTextView = (TextView) getActivity().findViewById(R.id.chainTypeData);
         if(chain.getType().equals("MinMax")) {
