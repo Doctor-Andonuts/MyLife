@@ -275,6 +275,21 @@ public class ChainDetailFragment extends Fragment {
                 editEndDate();
             }
         });
+
+        TextView chainUUIDView = (TextView) getActivity().findViewById(R.id.chainUUID);
+        chainUUIDView.setText(chain.getUUID());
+
+        TextView chainTypeTextView = (TextView) getActivity().findViewById(R.id.chainType);
+        chainTypeTextView.setText(chain.getType());
+
+        TextView chainTypeDataTextView = (TextView) getActivity().findViewById(R.id.chainTypeData);
+        if(chain.getType().equals("MinMax")) {
+            String text = chain.getMinDays() + " - " + chain.getMaxDays();
+            chainTypeDataTextView.setText(text);
+        } else {
+            String text = Integer.toString(chain.getPerWeekValue());
+            chainTypeDataTextView.setText(text);
+        }
     }
 
     private void editDescription() {
