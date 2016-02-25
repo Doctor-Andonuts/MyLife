@@ -21,11 +21,11 @@ class ChainComparator implements Comparator<Chain> {
         double[] lhsOnceOver = lhs.getOnceOverData(todayString);
         double[] rhsOnceOver = rhs.getOnceOverData(todayString);
 
-        int lhsPercent = 0;
+        int lhsPercent = -1;
         if(lhsOnceOver[0] != -1 || lhsOnceOver[1] != -1) {
             lhsPercent = (int) ((lhsOnceOver[0] / lhsOnceOver[1]) * 100);
         }
-        int rhsPercent = 0;
+        int rhsPercent = -1;
         if(rhsOnceOver[0] != -1 || rhsOnceOver[1] != -1) {
             rhsPercent = (int) ((rhsOnceOver[0] / rhsOnceOver[1]) * 100);
         }
