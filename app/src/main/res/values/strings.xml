@@ -18,6 +18,7 @@
     <string name="label_type">Type</string>
     <string name="label_typeData">Type Data</string>
     <string name="label_uuid">UUID</string>
+    <string name="label_resort">Re-sort</string>
 
     <string name="description_logo">MyLife Logo</string>
 

@@ -5,8 +5,12 @@ import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +22,7 @@ public class ChainListFragment extends ListFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        setHasOptionsMenu(true);
         return inflater.inflate(R.layout.fragment_chain_list, container, false);
     }
 
@@ -47,6 +52,28 @@ public class ChainListFragment extends ListFragment {
         CustomArrayAdapter arrayAdapter = new CustomArrayAdapter(getActivity(), chains, mListener);
         arrayAdapter.notifyDataSetChanged();
         setListAdapter(arrayAdapter);
+    }
+
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.list_menu, menu);
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // handle item selection
+        switch (item.getItemId()) {
+            case R.id.item_resort:
+                refreshData();
+                CustomArrayAdapter arrayAdapter = new CustomArrayAdapter(getActivity(), chains, mListener);
+                arrayAdapter.notifyDataSetChanged();
+                setListAdapter(arrayAdapter);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
 
