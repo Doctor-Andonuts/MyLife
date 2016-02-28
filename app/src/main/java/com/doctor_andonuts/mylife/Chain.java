@@ -415,7 +415,7 @@ class Chain {
                         return returnValue;
                     } else if (i < minDays) {
                         returnValue[0] = 0;
-                        returnValue[1] = maxDays;
+                        returnValue[1] = (maxDays - i + 1);
                         return returnValue;
                     } else if (i < maxDays) {
                         returnValue[0] = 1;
