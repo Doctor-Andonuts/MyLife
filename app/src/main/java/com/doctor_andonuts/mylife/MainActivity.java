@@ -2,6 +2,7 @@ package com.doctor_andonuts.mylife;
 
 import android.app.Activity;
 import android.app.FragmentManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -23,7 +24,7 @@ import org.json.JSONObject;
 import java.util.UUID;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, ChainListFragment.OnFragmentInteractionListener {
+        implements NavigationView.OnNavigationItemSelectedListener, ChainListFragment.OnFragmentInteractionListener, BlankFragment.OnFragmentInteractionListener {
 
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle actionBarDrawerToggle;
@@ -51,34 +52,15 @@ public class MainActivity extends AppCompatActivity
 //            }
 //        }
 
+
+
         // IF NO FRAGMENT SET, SET IT
         if (getFragmentManager().findFragmentById(R.id.content_area) == null) {
-            ChainListFragment chainListFragment = new ChainListFragment();
-            getFragmentManager().beginTransaction()
-                    .add(R.id.content_area, chainListFragment, "ChainListFragment")
-                    .commit();
+            loadChainListFragment();
         }
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                setDrawerState(false);
-
-                ChainCreateFragment chainCreateFragment = new ChainCreateFragment();
-                ChainListFragment chainListFragment = (ChainListFragment) getFragmentManager().findFragmentByTag("ChainListFragment");
-                getFragmentManager().beginTransaction()
-                        .remove(chainListFragment)
-                        .add(R.id.content_area, chainCreateFragment, "ChainCreateFragment")
-                        .addToBackStack(null)
-                        .commit();
-                FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-                fab.hide();
-            }
-        });
 
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         actionBarDrawerToggle = new ActionBarDrawerToggle(
@@ -148,6 +130,38 @@ public class MainActivity extends AppCompatActivity
     }
 
 
+    private void loadChainListFragment() {
+        ChainListFragment chainListFragment = new ChainListFragment();
+        getFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+        getFragmentManager().beginTransaction().replace(R.id.content_area, chainListFragment, "ChainListFragment").addToBackStack(null).commit();
+
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.show();
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                setDrawerState(false);
+
+                ChainCreateFragment chainCreateFragment = new ChainCreateFragment();
+                ChainListFragment chainListFragment = (ChainListFragment) getFragmentManager().findFragmentByTag("ChainListFragment");
+                getFragmentManager().beginTransaction()
+                        .remove(chainListFragment)
+                        .add(R.id.content_area, chainCreateFragment, "ChainCreateFragment")
+                        .addToBackStack(null)
+                        .commit();
+                FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+                fab.hide();
+            }
+        });
+    }
+
+    private void loadTaskWarriorFragment() {
+        BlankFragment blankFragment = new BlankFragment();
+        getFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+        getFragmentManager().beginTransaction().replace(R.id.content_area, blankFragment, "TaskListFragment").addToBackStack(null).commit();
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.hide();
+    }
 
     // If you hit the drawer button on the ChainListFragment, show the drawer
     @Override
@@ -156,7 +170,11 @@ public class MainActivity extends AppCompatActivity
 
         if (id == android.R.id.home) {
             ChainListFragment chainListFragment = (ChainListFragment) getFragmentManager().findFragmentByTag("ChainListFragment");
+            BlankFragment blankFragment = (BlankFragment) getFragmentManager().findFragmentByTag("TaskListFragment");
             if (chainListFragment != null && chainListFragment.isVisible()) {
+                drawerLayout.openDrawer(GravityCompat.START);
+                return true;
+            } else if (blankFragment != null && blankFragment.isVisible()) {
                 drawerLayout.openDrawer(GravityCompat.START);
                 return true;
             }
@@ -174,9 +192,9 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_chain) {
-
+            loadChainListFragment();
         } else if (id == R.id.nav_taskwarrior) {
-
+            loadTaskWarriorFragment();
         } else if (id == R.id.nav_settings) {
 
         }
@@ -306,6 +324,7 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
+    // When a chain on the list fragment is clicked I think
     public void onFragmentInteraction(Chain chain) {
         setDrawerState(false);
 
@@ -319,5 +338,9 @@ public class MainActivity extends AppCompatActivity
                 .commit();
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.hide();
+    }
+
+    public void onFragmentInteraction(Uri uri) {
+
     }
 }
