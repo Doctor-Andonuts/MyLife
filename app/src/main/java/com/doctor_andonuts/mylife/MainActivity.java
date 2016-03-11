@@ -2,7 +2,6 @@ package com.doctor_andonuts.mylife;
 
 import android.app.Activity;
 import android.app.FragmentManager;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -24,13 +23,15 @@ import com.doctor_andonuts.mylife.Chain.ChainCreateFragment;
 import com.doctor_andonuts.mylife.Chain.ChainDetailFragment;
 import com.doctor_andonuts.mylife.Chain.ChainListFragment;
 import com.doctor_andonuts.mylife.Chain.ChainManager;
+import com.doctor_andonuts.mylife.Task.TaskListFragment;
+import com.doctor_andonuts.mylife.Task.dummy.DummyContent;
 
 import org.json.JSONObject;
 
 import java.util.UUID;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, ChainListFragment.OnFragmentInteractionListener, BlankFragment.OnFragmentInteractionListener {
+        implements NavigationView.OnNavigationItemSelectedListener, ChainListFragment.OnFragmentInteractionListener, TaskListFragment.OnListFragmentInteractionListener {
 
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle actionBarDrawerToggle;
@@ -162,9 +163,9 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void loadTaskWarriorFragment() {
-        BlankFragment blankFragment = new BlankFragment();
+        TaskListFragment taskListFragment = new TaskListFragment();
         getFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-        getFragmentManager().beginTransaction().replace(R.id.content_area, blankFragment, "TaskListFragment").addToBackStack(null).commit();
+        getFragmentManager().beginTransaction().replace(R.id.content_area, taskListFragment, "TaskListFragment").addToBackStack(null).commit();
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.hide();
     }
@@ -176,11 +177,11 @@ public class MainActivity extends AppCompatActivity
 
         if (id == android.R.id.home) {
             ChainListFragment chainListFragment = (ChainListFragment) getFragmentManager().findFragmentByTag("ChainListFragment");
-            BlankFragment blankFragment = (BlankFragment) getFragmentManager().findFragmentByTag("TaskListFragment");
+            TaskListFragment taskListFragment = (TaskListFragment) getFragmentManager().findFragmentByTag("TaskListFragment");
             if (chainListFragment != null && chainListFragment.isVisible()) {
                 drawerLayout.openDrawer(GravityCompat.START);
                 return true;
-            } else if (blankFragment != null && blankFragment.isVisible()) {
+            } else if (taskListFragment != null && taskListFragment.isVisible()) {
                 drawerLayout.openDrawer(GravityCompat.START);
                 return true;
             }
@@ -346,7 +347,7 @@ public class MainActivity extends AppCompatActivity
         fab.hide();
     }
 
-    public void onFragmentInteraction(Uri uri) {
+    public void onListFragmentInteraction(DummyContent.DummyItem item) {
 
     }
 }
