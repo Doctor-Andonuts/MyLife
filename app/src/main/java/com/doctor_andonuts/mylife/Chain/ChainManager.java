@@ -1,7 +1,9 @@
-package com.doctor_andonuts.mylife;
+package com.doctor_andonuts.mylife.Chain;
 
 import android.content.Context;
 import android.util.Log;
+
+import com.doctor_andonuts.mylife.Chain.Chain;
 
 import org.json.JSONObject;
 
@@ -18,7 +20,7 @@ import java.util.List;
  *
  * Manages chains, reads and writes to the JSON files, and handles updating chains with new data.
  */
-class ChainManager {
+public class ChainManager {
     @SuppressWarnings("FieldCanBeLocal")
     private final String TAG = "ChainManager";
     private final String fileName = "chain.data";

@@ -1,4 +1,6 @@
-package com.doctor_andonuts.mylife;
+package com.doctor_andonuts.mylife.Chain;
+
+import com.doctor_andonuts.mylife.Chain.Chain;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;

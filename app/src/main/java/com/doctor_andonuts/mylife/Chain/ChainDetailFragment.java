@@ -1,4 +1,4 @@
-package com.doctor_andonuts.mylife;
+package com.doctor_andonuts.mylife.Chain;
 
 import android.app.DatePickerDialog;
 import android.app.Fragment;
@@ -22,6 +22,8 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import com.doctor_andonuts.mylife.R;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;

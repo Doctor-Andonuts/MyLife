@@ -1,4 +1,4 @@
-package com.doctor_andonuts.mylife;
+package com.doctor_andonuts.mylife.Chain;
 
 import android.app.ListFragment;
 import android.content.Context;
@@ -10,7 +10,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
+
+import com.doctor_andonuts.mylife.R;
 
 import java.util.ArrayList;
 import java.util.List;

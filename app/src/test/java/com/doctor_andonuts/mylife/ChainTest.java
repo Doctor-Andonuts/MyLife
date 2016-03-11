@@ -1,5 +1,7 @@
 package com.doctor_andonuts.mylife;
 
+import com.doctor_andonuts.mylife.Chain.Chain;
+
 import junit.framework.TestCase;
 
 import org.json.JSONObject;

@@ -1,4 +1,4 @@
-package com.doctor_andonuts.mylife;
+package com.doctor_andonuts.mylife.Chain;
 
 import android.util.Log;
 
@@ -8,7 +8,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
 
-class Chain {
+public class Chain {
     private final String TAG = "ChainClass";
     private final JSONObject chainJson;
 

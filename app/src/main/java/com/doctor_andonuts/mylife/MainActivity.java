@@ -19,6 +19,12 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.Spinner;
 
+import com.doctor_andonuts.mylife.Chain.Chain;
+import com.doctor_andonuts.mylife.Chain.ChainCreateFragment;
+import com.doctor_andonuts.mylife.Chain.ChainDetailFragment;
+import com.doctor_andonuts.mylife.Chain.ChainListFragment;
+import com.doctor_andonuts.mylife.Chain.ChainManager;
+
 import org.json.JSONObject;
 
 import java.util.UUID;
