@@ -50,7 +50,7 @@ public class ChainListFragment extends ListFragment {
 
         refreshData();
 
-        CustomArrayAdapter arrayAdapter = new CustomArrayAdapter(getActivity(), chains, mListener);
+        ChainListArrayAdapter arrayAdapter = new ChainListArrayAdapter(getActivity(), chains, mListener);
         arrayAdapter.notifyDataSetChanged();
         setListAdapter(arrayAdapter);
     }
@@ -68,7 +68,7 @@ public class ChainListFragment extends ListFragment {
         switch (item.getItemId()) {
             case R.id.item_resort:
                 refreshData();
-                CustomArrayAdapter arrayAdapter = new CustomArrayAdapter(getActivity(), chains, mListener);
+                ChainListArrayAdapter arrayAdapter = new ChainListArrayAdapter(getActivity(), chains, mListener);
                 arrayAdapter.notifyDataSetChanged();
                 setListAdapter(arrayAdapter);
                 return true;

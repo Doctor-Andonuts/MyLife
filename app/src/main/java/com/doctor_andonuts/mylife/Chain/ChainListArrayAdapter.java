@@ -22,7 +22,7 @@ import java.util.Locale;
  *
  * Array adapter for the list fragment
  */
-class CustomArrayAdapter extends ArrayAdapter<Chain> {
+class ChainListArrayAdapter extends ArrayAdapter<Chain> {
     private final Context context;
     private final List<Chain> chains;
     private final ChainListFragment.OnFragmentInteractionListener mListener;
@@ -40,7 +40,7 @@ class CustomArrayAdapter extends ArrayAdapter<Chain> {
         super.notifyDataSetChanged();
     }
 
-    public CustomArrayAdapter(Context context, List<Chain> chains, ChainListFragment.OnFragmentInteractionListener mListener) {
+    public ChainListArrayAdapter(Context context, List<Chain> chains, ChainListFragment.OnFragmentInteractionListener mListener) {
         super(context, -1, chains);
         this.context = context;
         this.chains = chains;
