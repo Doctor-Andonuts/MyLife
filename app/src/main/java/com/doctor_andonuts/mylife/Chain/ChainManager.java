@@ -11,7 +11,9 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FileReader;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 
@@ -36,33 +38,33 @@ public class ChainManager {
         HashMap<String, Chain> hashMapChainList = readFile();
 
         for (Chain chain : hashMapChainList.values()) {
-//            String startDateString = chain.getStartDate();
-//            String endDateString = chain.getEndDate();
-//            SimpleDateFormat myDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-//
-//            Calendar startDate = Calendar.getInstance();
-//            Calendar endDate = Calendar.getInstance();
-//            Calendar today = Calendar.getInstance();
-//
-//            try {
-//                startDate.setTime(myDateFormat.parse(startDateString));
-//                if(endDateString == null || endDateString.equals("null")) {
-//                    endDate = null;
-//                } else {
-//                    endDate.setTime(myDateFormat.parse(endDateString));
-//                }
-//                today.setTime(myDateFormat.parse(myDateFormat.format(today.getTime())));
-//            } catch (Exception e) {
-//                Log.e(TAG, "END DATE STRING: " + endDateString);
-//                Log.e(TAG, "JSON: " + chain.getJsonString());
-//                Log.e(TAG, "Parse Error: " + e.toString());
-//            }
+            String startDateString = chain.getStartDate();
+            String endDateString = chain.getEndDate();
+            SimpleDateFormat myDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
-//            if(startDate.before(today) || startDate.equals(today)) {
-//                if(chain.getEndDate().equals("null") || endDate.after(today) || endDate.equals(today)) {
+            Calendar startDate = Calendar.getInstance();
+            Calendar endDate = Calendar.getInstance();
+            Calendar today = Calendar.getInstance();
+
+            try {
+                startDate.setTime(myDateFormat.parse(startDateString));
+                if(endDateString == null || endDateString.equals("null")) {
+                    endDate = null;
+                } else {
+                    endDate.setTime(myDateFormat.parse(endDateString));
+                }
+                today.setTime(myDateFormat.parse(myDateFormat.format(today.getTime())));
+            } catch (Exception e) {
+                Log.e(TAG, "END DATE STRING: " + endDateString);
+                Log.e(TAG, "JSON: " + chain.getJsonString());
+                Log.e(TAG, "Parse Error: " + e.toString());
+            }
+
+            if(startDate.before(today) || startDate.equals(today)) {
+                if(chain.getEndDate().equals("null") || endDate.after(today) || endDate.equals(today)) {
                     returnChainList.add(chain);
-//                }
-//            }
+                }
+            }
         }
 
         return returnChainList;

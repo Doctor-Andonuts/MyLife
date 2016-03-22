@@ -8,8 +8,8 @@ android {
         applicationId "com.andonuts.mylife"
         minSdkVersion 21
         targetSdkVersion 23
-        versionCode 16
-        versionName "1.0.2"
+        versionCode 17
+        versionName "1.0.3"
     }
     buildTypes {
         release {
