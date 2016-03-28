@@ -23,6 +23,7 @@ import com.doctor_andonuts.mylife.Chain.ChainCreateFragment;
 import com.doctor_andonuts.mylife.Chain.ChainDetailFragment;
 import com.doctor_andonuts.mylife.Chain.ChainListFragment;
 import com.doctor_andonuts.mylife.Chain.ChainManager;
+import com.doctor_andonuts.mylife.Task.Task;
 import com.doctor_andonuts.mylife.Task.TaskListFragment;
 import com.doctor_andonuts.mylife.Task.dummy.DummyContent;
 
@@ -347,7 +348,7 @@ public class MainActivity extends AppCompatActivity
         fab.hide();
     }
 
-    public void onListFragmentInteraction(DummyContent.DummyItem item) {
+    public void onListFragmentInteraction(Task task) {
 
     }
 }

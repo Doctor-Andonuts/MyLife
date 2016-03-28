@@ -19,11 +19,11 @@ import java.util.List;
  */
 public class MyTaskRecyclerViewAdapter extends RecyclerView.Adapter<MyTaskRecyclerViewAdapter.ViewHolder> {
 
-    private final List<DummyItem> mValues;
+    private final List<Task> tasks;
     private final OnListFragmentInteractionListener mListener;
 
-    public MyTaskRecyclerViewAdapter(List<DummyItem> items, OnListFragmentInteractionListener listener) {
-        mValues = items;
+    public MyTaskRecyclerViewAdapter(List<Task> tasks, OnListFragmentInteractionListener listener) {
+        this.tasks = tasks;
         mListener = listener;
     }
 
@@ -36,9 +36,9 @@ public class MyTaskRecyclerViewAdapter extends RecyclerView.Adapter<MyTaskRecycl
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        holder.mItem = mValues.get(position);
-        holder.mIdView.setText(mValues.get(position).id);
-        holder.mContentView.setText(mValues.get(position).content);
+        holder.mItem = tasks.get(position);
+        holder.mIdView.setText(tasks.get(position).getValue("UUID"));
+        holder.mContentView.setText(tasks.get(position).getValue("Description"));
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -54,14 +54,14 @@ public class MyTaskRecyclerViewAdapter extends RecyclerView.Adapter<MyTaskRecycl
 
     @Override
     public int getItemCount() {
-        return mValues.size();
+        return tasks.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
         public final TextView mIdView;
         public final TextView mContentView;
-        public DummyItem mItem;
+        public Task mItem;
 
         public ViewHolder(View view) {
             super(view);

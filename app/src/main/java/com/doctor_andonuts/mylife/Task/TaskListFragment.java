@@ -69,7 +69,8 @@ public class TaskListFragment extends Fragment {
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            recyclerView.setAdapter(new MyTaskRecyclerViewAdapter(DummyContent.ITEMS, mListener));
+            TaskManager taskManager = new TaskManager(context);
+            recyclerView.setAdapter(new MyTaskRecyclerViewAdapter(taskManager.getPendingTasks(), mListener));
         }
         return view;
     }
@@ -104,6 +105,6 @@ public class TaskListFragment extends Fragment {
      */
     public interface OnListFragmentInteractionListener {
         // TODO: Update argument type and name
-        void onListFragmentInteraction(DummyContent.DummyItem item);
+        void onListFragmentInteraction(Task task);
     }
 }
