@@ -89,10 +89,13 @@ public class TaskListFragment extends Fragment {
         return view;
     }
 
+    // TODO: This only updates the data once it goes off-screen.  If the task is on the screen and sync'd as done, it will stay until I scroll that card off the screen
     public void refreshData() {
         TaskManager taskManager = new TaskManager(getActivity());
         tasks.clear();
         tasks.addAll(taskManager.getPendingTasks());
+        MyTaskRecyclerViewAdapter myTaskRecyclerViewAdapter = new MyTaskRecyclerViewAdapter(tasks, mListener);
+        myTaskRecyclerViewAdapter.notifyDataSetChanged();
         Log.d("FragmentList", "DATA REFRESH");
     }
 
