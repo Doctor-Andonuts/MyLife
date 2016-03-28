@@ -37,8 +37,7 @@ public class MyTaskRecyclerViewAdapter extends RecyclerView.Adapter<MyTaskRecycl
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = tasks.get(position);
-        holder.mIdView.setText(tasks.get(position).getValue("UUID"));
-        holder.mContentView.setText(tasks.get(position).getValue("Description"));
+        holder.mDescriptionView.setText(tasks.get(position).getValue("description"));
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,20 +58,18 @@ public class MyTaskRecyclerViewAdapter extends RecyclerView.Adapter<MyTaskRecycl
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
-        public final TextView mIdView;
-        public final TextView mContentView;
+        public final TextView mDescriptionView;
         public Task mItem;
 
         public ViewHolder(View view) {
             super(view);
             mView = view;
-            mIdView = (TextView) view.findViewById(R.id.id);
-            mContentView = (TextView) view.findViewById(R.id.content);
+            mDescriptionView = (TextView) view.findViewById(R.id.task_card_description);
         }
 
         @Override
         public String toString() {
-            return super.toString() + " '" + mContentView.getText() + "'";
+            return super.toString() + " '" + mDescriptionView.getText() + "'";
         }
     }
 }

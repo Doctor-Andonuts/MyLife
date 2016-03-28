@@ -6,7 +6,7 @@ android {
 
     defaultConfig {
         applicationId "com.andonuts.mylife"
-        minSdkVersion 21
+        minSdkVersion 23
         targetSdkVersion 23
         versionCode 17
         versionName "1.0.3"

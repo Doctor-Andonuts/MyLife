@@ -38,7 +38,7 @@ public class TaskManager {
         HashMap<String, Task> hashMapTaskList = readFile("pending");
         List<String> blockingUuid = new ArrayList<>();
 
-        SharedPreferences sharedPref = _context.getSharedPreferences("com.doctorandonuts.taskchampion.prefSync", Context.MODE_PRIVATE);
+        SharedPreferences sharedPref = _context.getSharedPreferences("com.doctor_andonuts.mylife.prefSync", Context.MODE_PRIVATE);
         String context = sharedPref.getString("context", "");
 
         List<String> tagFilter = new ArrayList<>();

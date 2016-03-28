@@ -137,7 +137,6 @@ public class MainActivity extends AppCompatActivity
         fab.show();
     }
 
-
     private void loadChainListFragment() {
         ChainListFragment chainListFragment = new ChainListFragment();
         getFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
