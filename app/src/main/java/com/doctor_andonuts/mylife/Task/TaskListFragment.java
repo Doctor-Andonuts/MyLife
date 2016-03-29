@@ -6,6 +6,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.app.Fragment;
+import android.support.v7.util.SortedList;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -32,7 +33,7 @@ import java.util.List;
  */
 public class TaskListFragment extends Fragment {
 
-    private List<Task> tasks = new ArrayList<>();
+    private SortedList<Task> tasks;
 
     // TODO: Customize parameter argument names
     private static final String ARG_COLUMN_COUNT = "column-count";
@@ -84,19 +85,21 @@ public class TaskListFragment extends Fragment {
             }
             TaskManager taskManager = new TaskManager(context);
             tasks = taskManager.getPendingTasks();
-            recyclerView.setAdapter(new MyTaskRecyclerViewAdapter(tasks, mListener));
+            MyTaskRecyclerViewAdapter myTaskRecyclerViewAdapter = new MyTaskRecyclerViewAdapter(tasks, mListener);
+            recyclerView.setAdapter(myTaskRecyclerViewAdapter);
         }
         return view;
     }
 
     // TODO: This only updates the data once it goes off-screen.  If the task is on the screen and sync'd as done, it will stay until I scroll that card off the screen
     public void refreshData() {
-        TaskManager taskManager = new TaskManager(getActivity());
-        tasks.clear();
-        tasks.addAll(taskManager.getPendingTasks());
-        MyTaskRecyclerViewAdapter myTaskRecyclerViewAdapter = new MyTaskRecyclerViewAdapter(tasks, mListener);
-        myTaskRecyclerViewAdapter.notifyDataSetChanged();
-        Log.d("FragmentList", "DATA REFRESH");
+        //TaskManager taskManager = new TaskManager(getActivity());
+        //tasks.clear();
+        //tasks.addAll(taskManager.getPendingTasks());
+        //MyTaskRecyclerViewAdapter myTaskRecyclerViewAdapter = new MyTaskRecyclerViewAdapter(tasks, mListener);
+
+        //myTaskRecyclerViewAdapter.notifyDataSetChanged();
+        //Log.d("FragmentList", "DATA REFRESH");
     }
 
 

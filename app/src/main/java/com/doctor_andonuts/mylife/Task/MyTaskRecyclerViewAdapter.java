@@ -1,5 +1,6 @@
 package com.doctor_andonuts.mylife.Task;
 
+import android.support.v7.util.SortedList;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,10 +14,10 @@ import java.util.List;
 
 public class MyTaskRecyclerViewAdapter extends RecyclerView.Adapter<MyTaskRecyclerViewAdapter.ViewHolder> {
 
-    private final List<Task> tasks;
+    private final SortedList<Task> tasks;
     private final OnListFragmentInteractionListener mListener;
 
-    public MyTaskRecyclerViewAdapter(List<Task> tasks, OnListFragmentInteractionListener listener) {
+    public MyTaskRecyclerViewAdapter(SortedList<Task> tasks, OnListFragmentInteractionListener listener) {
         this.tasks = tasks;
         mListener = listener;
     }
