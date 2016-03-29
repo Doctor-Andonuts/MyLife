@@ -8,15 +8,9 @@ import android.widget.TextView;
 
 import com.doctor_andonuts.mylife.R;
 import com.doctor_andonuts.mylife.Task.TaskListFragment.OnListFragmentInteractionListener;
-import com.doctor_andonuts.mylife.Task.dummy.DummyContent.DummyItem;
 
 import java.util.List;
 
-/**
- * {@link RecyclerView.Adapter} that can display a {@link DummyItem} and makes a call to the
- * specified {@link OnListFragmentInteractionListener}.
- * TODO: Replace the implementation with code for your data type.
- */
 public class MyTaskRecyclerViewAdapter extends RecyclerView.Adapter<MyTaskRecyclerViewAdapter.ViewHolder> {
 
     private final List<Task> tasks;
@@ -38,6 +32,9 @@ public class MyTaskRecyclerViewAdapter extends RecyclerView.Adapter<MyTaskRecycl
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = tasks.get(position);
         holder.mDescriptionView.setText(tasks.get(position).getValue("description"));
+        holder.mProjectView.setText(tasks.get(position).getValue("project"));
+        String urgencyString = String.format("%.2f", tasks.get(position).getUrgency());
+        holder.mUrgencyView.setText(urgencyString);
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,12 +56,16 @@ public class MyTaskRecyclerViewAdapter extends RecyclerView.Adapter<MyTaskRecycl
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
         public final TextView mDescriptionView;
+        public final TextView mProjectView;
+        public final TextView mUrgencyView;
         public Task mItem;
 
         public ViewHolder(View view) {
             super(view);
             mView = view;
             mDescriptionView = (TextView) view.findViewById(R.id.task_card_description);
+            mProjectView = (TextView) view.findViewById(R.id.task_card_project);
+            mUrgencyView = (TextView) view.findViewById(R.id.task_card_urgency);
         }
 
         @Override

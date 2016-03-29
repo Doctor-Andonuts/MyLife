@@ -25,7 +25,6 @@ import com.doctor_andonuts.mylife.Chain.ChainListFragment;
 import com.doctor_andonuts.mylife.Chain.ChainManager;
 import com.doctor_andonuts.mylife.Task.Task;
 import com.doctor_andonuts.mylife.Task.TaskListFragment;
-import com.doctor_andonuts.mylife.Task.dummy.DummyContent;
 
 import org.json.JSONObject;
 
