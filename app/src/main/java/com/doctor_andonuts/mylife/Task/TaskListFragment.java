@@ -1,6 +1,7 @@
 package com.doctor_andonuts.mylife.Task;
 
 
+import android.app.ListFragment;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -23,6 +24,7 @@ import com.doctor_andonuts.mylife.R;
 import com.doctor_andonuts.mylife.Task.sync.TaskWarriorSync;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -33,7 +35,9 @@ import java.util.List;
  */
 public class TaskListFragment extends Fragment {
 
-    private SortedList<Task> tasks;
+    private List<Task> tasks;
+    private RecyclerView recyclerView;
+    private MyTaskRecyclerViewAdapter myTaskRecyclerViewAdapter;
 
     // TODO: Customize parameter argument names
     private static final String ARG_COLUMN_COUNT = "column-count";
@@ -77,7 +81,7 @@ public class TaskListFragment extends Fragment {
         // Set the adapter
         if (view instanceof RecyclerView) {
             Context context = view.getContext();
-            RecyclerView recyclerView = (RecyclerView) view;
+            recyclerView = (RecyclerView) view;
             if (mColumnCount <= 1) {
                 recyclerView.setLayoutManager(new LinearLayoutManager(context));
             } else {
@@ -85,21 +89,24 @@ public class TaskListFragment extends Fragment {
             }
             TaskManager taskManager = new TaskManager(context);
             tasks = taskManager.getPendingTasks();
-            MyTaskRecyclerViewAdapter myTaskRecyclerViewAdapter = new MyTaskRecyclerViewAdapter(tasks, mListener);
+            TaskComparator taskComparator = new TaskComparator();
+            Collections.sort(tasks, taskComparator);
+            myTaskRecyclerViewAdapter = new MyTaskRecyclerViewAdapter(tasks, mListener);
             recyclerView.setAdapter(myTaskRecyclerViewAdapter);
         }
         return view;
     }
 
-    // TODO: This only updates the data once it goes off-screen.  If the task is on the screen and sync'd as done, it will stay until I scroll that card off the screen
     public void refreshData() {
-        //TaskManager taskManager = new TaskManager(getActivity());
-        //tasks.clear();
-        //tasks.addAll(taskManager.getPendingTasks());
-        //MyTaskRecyclerViewAdapter myTaskRecyclerViewAdapter = new MyTaskRecyclerViewAdapter(tasks, mListener);
+        TaskManager taskManager = new TaskManager(getActivity());
+        tasks.clear();
+        tasks.addAll(taskManager.getPendingTasks());
+        TaskComparator taskComparator = new TaskComparator();
+        Collections.sort(tasks, taskComparator);
+        MyTaskRecyclerViewAdapter myTaskRecyclerViewAdapter = (MyTaskRecyclerViewAdapter) recyclerView.getAdapter();
+        myTaskRecyclerViewAdapter.notifyDataSetChanged();
 
-        //myTaskRecyclerViewAdapter.notifyDataSetChanged();
-        //Log.d("FragmentList", "DATA REFRESH");
+        Log.d("FragmentList", "DATA REFRESH");
     }
 
 
