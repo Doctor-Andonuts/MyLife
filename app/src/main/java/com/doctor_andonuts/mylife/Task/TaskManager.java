@@ -33,44 +33,45 @@ public class TaskManager {
         _context = context;
     }
 
+    SortedList<Task> sortedTaskList = new SortedList<>(Task.class, new SortedList.Callback<Task>() {
+        @Override
+        public int compare(Task o1, Task o2) {
+            return o2.getUrgency().compareTo(o1.getUrgency());
+        }
+        @Override
+        public void onInserted(int position, int count) {
+
+        }
+
+        @Override
+        public void onRemoved(int position, int count) {
+
+        }
+
+        @Override
+        public void onMoved(int fromPosition, int toPosition) {
+
+        }
+
+        @Override
+        public void onChanged(int position, int count) {
+
+        }
+
+        @Override
+        public boolean areContentsTheSame(Task oldItem, Task newItem) {
+            // return whether the items' visual representations are the same or not.
+            return oldItem.getValue("description").equals(newItem.getValue("description"));
+        }
+
+        @Override
+        public boolean areItemsTheSame(Task item1, Task item2) {
+            return item1.getValue("uuid") == item2.getValue("uuid");
+        }
+    });
 
     public SortedList<Task> getPendingTasks() {
-        SortedList<Task> returnTaskList = new SortedList<>(Task.class, new SortedList.Callback<Task>() {
-            @Override
-            public int compare(Task o1, Task o2) {
-                return o2.getUrgency().compareTo(o1.getUrgency());
-            }
-            @Override
-            public void onInserted(int position, int count) {
-
-            }
-
-            @Override
-            public void onRemoved(int position, int count) {
-
-            }
-
-            @Override
-            public void onMoved(int fromPosition, int toPosition) {
-
-            }
-
-            @Override
-            public void onChanged(int position, int count) {
-
-            }
-
-            @Override
-            public boolean areContentsTheSame(Task oldItem, Task newItem) {
-                // return whether the items' visual representations are the same or not.
-                return oldItem.getValue("description").equals(newItem.getValue("description"));
-            }
-
-            @Override
-            public boolean areItemsTheSame(Task item1, Task item2) {
-                return item1.getValue("uuid") == item2.getValue("uuid");
-            }
-        });
+        SortedList<Task> returnTaskList = sortedTaskList;
         HashMap<String, Task> hashMapTaskList = readFile("pending");
         List<String> blockingUuid = new ArrayList<>();
 
