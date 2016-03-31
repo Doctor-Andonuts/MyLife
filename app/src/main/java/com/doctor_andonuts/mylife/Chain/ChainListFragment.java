@@ -1,7 +1,9 @@
 package com.doctor_andonuts.mylife.Chain;
 
+import android.app.AlertDialog;
 import android.app.ListFragment;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -10,6 +12,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.Toast;
 
 import com.doctor_andonuts.mylife.R;
 
@@ -53,6 +57,24 @@ public class ChainListFragment extends ListFragment {
         ChainListArrayAdapter arrayAdapter = new ChainListArrayAdapter(getActivity(), chains, mListener);
         arrayAdapter.notifyDataSetChanged();
         setListAdapter(arrayAdapter);
+
+        getListView().setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                final CharSequence colors[] = new CharSequence[] {"Set Vacation Day", "Set Sick Day"};
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                builder.setItems(colors, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // the user clicked on colors[which]
+                        Toast.makeText(getContext(), "Ressult: " + which, Toast.LENGTH_SHORT).show();
+                    }
+                });
+                builder.show();
+                return false;
+            }
+        });
     }
 
 
