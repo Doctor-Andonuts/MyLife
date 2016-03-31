@@ -37,7 +37,6 @@ public class TaskListFragment extends Fragment {
 
     private List<Task> tasks;
     private RecyclerView recyclerView;
-    private MyTaskRecyclerViewAdapter myTaskRecyclerViewAdapter;
 
     // TODO: Customize parameter argument names
     private static final String ARG_COLUMN_COUNT = "column-count";
@@ -91,7 +90,7 @@ public class TaskListFragment extends Fragment {
             tasks = taskManager.getPendingTasks();
             TaskComparator taskComparator = new TaskComparator();
             Collections.sort(tasks, taskComparator);
-            myTaskRecyclerViewAdapter = new MyTaskRecyclerViewAdapter(tasks, mListener);
+            MyTaskRecyclerViewAdapter myTaskRecyclerViewAdapter = new MyTaskRecyclerViewAdapter(tasks, mListener);
             recyclerView.setAdapter(myTaskRecyclerViewAdapter);
         }
         return view;
