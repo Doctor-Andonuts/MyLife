@@ -277,13 +277,23 @@ public class Chain {
             return "No need";
 */
 
-
-            String dayValue = getDateValue(dateToCheckString);
-            if (dayValue.equals("D")) {
+            double[] onceOverData = getOnceOverData(dateToCheckString);
+            if (onceOverData[0] == -1 && onceOverData[1] == -1) {
                 return "Done";
-            } else {
+            } else if (onceOverData[0] >= onceOverData[1]) {
                 return "DO IT!";
+            } else if (onceOverData[0] / onceOverData[1] >= 0.5) {
+                return "Should do";
+            } else {
+                return "No need";
             }
+
+//            String dayValue = getDateValue(dateToCheckString);
+//            if (dayValue.equals("D")) {
+//                return "Done";
+//            } else {
+//                return "DO IT!";
+//            }
         }
         return "";
     }

@@ -111,7 +111,7 @@ class ChainListArrayAdapter extends ArrayAdapter<Chain> {
         doneButton.setText(String.valueOf(chain.getCurrentLength(todayString)));
         doneButton.setTextColor(0xFFFFFFFF);
 
-        if (chain.getType().equals("MinMax")) {
+        //if (chain.getType().equals("MinMax")) {
             String dayStatus = chain.getDayStatus(todayString);
             switch(dayStatus) {
                 case "Done":
@@ -130,18 +130,18 @@ class ChainListArrayAdapter extends ArrayAdapter<Chain> {
                     doneButton.setBackgroundColor(0xFF666666);
                     break;
             }
-        } else {
-            double[] onceOverData = chain.getOnceOverData(todayString);
-            if (onceOverData[0] == -1 && onceOverData[1] == -1) {
-                doneButton.setBackgroundColor(0xFF43a047); // Light Green
-            } else if (onceOverData[0] >= onceOverData[1]) {
-                doneButton.setBackgroundColor(0xFFc62828); // Red
-            } else if (onceOverData[0] / onceOverData[1] >= 0.5) {
-                doneButton.setBackgroundColor(0xFFfdd835); // Yellow
-            } else {
-                doneButton.setBackgroundColor(0xFF1b5e20); // Dark Green
-            }
-        }
+//        } else {
+//            double[] onceOverData = chain.getOnceOverData(todayString);
+//            if (onceOverData[0] == -1 && onceOverData[1] == -1) {
+//                doneButton.setBackgroundColor(0xFF43a047); // Light Green
+//            } else if (onceOverData[0] >= onceOverData[1]) {
+//                doneButton.setBackgroundColor(0xFFc62828); // Red
+//            } else if (onceOverData[0] / onceOverData[1] >= 0.5) {
+//                doneButton.setBackgroundColor(0xFFfdd835); // Yellow
+//            } else {
+//                doneButton.setBackgroundColor(0xFF1b5e20); // Dark Green
+//            }
+//        }
 
         doneButton.setOnClickListener(new View.OnClickListener() {
             @Override
