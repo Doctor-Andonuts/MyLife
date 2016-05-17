@@ -20,7 +20,7 @@
         android:visibility="invisible" />
 
     <TextView
-        android:id="@+id/topLeft"
+        android:id="@+id/chainWidget_doIt"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentLeft="true"
@@ -33,7 +33,7 @@
         android:textSize="@dimen/abc_text_size_large_material"
         android:textStyle="bold"/>
     <TextView
-        android:id="@+id/topRight"
+        android:id="@+id/chainWidget_shouldDo"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentRight="true"
@@ -46,7 +46,7 @@
         android:textSize="@dimen/abc_text_size_large_material"
         android:textStyle="bold"/>
     <TextView
-        android:id="@+id/bottomLeft"
+        android:id="@+id/chainWidget_noNeed"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentLeft="true"
@@ -59,7 +59,7 @@
         android:textSize="@dimen/abc_text_size_large_material"
         android:textStyle="bold"/>
     <TextView
-        android:id="@+id/bottomRight"
+        android:id="@+id/chainWidget_done"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentRight="true"
