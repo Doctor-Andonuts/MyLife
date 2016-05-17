@@ -22,18 +22,15 @@ public class SimpleWidgetProvider extends AppWidgetProvider {
 
         for (int i = 0; i < count; i++) {
             int widgetId = appWidgetIds[i];
-            String number = String.format("%03d", (new Random().nextInt(900) + 100));
+            //String number = String.format("%03d", (new Random().nextInt(900) + 100));
 
             RemoteViews remoteViews = new RemoteViews(context.getPackageName(),
                     R.layout.chain_widget);
-            remoteViews.setTextViewText(R.id.textView, number);
+            //remoteViews.setTextViewText(R.id.textView, number);
 
             Intent intent = new Intent(context, SimpleWidgetProvider.class);
             intent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
             intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, appWidgetIds);
-            PendingIntent pendingIntent = PendingIntent.getBroadcast(context,
-                    0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-            remoteViews.setOnClickPendingIntent(R.id.actionButton, pendingIntent);
             appWidgetManager.updateAppWidget(widgetId, remoteViews);
         }
     }

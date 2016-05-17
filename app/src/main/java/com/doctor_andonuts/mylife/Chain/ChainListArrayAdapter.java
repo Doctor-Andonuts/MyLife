@@ -2,6 +2,7 @@ package com.doctor_andonuts.mylife.Chain;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -109,25 +110,25 @@ class ChainListArrayAdapter extends ArrayAdapter<Chain> {
 
         Button doneButton = (Button) rowView.findViewById(R.id.listButton_Done);
         doneButton.setText(String.valueOf(chain.getCurrentLength(todayString)));
-        doneButton.setTextColor(0xFFFFFFFF);
+        doneButton.setTextColor(Color.WHITE);
 
         //if (chain.getType().equals("MinMax")) {
             String dayStatus = chain.getDayStatus(todayString);
             switch(dayStatus) {
                 case "Done":
-                    doneButton.setBackgroundColor(0xFF43a047); // Light Green
+                    doneButton.setBackgroundColor(getContext().getResources().getColor(R.color.done));
                     break;
                 case "Should do":
-                    doneButton.setBackgroundColor(0xFFfdd835); // Yellow
+                    doneButton.setBackgroundColor(getContext().getResources().getColor(R.color.shouldDo));
                     break;
                 case "No need":
-                    doneButton.setBackgroundColor(0xFF1b5e20); // Dark Green
+                    doneButton.setBackgroundColor(getContext().getResources().getColor(R.color.noNeed));
                     break;
                 case "DO IT!":
-                    doneButton.setBackgroundColor(0xFFc62828); // Red
+                    doneButton.setBackgroundColor(getContext().getResources().getColor(R.color.doIt));
                     break;
                 default:
-                    doneButton.setBackgroundColor(0xFF666666);
+                    doneButton.setBackgroundColor(Color.RED);
                     break;
             }
 //        } else {

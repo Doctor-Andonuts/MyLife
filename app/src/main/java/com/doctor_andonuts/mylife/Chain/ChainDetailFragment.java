@@ -205,31 +205,37 @@ public class ChainDetailFragment extends Fragment {
                 buttons[d].setBackground(dayDrawable);
                 buttons[d].setText(String.valueOf(targetDayInMonth));
 
+                int buttonTextColor = Color.BLACK;
+
                 if(calendar.before(startDate)) {
                     dayDrawable.setColor(0xFFCCCCCC);
                     dayDrawable.setStroke(1, Color.WHITE);
-                    buttons[d].setTextColor(0xFFFFFFFF);
+                    buttons[d].setTextColor(Color.WHITE);
                     buttons[d].setOnClickListener(null);
                 } else if(calendar.after(endDate)) {
                     dayDrawable.setColor(0xFFCCCCCC);
                     dayDrawable.setStroke(1, Color.WHITE);
-                    buttons[d].setTextColor(0xFFFFFFFF);
+                    buttons[d].setTextColor(Color.WHITE);
                     buttons[d].setOnClickListener(null);
                 } else if(chain.getDayStatus(chainDateTest).equals("Done")) {
-                    dayDrawable.setColor(0xFF43a047);
+                    buttons[d].setTextColor(buttonTextColor);
+                    dayDrawable.setColor(getResources().getColor(R.color.done));
                 } else if(chain.getDayStatus(chainDateTest).equals("Should do")) {
-                    dayDrawable.setColor(0xFFfdd835);
+                    buttons[d].setTextColor(buttonTextColor);
+                    dayDrawable.setColor(getResources().getColor(R.color.shouldDo));
                 } else if(chain.getDayStatus(chainDateTest).equals("No need")) {
-                    dayDrawable.setColor(0xFF1b5e20);
+                    buttons[d].setTextColor(buttonTextColor);
+                    dayDrawable.setColor(getResources().getColor(R.color.noNeed));
                 } else if(targetMonthOfYear == currentMonthOfYear && targetDayInMonth > currentDayInMonth) {
                     dayDrawable.setColor(0xFFCCCCCC);
                     dayDrawable.setStroke(1, Color.WHITE);
-                    buttons[d].setTextColor(0xFFFFFFFF);
+                    buttons[d].setTextColor(Color.WHITE);
                     buttons[d].setOnClickListener(null);
                 } else if(chain.getDayStatus(chainDateTest).equals("DO IT!")) {
-                    dayDrawable.setColor(0xFFc62828);
+                    buttons[d].setTextColor(buttonTextColor);
+                    dayDrawable.setColor(getResources().getColor(R.color.doIt));
                 } else {
-                    dayDrawable.setColor(0xFFFFFFFF);
+                    dayDrawable.setColor(Color.WHITE);
                 }
 
                 calendar.add(Calendar.DATE, 1);
