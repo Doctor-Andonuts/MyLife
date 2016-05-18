@@ -1,12 +1,17 @@
 package com.doctor_andonuts.mylife.Chain;
 
+import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
+import android.content.ActivityNotFoundException;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.widget.RemoteViews;
+import android.widget.Toast;
 
+import com.doctor_andonuts.mylife.MainActivity;
 import com.doctor_andonuts.mylife.R;
 import com.doctor_andonuts.mylife.Task.TaskManager;
 
@@ -69,5 +74,26 @@ public class ChainWidgetProvider extends AppWidgetProvider {
             intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, appWidgetIds);
             appWidgetManager.updateAppWidget(widgetId, remoteViews);
         }
+
+        // Perform this loop procedure for each App Widget that belongs to this provider
+        for (int i=0; i<1; i++) {
+            int appWidgetId = appWidgetIds[i];
+
+            // Create an Intent to launch ExampleActivity
+            Intent intent = new Intent(context, MainActivity.class);
+            PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
+
+            // Get the layout for the App Widget and attach an on-click listener
+            // to the button
+            RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.chain_widget);
+            views.setOnClickPendingIntent(R.id.chainWidget_parent, pendingIntent);
+
+
+            // Tell the AppWidgetManager to perform an update on the current app widget
+            appWidgetManager.updateAppWidget(appWidgetId, views);
+        }
+
     }
+
+
 }
