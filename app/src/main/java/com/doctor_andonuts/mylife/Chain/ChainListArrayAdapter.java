@@ -1,7 +1,11 @@
 package com.doctor_andonuts.mylife.Chain;
 
 import android.annotation.SuppressLint;
+import android.appwidget.AppWidgetManager;
+import android.appwidget.AppWidgetProvider;
+import android.content.ComponentName;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -197,6 +201,14 @@ class ChainListArrayAdapter extends ArrayAdapter<Chain> {
 
                 ChainManager chainManager = new ChainManager(context);
                 chainManager.addOrUpdateChain(chain);
+
+                Intent intent = new Intent(context, ChainWidgetProvider.class);
+                intent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
+                int[] ids = AppWidgetManager.getInstance(context).getAppWidgetIds(new ComponentName(context, ChainWidgetProvider.class));
+                intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS,ids);
+                context.sendBroadcast(intent);
+
+
             }
         });
 

@@ -2,7 +2,10 @@ package com.doctor_andonuts.mylife.Chain;
 
 import android.app.DatePickerDialog;
 import android.app.Fragment;
+import android.appwidget.AppWidgetManager;
+import android.content.ComponentName;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
@@ -360,6 +363,13 @@ public class ChainDetailFragment extends Fragment {
             }
             ChainManager chainManager = new ChainManager(getActivity());
             chainManager.addOrUpdateChain(chain);
+
+            Intent intent = new Intent(getContext(), ChainWidgetProvider.class);
+            intent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
+            int[] ids = AppWidgetManager.getInstance(getContext()).getAppWidgetIds(new ComponentName(getContext(), ChainWidgetProvider.class));
+            intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS,ids);
+            getContext().sendBroadcast(intent);
+
             loadData();
         }
 
