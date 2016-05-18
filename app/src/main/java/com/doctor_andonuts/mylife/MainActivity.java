@@ -2,6 +2,9 @@ package com.doctor_andonuts.mylife;
 
 import android.app.Activity;
 import android.app.FragmentManager;
+import android.appwidget.AppWidgetManager;
+import android.content.ComponentName;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -23,6 +26,7 @@ import com.doctor_andonuts.mylife.Chain.ChainCreateFragment;
 import com.doctor_andonuts.mylife.Chain.ChainDetailFragment;
 import com.doctor_andonuts.mylife.Chain.ChainListFragment;
 import com.doctor_andonuts.mylife.Chain.ChainManager;
+import com.doctor_andonuts.mylife.Chain.ChainWidgetProvider;
 import com.doctor_andonuts.mylife.Task.Task;
 import com.doctor_andonuts.mylife.Task.TaskListFragment;
 
@@ -282,6 +286,12 @@ public class MainActivity extends AppCompatActivity
             Chain chain = new Chain(jsonChain);
             ChainManager chainManager = new ChainManager(this);
             chainManager.addOrUpdateChain(chain);
+
+            Intent intent = new Intent(getBaseContext(), ChainWidgetProvider.class);
+            intent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
+            int[] ids = AppWidgetManager.getInstance(getApplication()).getAppWidgetIds(new ComponentName(getApplication(), ChainWidgetProvider.class));
+            intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS,ids);
+            sendBroadcast(intent);
 
             for (Chain chainLoop : chainManager.getChains()) {
                 Log.d("ChainList", chainLoop.getJsonString());
