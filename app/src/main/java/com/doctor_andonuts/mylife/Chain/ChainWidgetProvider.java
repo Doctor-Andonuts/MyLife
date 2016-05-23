@@ -3,17 +3,12 @@ package com.doctor_andonuts.mylife.Chain;
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
-import android.content.ActivityNotFoundException;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.widget.RemoteViews;
-import android.widget.Toast;
 
 import com.doctor_andonuts.mylife.MainActivity;
 import com.doctor_andonuts.mylife.R;
-import com.doctor_andonuts.mylife.Task.TaskManager;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -62,8 +57,7 @@ public class ChainWidgetProvider extends AppWidgetProvider {
                 }
             }
 
-            RemoteViews remoteViews = new RemoteViews(context.getPackageName(),
-                    R.layout.chain_widget);
+            RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.chain_widget);
             remoteViews.setTextViewText(R.id.chainWidget_done, dayStatusCount_done.toString());
             remoteViews.setTextViewText(R.id.chainWidget_shouldDo, dayStatusCount_shouldDo.toString());
             remoteViews.setTextViewText(R.id.chainWidget_noNeed, dayStatusCount_noNeed.toString());

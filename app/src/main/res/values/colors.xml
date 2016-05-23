@@ -8,4 +8,8 @@
     <color name="shouldDo">#FFFDD835</color>
     <color name="noNeed">#FF1b5e20</color>
     <color name="doIt">#FFc62828</color>
+
+    <color name="white">#FFFFFFFF</color>
+    <color name="black">#FF000000</color>
 </resources>
+
