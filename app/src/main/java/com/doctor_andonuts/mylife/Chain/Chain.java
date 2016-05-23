@@ -438,8 +438,14 @@ public class Chain {
             returnValue[1] = 1;
             return returnValue;
         } else {
-            Calendar todayDate = Calendar.getInstance();
-            int todayDayOfWeek = todayDate.get(Calendar.DAY_OF_WEEK);
+            Calendar dateToCheck = Calendar.getInstance();
+            try {
+                dateToCheck.setTime(myDateFormat.parse(dateToCheckString));
+            } catch (Exception e) {
+                Log.e(TAG, "Date Clone");
+            }
+
+            int todayDayOfWeek = dateToCheck.get(Calendar.DAY_OF_WEEK);
             // Sunday == 1, Saturday == 7
             // I want Monday to be one and Sunday to be 7
             todayDayOfWeek -= 1;
