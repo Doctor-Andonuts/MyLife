@@ -68,7 +68,7 @@ public class ChainListFragment extends ListFragment {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         // the user clicked on colors[which]
-                        Toast.makeText(getContext(), "Ressult: " + which, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), "Result: " + which, Toast.LENGTH_SHORT).show();
                     }
                 });
                 builder.show();
