@@ -57,24 +57,6 @@ public class ChainListFragment extends ListFragment {
         ChainListArrayAdapter arrayAdapter = new ChainListArrayAdapter(getActivity(), chains, mListener);
         arrayAdapter.notifyDataSetChanged();
         setListAdapter(arrayAdapter);
-
-        getListView().setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                final CharSequence colors[] = new CharSequence[] {"Set Vacation Day", "Set Sick Day"};
-
-                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-                builder.setItems(colors, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        // the user clicked on colors[which]
-                        Toast.makeText(getContext(), "Result: " + which, Toast.LENGTH_SHORT).show();
-                    }
-                });
-                builder.show();
-                return false;
-            }
-        });
     }
 
 

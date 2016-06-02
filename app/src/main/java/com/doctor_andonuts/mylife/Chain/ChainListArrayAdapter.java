@@ -1,10 +1,12 @@
 package com.doctor_andonuts.mylife.Chain;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.ComponentName;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.util.Log;
@@ -14,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.doctor_andonuts.mylife.R;
 
@@ -209,6 +212,24 @@ class ChainListArrayAdapter extends ArrayAdapter<Chain> {
                 context.sendBroadcast(intent);
 
 
+            }
+        });
+
+        doneButton.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View arg0) {
+                final CharSequence colors[] = new CharSequence[] {"Set Vacation Day", "Set Sick Day"};
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                builder.setItems(colors, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // the user clicked on colors[which]
+                        Toast.makeText(getContext(), "Result: " + which, Toast.LENGTH_SHORT).show();
+                    }
+                });
+                builder.show();
+                return true;
             }
         });
 
