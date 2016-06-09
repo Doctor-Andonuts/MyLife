@@ -161,64 +161,14 @@ class ChainListArrayAdapter extends ArrayAdapter<Chain> {
                 } else {
                     chain.setDone(todayString, "Done");
                 }
-
-                TextView onceOverTextView = (TextView) rowView.findViewById(R.id.onceOver);
-                onceOverTextView.setText(chain.getOnceOverString(todayString));
-
-                Button doneButton = (Button) rowView.findViewById(R.id.listButton_Done);
-                doneButton.setText(String.valueOf(chain.getCurrentLength(todayString)));
-                doneButton.setTextColor(0xFFFFFFFF);
-
-                if (chain.getType().equals("MinMax")) {
-                    String dayStatus = chain.getDayStatus(todayString);
-
-                    switch(dayStatus) {
-                        case "Done":
-                            doneButton.setBackgroundColor(0xFF43a047); // Light Green
-                            break;
-                        case "Should do":
-                            doneButton.setBackgroundColor(0xFFfdd835); // Yellow
-                            break;
-                        case "No need":
-                            doneButton.setBackgroundColor(0xFF1b5e20); // Dark Green
-                            break;
-                        case "DO IT!":
-                            doneButton.setBackgroundColor(0xFFc62828); // Red
-                            break;
-                        default:
-                            doneButton.setBackgroundColor(0xFF666666);
-                            break;
-                    }
-                } else {
-                    double[] onceOverData = chain.getOnceOverData(todayString);
-                    if (onceOverData[0] == -1 && onceOverData[1] == -1) {
-                        v.setBackgroundColor(0xFF43a047); // Light Green
-                    } else if (onceOverData[0] == onceOverData[1]) {
-                        v.setBackgroundColor(0xFFc62828); // Red
-                    } else if (onceOverData[0] / onceOverData[1] >= 0.5) {
-                        v.setBackgroundColor(0xFFfdd835); // Yellow
-                    } else {
-                        v.setBackgroundColor(0xFF1b5e20); // Dark Green
-                    }
-                }
-
-                ChainManager chainManager = new ChainManager(context);
-                chainManager.addOrUpdateChain(chain);
-
-                Intent intent = new Intent(context, ChainWidgetProvider.class);
-                intent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
-                int[] ids = AppWidgetManager.getInstance(context).getAppWidgetIds(new ComponentName(context, ChainWidgetProvider.class));
-                intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS,ids);
-                context.sendBroadcast(intent);
-
-
+                refreshChainListItem(chain, rowView, v);
             }
         });
 
         doneButton.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
-            public boolean onLongClick(View arg0) {
-                final CharSequence colors[] = new CharSequence[] {"Set Vacation Day", "Set Sick Day"};
+            public boolean onLongClick(final View v) {
+                final CharSequence colors[] = new CharSequence[] {"Set Vacation Day", "Set Sick Day", "Set Off Day"};
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
                 builder.setItems(colors, new DialogInterface.OnClickListener() {
@@ -226,6 +176,17 @@ class ChainListArrayAdapter extends ArrayAdapter<Chain> {
                     public void onClick(DialogInterface dialog, int which) {
                         // the user clicked on colors[which]
                         Toast.makeText(getContext(), "Result: " + which, Toast.LENGTH_SHORT).show();
+
+                        Chain chain = chains.get(position);
+
+                        if (which == 0) {
+                            chain.setDone(todayString, "Vacation");
+                        } else if (which == 1) {
+                            chain.setDone(todayString, "Sick");
+                        } else {
+                            chain.setDone(todayString, "Off Day");
+                        }
+                        refreshChainListItem(chain, rowView, v);
                     }
                 });
                 builder.show();
@@ -235,5 +196,60 @@ class ChainListArrayAdapter extends ArrayAdapter<Chain> {
 
 
         return rowView;
+    }
+
+    private void refreshChainListItem(Chain chain, View rowView, View clickView) {
+        SimpleDateFormat myDateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
+        final Calendar today = Calendar.getInstance();
+        final String todayString = myDateFormat.format(today.getTime());
+
+        TextView onceOverTextView = (TextView) rowView.findViewById(R.id.onceOver);
+        onceOverTextView.setText(chain.getOnceOverString(todayString));
+
+        Button doneButton = (Button) rowView.findViewById(R.id.listButton_Done);
+        doneButton.setText(String.valueOf(chain.getCurrentLength(todayString)));
+        doneButton.setTextColor(0xFFFFFFFF);
+
+        if (chain.getType().equals("MinMax")) {
+            String dayStatus = chain.getDayStatus(todayString);
+
+            switch(dayStatus) {
+                case "Done":
+                    doneButton.setBackgroundColor(0xFF43a047); // Light Green
+                    break;
+                case "Should do":
+                    doneButton.setBackgroundColor(0xFFfdd835); // Yellow
+                    break;
+                case "No need":
+                    doneButton.setBackgroundColor(0xFF1b5e20); // Dark Green
+                    break;
+                case "DO IT!":
+                    doneButton.setBackgroundColor(0xFFc62828); // Red
+                    break;
+                default:
+                    doneButton.setBackgroundColor(0xFF666666);
+                    break;
+            }
+        } else {
+            double[] onceOverData = chain.getOnceOverData(todayString);
+            if (onceOverData[0] == -1 && onceOverData[1] == -1) {
+                clickView.setBackgroundColor(0xFF43a047); // Light Green
+            } else if (onceOverData[0] == onceOverData[1]) {
+                clickView.setBackgroundColor(0xFFc62828); // Red
+            } else if (onceOverData[0] / onceOverData[1] >= 0.5) {
+                clickView.setBackgroundColor(0xFFfdd835); // Yellow
+            } else {
+                clickView.setBackgroundColor(0xFF1b5e20); // Dark Green
+            }
+        }
+
+        ChainManager chainManager = new ChainManager(context);
+        chainManager.addOrUpdateChain(chain);
+
+        Intent intent = new Intent(context, ChainWidgetProvider.class);
+        intent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
+        int[] ids = AppWidgetManager.getInstance(context).getAppWidgetIds(new ComponentName(context, ChainWidgetProvider.class));
+        intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS,ids);
+        context.sendBroadcast(intent);
     }
 }
