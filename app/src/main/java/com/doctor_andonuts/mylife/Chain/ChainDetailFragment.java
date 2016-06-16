@@ -371,6 +371,14 @@ public class ChainDetailFragment extends Fragment {
                     } else {
                         chain.setDone(chainDate, "Off Day");
                     }
+                    ChainManager chainManager = new ChainManager(getActivity());
+                    chainManager.addOrUpdateChain(chain);
+
+                    Intent intent = new Intent(getContext(), ChainWidgetProvider.class);
+                    intent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
+                    int[] ids = AppWidgetManager.getInstance(getContext()).getAppWidgetIds(new ComponentName(getContext(), ChainWidgetProvider.class));
+                    intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS,ids);
+                    getContext().sendBroadcast(intent);
 
                     loadData();
                 }

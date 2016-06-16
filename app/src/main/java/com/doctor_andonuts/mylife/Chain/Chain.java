@@ -332,7 +332,9 @@ public class Chain {
                     }
                     newDateToCheck.add(Calendar.DATE, -i);
                     String newDateToCheckString = myDateFormat.format(newDateToCheck.getTime());
-                    if(getDateValue(newDateToCheckString).equals("D")) {
+                    if(getDateValue(newDateToCheckString).equals("V")) {
+                        maxDays++;
+                    } else if(getDateValue(newDateToCheckString).equals("D")) {
                         foundDate = true;
                         lastDoneDate = newDateToCheckString;
                         chainLength++;
