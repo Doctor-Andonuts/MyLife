@@ -25,6 +25,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.doctor_andonuts.mylife.R;
 
@@ -205,10 +206,9 @@ public class ChainDetailFragment extends Fragment {
                 }
 
                 buttons[d].setOnClickListener(new DetailDoneButtonOnClickListener(chainDateFormat.format(calendar.getTime())));
+                buttons[d].setOnLongClickListener(new DetailDoneButtonOnLongClickListener(chainDateFormat.format(calendar.getTime())));
                 buttons[d].setBackground(dayDrawable);
                 buttons[d].setText(String.valueOf(targetDayInMonth));
-
-                int buttonTextColor = Color.BLACK;
 
                 if(calendar.before(startDate)) {
                     dayDrawable.setColor(0xFFCCCCCC);
@@ -221,13 +221,16 @@ public class ChainDetailFragment extends Fragment {
                     buttons[d].setTextColor(Color.WHITE);
                     buttons[d].setOnClickListener(null);
                 } else if(chain.getDayStatus(chainDateTest).equals("Done")) {
-                    buttons[d].setTextColor(buttonTextColor);
+                    buttons[d].setTextColor(Color.WHITE);
                     dayDrawable.setColor(getResources().getColor(R.color.done));
+                } else if(chain.getDayStatus(chainDateTest).equals("Off")) {
+                    buttons[d].setTextColor(Color.WHITE);
+                    dayDrawable.setColor(getResources().getColor(R.color.off));
                 } else if(chain.getDayStatus(chainDateTest).equals("Should do")) {
-                    buttons[d].setTextColor(buttonTextColor);
+                    buttons[d].setTextColor(Color.BLACK);
                     dayDrawable.setColor(getResources().getColor(R.color.shouldDo));
                 } else if(chain.getDayStatus(chainDateTest).equals("No need")) {
-                    buttons[d].setTextColor(buttonTextColor);
+                    buttons[d].setTextColor(Color.WHITE);
                     dayDrawable.setColor(getResources().getColor(R.color.noNeed));
                 } else if(targetMonthOfYear == currentMonthOfYear && targetDayInMonth > currentDayInMonth) {
                     dayDrawable.setColor(0xFFCCCCCC);
@@ -235,7 +238,7 @@ public class ChainDetailFragment extends Fragment {
                     buttons[d].setTextColor(Color.WHITE);
                     buttons[d].setOnClickListener(null);
                 } else if(chain.getDayStatus(chainDateTest).equals("DO IT!")) {
-                    buttons[d].setTextColor(buttonTextColor);
+                    buttons[d].setTextColor(Color.WHITE);
                     dayDrawable.setColor(getResources().getColor(R.color.doIt));
                 } else {
                     dayDrawable.setColor(Color.WHITE);
@@ -344,6 +347,38 @@ public class ChainDetailFragment extends Fragment {
         alert.show();
     }
 
+    public class DetailDoneButtonOnLongClickListener implements View.OnLongClickListener
+    {
+        final String chainDate;
+        public DetailDoneButtonOnLongClickListener(String chainDate) {
+            this.chainDate = chainDate;
+        }
+
+        @Override
+        public boolean onLongClick(final View v) {
+
+            final CharSequence colors[] = new CharSequence[] {"Set Vacation Day", "Set Sick Day", "Set Off Day"};
+
+            android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(getContext());
+            builder.setItems(colors, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    if (which == 0) {
+                        chain.setDone(chainDate, "Vacation");
+                        Log.d("VACATION", chain.getDateValue(chainDate));
+                    } else if (which == 1) {
+                        chain.setDone(chainDate, "Sick");
+                    } else {
+                        chain.setDone(chainDate, "Off Day");
+                    }
+
+                    loadData();
+                }
+            });
+            builder.show();
+            return true;
+        }
+    }
     public class DetailDoneButtonOnClickListener implements View.OnClickListener
     {
 
