@@ -255,10 +255,11 @@ public class Chain {
                     } else if (i == 0 && dayValue.equals("V")) {
                         return "Off";
                     }
+                    if (dayValue.equals("V")) {
+                        maxDays++;
+                    }
                     if (dayValue.equals("D")) {
-                        if (i == 0) {
-                            return "Done";
-                        } else if (i < minDays) {
+                        if (i < minDays) {
                             return "No need";
                         } else if (i < maxDays) {
                             return "Should do";
