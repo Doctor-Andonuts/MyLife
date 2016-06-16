@@ -223,9 +223,9 @@ public class ChainDetailFragment extends Fragment {
                 } else if(chain.getDayStatus(chainDateTest).equals("Done")) {
                     buttons[d].setTextColor(Color.WHITE);
                     dayDrawable.setColor(getResources().getColor(R.color.done));
-                } else if(chain.getDayStatus(chainDateTest).equals("Off")) {
+                } else if(chain.getDayStatus(chainDateTest).equals("Offday")) {
                     buttons[d].setTextColor(Color.WHITE);
-                    dayDrawable.setColor(getResources().getColor(R.color.off));
+                    dayDrawable.setColor(getResources().getColor(R.color.offday));
                 } else if(chain.getDayStatus(chainDateTest).equals("Should do")) {
                     buttons[d].setTextColor(Color.BLACK);
                     dayDrawable.setColor(getResources().getColor(R.color.shouldDo));
@@ -365,11 +365,10 @@ public class ChainDetailFragment extends Fragment {
                 public void onClick(DialogInterface dialog, int which) {
                     if (which == 0) {
                         chain.setDone(chainDate, "Vacation");
-                        Log.d("VACATION", chain.getDateValue(chainDate));
                     } else if (which == 1) {
                         chain.setDone(chainDate, "Sick");
                     } else {
-                        chain.setDone(chainDate, "Off Day");
+                        chain.setDone(chainDate, "Offday");
                     }
                     ChainManager chainManager = new ChainManager(getActivity());
                     chainManager.addOrUpdateChain(chain);

@@ -250,10 +250,12 @@ public class Chain {
                     String newDateString = myDateFormat.format(newDate.getTime());
 
                     String dayValue = getDateValue(newDateString);
-                    if(i == 0 && dayValue.equals("D")) {
-                        return "Done";
-                    } else if (i == 0 && dayValue.equals("V")) {
-                        return "Off";
+                    if (i == 0) {
+                        if (dayValue.equals("D")) {
+                            return "Done";
+                        } else if (dayValue.equals("V") || dayValue.equals("S") || dayValue.equals("O")) {
+                            return "Offday";
+                        }
                     }
                     if (dayValue.equals("V")) {
                         maxDays++;
@@ -332,7 +334,7 @@ public class Chain {
                     }
                     newDateToCheck.add(Calendar.DATE, -i);
                     String newDateToCheckString = myDateFormat.format(newDateToCheck.getTime());
-                    if(getDateValue(newDateToCheckString).equals("V")) {
+                    if(getDateValue(newDateToCheckString).equals("V") ||  getDateValue(newDateToCheckString).equals("S") || getDateValue(newDateToCheckString).equals("O")) {
                         maxDays++;
                     } else if(getDateValue(newDateToCheckString).equals("D")) {
                         foundDate = true;

@@ -126,8 +126,8 @@ class ChainListArrayAdapter extends ArrayAdapter<Chain> {
                     doneButton.setBackgroundColor(getContext().getResources().getColor(R.color.done));
                     doneButton.setTextColor(Color.WHITE);
                     break;
-                case "Off":
-                    doneButton.setBackgroundColor(getContext().getResources().getColor(R.color.off));
+                case "Offday":
+                    doneButton.setBackgroundColor(getContext().getResources().getColor(R.color.offday));
                     doneButton.setTextColor(Color.WHITE);
                     break;
                 case "Should do":
@@ -191,7 +191,7 @@ class ChainListArrayAdapter extends ArrayAdapter<Chain> {
                         } else if (which == 1) {
                             chain.setDone(todayString, "Sick");
                         } else {
-                            chain.setDone(todayString, "Off Day");
+                            chain.setDone(todayString, "Offday");
                         }
                         refreshChainListItem(chain, rowView);
                     }
@@ -225,8 +225,8 @@ class ChainListArrayAdapter extends ArrayAdapter<Chain> {
                     doneButton.setBackgroundColor(getContext().getResources().getColor(R.color.done)); // Light Green
                     doneButton.setTextColor(Color.WHITE);
                     break;
-                case "Off":
-                    doneButton.setBackgroundColor(getContext().getResources().getColor(R.color.off)); // Blue
+                case "Offday":
+                    doneButton.setBackgroundColor(getContext().getResources().getColor(R.color.offday)); // Blue
                     doneButton.setTextColor(Color.WHITE);
                     break;
                 case "Should do":

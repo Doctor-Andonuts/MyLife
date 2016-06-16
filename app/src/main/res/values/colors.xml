@@ -5,7 +5,7 @@
     <color name="colorAccent">#939196</color>
 
     <color name="done">#FF43a047</color>
-    <color name="off">#FF1565C0</color>
+    <color name="offday">#FF1565C0</color>
     <color name="shouldDo">#FFFDD835</color>
     <color name="noNeed">#FF1b5e20</color>
     <color name="doIt">#FFc62828</color>
