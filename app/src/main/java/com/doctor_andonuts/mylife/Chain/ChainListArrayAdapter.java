@@ -127,6 +127,8 @@ class ChainListArrayAdapter extends ArrayAdapter<Chain> {
                     doneButton.setTextColor(Color.WHITE);
                     break;
                 case "Offday":
+                case "Sick":
+                case "Vacation":
                     doneButton.setBackgroundColor(getContext().getResources().getColor(R.color.offday));
                     doneButton.setTextColor(Color.WHITE);
                     break;
@@ -187,7 +189,6 @@ class ChainListArrayAdapter extends ArrayAdapter<Chain> {
 
                         if (which == 0) {
                             chain.setDone(todayString, "Vacation");
-                            Log.d("VACATION", chain.getDateValue(todayString));
                         } else if (which == 1) {
                             chain.setDone(todayString, "Sick");
                         } else {
@@ -226,6 +227,8 @@ class ChainListArrayAdapter extends ArrayAdapter<Chain> {
                     doneButton.setTextColor(Color.WHITE);
                     break;
                 case "Offday":
+                case "Sick":
+                case "Vacation":
                     doneButton.setBackgroundColor(getContext().getResources().getColor(R.color.offday)); // Blue
                     doneButton.setTextColor(Color.WHITE);
                     break;

@@ -253,7 +253,11 @@ public class Chain {
                     if (i == 0) {
                         if (dayValue.equals("D")) {
                             return "Done";
-                        } else if (dayValue.equals("V") || dayValue.equals("S") || dayValue.equals("O")) {
+                        } else if (dayValue.equals("V")) {
+                            return "Vacation";
+                        } else if (dayValue.equals("S")) {
+                            return "Sick";
+                        } else if (dayValue.equals("O")) {
                             return "Offday";
                         }
                     }

@@ -224,6 +224,15 @@ public class ChainDetailFragment extends Fragment {
                     buttons[d].setTextColor(Color.WHITE);
                     dayDrawable.setColor(getResources().getColor(R.color.done));
                 } else if(chain.getDayStatus(chainDateTest).equals("Offday")) {
+                    buttons[d].setText("O");
+                    buttons[d].setTextColor(Color.WHITE);
+                    dayDrawable.setColor(getResources().getColor(R.color.offday));
+                } else if(chain.getDayStatus(chainDateTest).equals("Sick")) {
+                    buttons[d].setText("S");
+                    buttons[d].setTextColor(Color.WHITE);
+                    dayDrawable.setColor(getResources().getColor(R.color.offday));
+                } else if(chain.getDayStatus(chainDateTest).equals("Vacation")) {
+                    buttons[d].setText("V");
                     buttons[d].setTextColor(Color.WHITE);
                     dayDrawable.setColor(getResources().getColor(R.color.offday));
                 } else if(chain.getDayStatus(chainDateTest).equals("Should do")) {
