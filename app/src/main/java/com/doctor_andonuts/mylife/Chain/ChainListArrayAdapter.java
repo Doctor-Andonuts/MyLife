@@ -170,7 +170,7 @@ class ChainListArrayAdapter extends ArrayAdapter<Chain> {
                 } else {
                     chain.setDone(todayString, "Done");
                 }
-                refreshChainListItem(chain, rowView, v);
+                refreshChainListItem(chain, rowView);
             }
         });
 
@@ -193,7 +193,7 @@ class ChainListArrayAdapter extends ArrayAdapter<Chain> {
                         } else {
                             chain.setDone(todayString, "Off Day");
                         }
-                        refreshChainListItem(chain, rowView, v);
+                        refreshChainListItem(chain, rowView);
                     }
                 });
                 builder.show();
@@ -205,7 +205,7 @@ class ChainListArrayAdapter extends ArrayAdapter<Chain> {
         return rowView;
     }
 
-    private void refreshChainListItem(Chain chain, View rowView, View clickView) {
+    private void refreshChainListItem(Chain chain, View rowView) {
         SimpleDateFormat myDateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
         final Calendar today = Calendar.getInstance();
         final String todayString = myDateFormat.format(today.getTime());
