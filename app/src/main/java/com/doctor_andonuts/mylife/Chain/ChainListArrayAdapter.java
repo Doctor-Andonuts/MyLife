@@ -125,6 +125,9 @@ class ChainListArrayAdapter extends ArrayAdapter<Chain> {
                 case "Done":
                     doneButton.setBackgroundColor(getContext().getResources().getColor(R.color.done));
                     break;
+                case "Off":
+                    doneButton.setBackgroundColor(getContext().getResources().getColor(R.color.off));
+                    break;
                 case "Should do":
                     doneButton.setBackgroundColor(getContext().getResources().getColor(R.color.shouldDo));
                     break;
@@ -135,7 +138,7 @@ class ChainListArrayAdapter extends ArrayAdapter<Chain> {
                     doneButton.setBackgroundColor(getContext().getResources().getColor(R.color.doIt));
                     break;
                 default:
-                    doneButton.setBackgroundColor(Color.RED);
+                    doneButton.setBackgroundColor(0xFF666666);
                     break;
             }
 //        } else {
@@ -181,6 +184,7 @@ class ChainListArrayAdapter extends ArrayAdapter<Chain> {
 
                         if (which == 0) {
                             chain.setDone(todayString, "Vacation");
+                            Log.d("VACATION", chain.getDateValue(todayString));
                         } else if (which == 1) {
                             chain.setDone(todayString, "Sick");
                         } else {
@@ -215,16 +219,19 @@ class ChainListArrayAdapter extends ArrayAdapter<Chain> {
 
             switch(dayStatus) {
                 case "Done":
-                    doneButton.setBackgroundColor(0xFF43a047); // Light Green
+                    doneButton.setBackgroundColor(getContext().getResources().getColor(R.color.done)); // Light Green
+                    break;
+                case "Off":
+                    doneButton.setBackgroundColor(getContext().getResources().getColor(R.color.off)); // Blue
                     break;
                 case "Should do":
-                    doneButton.setBackgroundColor(0xFFfdd835); // Yellow
+                    doneButton.setBackgroundColor(getContext().getResources().getColor(R.color.shouldDo)); // Yellow
                     break;
                 case "No need":
-                    doneButton.setBackgroundColor(0xFF1b5e20); // Dark Green
+                    doneButton.setBackgroundColor(getContext().getResources().getColor(R.color.noNeed)); // Dark Green
                     break;
                 case "DO IT!":
-                    doneButton.setBackgroundColor(0xFFc62828); // Red
+                    doneButton.setBackgroundColor(getContext().getResources().getColor(R.color.doIt)); // Red
                     break;
                 default:
                     doneButton.setBackgroundColor(0xFF666666);
@@ -233,13 +240,13 @@ class ChainListArrayAdapter extends ArrayAdapter<Chain> {
         } else {
             double[] onceOverData = chain.getOnceOverData(todayString);
             if (onceOverData[0] == -1 && onceOverData[1] == -1) {
-                clickView.setBackgroundColor(0xFF43a047); // Light Green
+                clickView.setBackgroundColor(getContext().getResources().getColor(R.color.done)); // Light Green
             } else if (onceOverData[0] == onceOverData[1]) {
-                clickView.setBackgroundColor(0xFFc62828); // Red
+                clickView.setBackgroundColor(getContext().getResources().getColor(R.color.doIt)); // Red
             } else if (onceOverData[0] / onceOverData[1] >= 0.5) {
-                clickView.setBackgroundColor(0xFFfdd835); // Yellow
+                clickView.setBackgroundColor(getContext().getResources().getColor(R.color.shouldDo)); // Yellow
             } else {
-                clickView.setBackgroundColor(0xFF1b5e20); // Dark Green
+                clickView.setBackgroundColor(getContext().getResources().getColor(R.color.noNeed)); // Dark Green
             }
         }
 

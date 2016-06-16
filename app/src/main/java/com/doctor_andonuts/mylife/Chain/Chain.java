@@ -250,6 +250,11 @@ public class Chain {
                     String newDateString = myDateFormat.format(newDate.getTime());
 
                     String dayValue = getDateValue(newDateString);
+                    if(i == 0 && dayValue.equals("D")) {
+                        return "Done";
+                    } else if (i == 0 && dayValue.equals("V")) {
+                        return "Off";
+                    }
                     if (dayValue.equals("D")) {
                         if (i == 0) {
                             return "Done";
