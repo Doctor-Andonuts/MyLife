@@ -131,6 +131,18 @@ public class TaskManager {
         writeFile("pending", taskHashMapToString(pendingTaskList));
         writeFile("completed", taskHashMapToString(completedTaskList));
     }
+    public void clearData() {
+        writeFile("pending", "");
+        writeFile("completed", "");
+        writeFile("backlog", "");
+//        SharedPreferences sharedPref = _context.getSharedPreferences("com.doctor_andonuts.mylife.prefSync", Context.MODE_PRIVATE);
+//        sharedPref.getString("syncKey", "");
+//        sharedPref.
+        SharedPreferences sharedPref = _context.getSharedPreferences("com.doctorandonuts.taskchampion.prefSync", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putString("syncKey", "");
+        editor.apply();
+    }
     public void clearFile(String file) {
         writeFile(file, "");
     }

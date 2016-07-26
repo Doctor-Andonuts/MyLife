@@ -146,6 +146,10 @@ public class TaskListFragment extends Fragment {
                 TaskWarriorSync taskWarriorSync = new TaskWarriorSync(this);
                 taskWarriorSync.execute();
                 return true;
+            case R.id.item_clearData:
+                TaskManager taskManager = new TaskManager(getContext());
+                taskManager.clearData();
+                refreshData();
             default:
                 return super.onOptionsItemSelected(item);
         }

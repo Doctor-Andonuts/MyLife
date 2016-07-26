@@ -9,4 +9,10 @@
         android:orderInCategory="10"
         android:title="@string/label_sync">
     </item>
+    <item
+        android:id="@+id/item_clearData"
+        app:showAsAction="never"
+        android:orderInCategory="100"
+        android:title="@string/label_clear">
+    </item>
 </menu>

@@ -20,6 +20,7 @@
     <string name="label_uuid">UUID</string>
     <string name="label_resort">Re-sort</string>
     <string name="label_sync">Sync</string>
+    <string name="label_clear">Clear</string>
 
     <string name="description_logo">MyLife Logo</string>
 
